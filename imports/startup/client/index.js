@@ -6,5 +6,5 @@ import { Routes } from './routes';
 
 Meteor.startup(() => {
   render(<Routes />, document.getElementById('react-root'));
-  $('body').addClass('skin-blue');
+  $('body').addClass('skin-black');
 });
