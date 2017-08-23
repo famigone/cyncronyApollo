@@ -5,7 +5,7 @@ const AppFooter = () => (
     <div className="pull-right hidden-xs">
       <b>Version</b> 2.3.11
     </div>
-    <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+    <strong>Copyright &copy;  <a href="http://reactib.com">REACTIB</a> - </strong> React With Us
   </footer>
 );
 

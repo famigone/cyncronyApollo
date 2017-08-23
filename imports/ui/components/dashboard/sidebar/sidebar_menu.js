@@ -12,8 +12,10 @@ const SideBarMenu = ({ userCount }) => (
       </a>
       <ul className="treeview-menu">
         <li className="active">
-          <Link to={'/dashboard'}><i className="fa fa-circle-o" /> Dashboard 1</Link></li>
-        <li><a href="#"><i className="fa fa-circle-o" /> Dashboard 2</a></li>
+          <Link to={'/dashboard'}><i className="fa fa-circle-o" /> Dashboard</Link></li>
+        <li className="active">
+          <Link to={'/tasks'}><i className="fa fa-circle-o" /> Tasks </Link></li>
+
       </ul>
     </li>
     <li>

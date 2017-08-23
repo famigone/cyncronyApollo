@@ -7,8 +7,8 @@ const AppHeader = () => (
   <header className="main-header">
 
     <a href="#" className="logo">
-      <span className="logo-mini"><b>A</b>L</span>
-      <span className="logo-lg"><b>Admin</b>LTE</span>
+      <span className="logo-mini"><b>P</b>M</span>
+      <span className="logo-lg"><b>reactib</b>PM</span>
     </a>
 
     <nav className="navbar navbar-static-top">
