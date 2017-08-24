@@ -14,7 +14,9 @@ const SideBarMenu = ({ userCount }) => (
         <li className="active">
           <Link to={'/dashboard/statistics'}><i className="fa fa-circle-o" /> Dashboard</Link></li>
         <li className="active">
-          <Link to={'/dashboard/tasks'}><i className="fa fa-circle-o" /> Tasks </Link></li>
+          <Link to={'/dashboard/projects'}><i className="fa fa-circle-o" />Mis Proyectos </Link></li>
+        <li className="active">
+          <Link to={'/dashboard/tasks'}><i className="fa fa-circle-o" /> Tareas </Link></li>
 
       </ul>
     </li>

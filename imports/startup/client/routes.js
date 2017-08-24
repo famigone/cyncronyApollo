@@ -10,7 +10,8 @@ import SignUp from '../../ui/components/sign_up';
 import Dashboard from '../../ui/components/dashboard/dashboard';
 import Statistics from '../../ui/components/dashboard/views/statistics/statistics';
 import { NotFound } from '../../ui/pages/not_found/not_found';
-import ListaTarea from '../../ui/components/ListaTarea';
+import ListaTarea from '../../ui/components/ListaTarea/ListaTarea';
+//import ProjectList from '../../ui/components/ProjectList/ProjectList';
 
 
 export const requireAuth = (nextState, replace) => {
@@ -31,6 +32,7 @@ export const Routes = () => (
       <Route path="dashboard" name="dashboard" component={Dashboard} onEnter={requireAuth}>
         <Route path="statistics" name="statistics" component={Statistics} />
         <Route path="tasks" name="tasks" component={ListaTarea} />
+
       </Route>
     </Route>
     <Route path="*" name="not-found" component={NotFound} />

@@ -17,9 +17,9 @@ class ListaTarea extends Component {
      return (
        <div className="container">
          <header>
-           <h1>Todo List</h1>
+           <h3>Tareas del Proyecto</h3>
          </header>
-
+         
          <ul>
            {this.renderTasks()}
          </ul>
