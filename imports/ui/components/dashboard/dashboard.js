@@ -10,7 +10,7 @@ import StatisticView from './views/statistics/statistics';
 
 class Dashboard extends Component {
   getContentView() {
-    return this.props.children && <StatisticView />;
+    return this.props.children;
   }
 
   render() {
@@ -24,7 +24,7 @@ class Dashboard extends Component {
       <div className="wrapper">
         <AppHeader user={currentUser} />
         <SideBar user={this.props.currentUser} users={this.props.users} />
-        
+
         <div className="content-wrapper" style={contentMinHeight} >
             {this.getContentView()}
         </div>

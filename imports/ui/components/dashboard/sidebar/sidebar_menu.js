@@ -8,13 +8,13 @@ const SideBarMenu = ({ userCount }) => (
     <li className="active treeview">
       <a href="#">
         <i className="fa fa-dashboard" />
-        <span>Dashboard</span> <i className="fa fa-angle-left pull-right" />
+        <span>Proyectos</span> <i className="fa fa-angle-left pull-right" />
       </a>
       <ul className="treeview-menu">
         <li className="active">
-          <Link to={'/dashboard'}><i className="fa fa-circle-o" /> Dashboard</Link></li>
+          <Link to={'/dashboard/statistics'}><i className="fa fa-circle-o" /> Dashboard</Link></li>
         <li className="active">
-          <Link to={'/tasks'}><i className="fa fa-circle-o" /> Tasks </Link></li>
+          <Link to={'/dashboard/tasks'}><i className="fa fa-circle-o" /> Tasks </Link></li>
 
       </ul>
     </li>

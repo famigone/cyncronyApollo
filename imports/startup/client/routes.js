@@ -10,7 +10,7 @@ import SignUp from '../../ui/components/sign_up';
 import Dashboard from '../../ui/components/dashboard/dashboard';
 import Statistics from '../../ui/components/dashboard/views/statistics/statistics';
 import { NotFound } from '../../ui/pages/not_found/not_found';
-
+import ListaTarea from '../../ui/components/ListaTarea';
 export const requireAuth = (nextState, replace) => {
   // No user is authenticated redirect ro index
   if (Meteor.user() === null) {
@@ -27,8 +27,8 @@ export const Routes = () => (
       <Route path="sign-in" name="signIn" component={SignIn} />
       <Route path="sign-up" name="signUp" component={SignUp} />
       <Route path="dashboard" name="dashboard" component={Dashboard} onEnter={requireAuth}>
-        <IndexRoute component={Statistics} />
         <Route path="statistics" name="statistics" component={Statistics} />
+        <Route path="tasks" name="tasks" component={ListaTarea} />
       </Route>
     </Route>
     <Route path="*" name="not-found" component={NotFound} />
