@@ -11,6 +11,8 @@ import Dashboard from '../../ui/components/dashboard/dashboard';
 import Statistics from '../../ui/components/dashboard/views/statistics/statistics';
 import { NotFound } from '../../ui/pages/not_found/not_found';
 import ListaTarea from '../../ui/components/ListaTarea';
+
+
 export const requireAuth = (nextState, replace) => {
   // No user is authenticated redirect ro index
   if (Meteor.user() === null) {

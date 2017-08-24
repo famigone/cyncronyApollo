@@ -10,7 +10,7 @@ import StatisticView from './views/statistics/statistics';
 
 class Dashboard extends Component {
   getContentView() {
-    return this.props.children;
+      return this.props.children;
   }
 
   render() {
