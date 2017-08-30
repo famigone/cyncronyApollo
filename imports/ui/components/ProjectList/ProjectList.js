@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Project } from '/imports/api/projects.js';
+import { Projects } from '/imports/api/projects.js';
 import Project from './Project.jsx';
 
 
@@ -17,12 +17,31 @@ class ProjectList extends Component {
      return (
        <div className="container">
          <header>
-           <h3>Proyecto</h3>
+           <h3>ProyeXto</h3>
          </header>
+         <div className="row">
+                 <div className="col-md-11">
+         <div className="box box-solid">
+                     <div className="box-header">
+                       
 
-         <ul>
-           {this.renderProjects()}
-         </ul>
+                         <div className="box-body no-padding">
+                            <table className="table table-bordered">
+                              <tr>
+                                <th>Código</th>
+                                <th>Proyecto</th>
+                              </tr>
+
+                                 {this.renderProjects()}
+
+
+                            </table>
+                          </div>
+          </div>
+         </div>
+
+       </div>
+       </div>
        </div>
      );
    }

@@ -11,7 +11,7 @@ import Dashboard from '../../ui/components/dashboard/dashboard';
 import Statistics from '../../ui/components/dashboard/views/statistics/statistics';
 import { NotFound } from '../../ui/pages/not_found/not_found';
 import ListaTarea from '../../ui/components/ListaTarea/ListaTarea';
-//import ProjectList from '../../ui/components/ProjectList/ProjectList';
+import ProjectList from '../../ui/components/ProjectList/ProjectList';
 
 
 export const requireAuth = (nextState, replace) => {
@@ -30,7 +30,7 @@ export const Routes = () => (
       <Route path="sign-in" name="signIn" component={SignIn} />
       <Route path="sign-up" name="signUp" component={SignUp} />
       <Route path="dashboard" name="dashboard" component={Dashboard} onEnter={requireAuth}>
-        <Route path="statistics" name="statistics" component={Statistics} />
+        <Route path="projects" name="projects" component={ProjectList} />
         <Route path="tasks" name="tasks" component={ListaTarea} />
 
       </Route>

@@ -4,7 +4,11 @@ import React, { Component, PropTypes } from 'react';
 export default class Project extends Component {
   render() {
     return (
-      <li>{this.props.project.text}</li>
+      <tr>
+      <td>dddd</td>
+      <td>{this.props.project.text}</td>
+    </tr>
+
     );
   }
 }
