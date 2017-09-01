@@ -17,16 +17,16 @@ class ProjectList extends Component {
      return (
        <div className="container">
          <header>
-           <h3>ProyeXto</h3>
+           <h3>Tus Proyectos</h3>
          </header>
          <div className="row">
                  <div className="col-md-11">
          <div className="box box-solid">
                      <div className="box-header">
-                       
+
 
                          <div className="box-body no-padding">
-                            <table className="table table-bordered">
+                            <table className="table">
                               <tr>
                                 <th>Código</th>
                                 <th>Proyecto</th>
