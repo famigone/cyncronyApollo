@@ -13,6 +13,7 @@ import { NotFound } from '../../ui/pages/not_found/not_found';
 import ListaTarea from '../../ui/components/ListaTarea/ListaTarea';
 import ProjectList from '../../ui/components/ProjectList/ProjectList';
 import ProjectNew from '../../ui/components/ProjectNew/ProjectNew';
+import ProjectInsert from '../../ui/components/ProjectNew/ProjectInsert';
 
 export const requireAuth = (nextState, replace) => {
   // No user is authenticated redirect ro index
@@ -32,7 +33,9 @@ export const Routes = () => (
       <Route path="dashboard" name="dashboard" component={Dashboard} onEnter={requireAuth}>
         <Route path="projects" name="projects" component={ProjectList} />
         <Route path="projectnew" name="projectnew" component={ProjectNew} />
+        <Route path="projectinsert" name="projectinsert" component={ProjectInsert} />
         <Route path="tasks" name="tasks" component={ListaTarea} />
+
       </Route>
     </Route>
     <Route path="*" name="not-found" component={NotFound} />
