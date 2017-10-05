@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component} from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Projects } from '/imports/api/projects.js';
 import Insert from './Insert.jsx';
 import ProjectForm from './ProjectForm.jsx';
+import ProjectFormUpdate from './ProjectFormUpdate.jsx';
 import ReactDOM from 'react-dom';
-
+import PropTypes from 'prop-types'; // ES6
 class ProjectInsert extends Component {
 
   renderProjects() {
@@ -15,13 +16,16 @@ class ProjectInsert extends Component {
 
    renderForm() {
      return (
-       <ProjectForm>
-
-       </ProjectForm>
-
-
-     )
+       <ProjectForm/>
+       )
    }
+renderUpdate() {
+     return (
+
+       <ProjectFormUpdate key1="002"/>
+       )
+   }
+
 
 renderTabla(){
   return(
@@ -63,6 +67,7 @@ renderTabla(){
             </section>
                  {this.renderForm()}
                  {this.renderTabla()}
+                 {this.renderUpdate()}
          </div>
       </div>
      );
