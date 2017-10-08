@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import ReactDOM from 'react-dom';
 import { Projects } from '/imports/api/projects.js';
 import PropTypes from 'prop-types'; // ES6
-
+import { withTracker } from 'meteor/react-meteor-data';
 
 // Task component - represents a single todo item
 export default class ProjectFormUpdate extends Component {
@@ -23,7 +23,7 @@ export default class ProjectFormUpdate extends Component {
      /*ReactDOM.findDOMNode(this.refs.codigoInput).value = '';
      ReactDOM.findDOMNode(this.refs.nombreInput).value = '';
      */
-     console.log("modificaaaaaaaaaaaaa")
+     
      this.setState({
       codigo: ReactDOM.findDOMNode(this.refs.codigoInput).value.trim(),
       nombre: ReactDOM.findDOMNode(this.refs.nombreInput).value.trim()
@@ -32,7 +32,7 @@ export default class ProjectFormUpdate extends Component {
    }
   
   handleSubmit(event){
-    console.log("submitióooooooooooo")
+
      this.setState({
       codigo: ReactDOM.findDOMNode(this.refs.codigoInput).value.trim(),
       nombre: ReactDOM.findDOMNode(this.refs.nombreInput).value.trim()
@@ -43,16 +43,19 @@ export default class ProjectFormUpdate extends Component {
 
     constructor(props) {
     super(props);
-    /*console.log("entro a constructor")
+//    var Projectxxx = Meteor.subscribe("projects");    
+//    var unId = this.props.key1;
+//    var unProj = Projects.findOne("qhZ8fHk54ntyguRqz");
     
-    unProj: subscription.findOne({codigo: this.props.key1})*/  
-/*    var subscription = Meteor.subscribe("projects");
-    unProj: Projects.find({"codigo":this.props.key1}),  */
+    
+
     this.state = {      
       codigo: this.props.key1,
-      nombre: "unNombre" ,
+      nombre: this.props.key1 ,
     
     };
+
+    
   }
 
   render() {
@@ -69,7 +72,7 @@ export default class ProjectFormUpdate extends Component {
                                 type="text"
                                 ref="codigoInput"
                                 placeholder="Código del Proyecto"
-                                value = {this.state.codigo}
+                                value = {this.props.key1}
                                 onChange = {this.handleUpdate.bind(this)}
                               />
                           </div>
@@ -79,7 +82,7 @@ export default class ProjectFormUpdate extends Component {
                                 type="text"
                                 ref="nombreInput"
                                 placeholder="Título"
-                                value = {this.state.nombre}
+                                value = {this.props.elProject}
                                 onChange = {this.handleUpdate.bind(this)}
                               />
                            </div>
@@ -101,7 +104,7 @@ export default class ProjectFormUpdate extends Component {
 ProjectFormUpdate.propTypes = {
   // This component gets the task to display through a React prop.
   // We can use propTypes to indicate it is required
-  key1: PropTypes.string.isRequired, 
+  elProject: React.PropTypes.string, 
 };
 
 /*export default createContainer(({resumeId}) => {

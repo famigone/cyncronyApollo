@@ -4,13 +4,34 @@ import { Projects } from '/imports/api/projects.js';
 import Insert from './Insert.jsx';
 import ProjectForm from './ProjectForm.jsx';
 import ProjectFormUpdate from './ProjectFormUpdate.jsx';
+import ProjectFormUpdateContainer from './ProjectFormUpdateContainer.jsx';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
 class ProjectInsert extends Component {
 
+ constructor(props) {
+    super(props);
+    this.state = {      
+      pid: "qhZ8fHk54ntyguRqz",      
+    
+    };
+  }
+
+  onChildChanged(newState){
+    this.setState({
+      pid:newState
+    });
+    console.log(this.state.pid)
+
+  }
+
   renderProjects() {
      return this.props.projects.map((project) => (
-       <Insert key={project._id} project={project} />
+       <Insert 
+          key={project._id} 
+          project={project} 
+          callbackParent={(newState) => this.onChildChanged(newState) }
+      />
      ));
    }
 
@@ -19,10 +40,11 @@ class ProjectInsert extends Component {
        <ProjectForm/>
        )
    }
-renderUpdate() {
+
+renderUpdate(pid) {
      return (
 
-       <ProjectFormUpdate key1="002"/>
+       <ProjectFormUpdateContainer key1={pid}/>
        )
    }
 
@@ -67,7 +89,7 @@ renderTabla(){
             </section>
                  {this.renderForm()}
                  {this.renderTabla()}
-                 {this.renderUpdate()}
+                 {this.renderUpdate(this.state.pid)}
          </div>
       </div>
      );
@@ -77,7 +99,8 @@ renderTabla(){
 
  ProjectInsert.propTypes = {
 
-   projects: PropTypes.array.isRequired,
+   projects: React.PropTypes.array,
+   
  };
 
  export default createContainer(() => {

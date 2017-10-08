@@ -2,6 +2,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import PropTypes from 'prop-types'; // ES6
 
 import Index from '../../ui/components/index';
 import Home from '../../ui/components/home';
