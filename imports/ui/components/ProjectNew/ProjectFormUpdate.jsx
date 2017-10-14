@@ -43,6 +43,7 @@ export default class ProjectFormUpdate extends Component {
 
     constructor(props) {
     super(props);
+    
 //    var Projectxxx = Meteor.subscribe("projects");    
 //    var unId = this.props.key1;
 //    var unProj = Projects.findOne("qhZ8fHk54ntyguRqz");
@@ -59,6 +60,11 @@ export default class ProjectFormUpdate extends Component {
   }
 
   render() {
+    const { oneProject, isLoading } = this.props;
+    if (!isLoading){
+      var unnombre = oneProject.nombre
+      var uncodigo = oneProject.codigo
+    
     
     return (
       <div className="col-xs-11">
@@ -72,7 +78,7 @@ export default class ProjectFormUpdate extends Component {
                                 type="text"
                                 ref="codigoInput"
                                 placeholder="Código del Proyecto"
-                                value = {this.props.key1}
+                                value = {oneProject.codigo}
                                 onChange = {this.handleUpdate.bind(this)}
                               />
                           </div>
@@ -82,7 +88,7 @@ export default class ProjectFormUpdate extends Component {
                                 type="text"
                                 ref="nombreInput"
                                 placeholder="Título"
-                                value = {this.props.elProject}
+                                value = {this.props.oneProject.nombre }
                                 onChange = {this.handleUpdate.bind(this)}
                               />
                            </div>
@@ -99,12 +105,14 @@ export default class ProjectFormUpdate extends Component {
 
     );
   }
-}
+  else {return (<div></div>);}
+}}
 
 ProjectFormUpdate.propTypes = {
   // This component gets the task to display through a React prop.
   // We can use propTypes to indicate it is required
-  elProject: React.PropTypes.string, 
+  oneProject: React.PropTypes.object,   
+  isLoading: React.PropTypes.bool, 
 };
 
 /*export default createContainer(({resumeId}) => {

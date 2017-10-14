@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { createContainer } from 'meteor/react-meteor-data';
+//import { createContainer } from 'meteor/react-meteor-data';
 import { Projects } from '/imports/api/projects.js';
 import Insert from './Insert.jsx';
 import ProjectForm from './ProjectForm.jsx';
@@ -7,11 +7,13 @@ import ProjectFormUpdate from './ProjectFormUpdate.jsx';
 import ProjectFormUpdateContainer from './ProjectFormUpdateContainer.jsx';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
+import { withTracker } from 'meteor/react-meteor-data';
 class ProjectInsert extends Component {
 
  constructor(props) {
     super(props);
-    this.state = {      
+      
+    this.state = {        
       pid: "qhZ8fHk54ntyguRqz",      
     
     };
@@ -21,7 +23,9 @@ class ProjectInsert extends Component {
     this.setState({
       pid:newState
     });
-    console.log(this.state.pid)
+    Meteor.subscribe('projects')
+    let elPro = Projects.findOne(newState);
+    console.log(elPro.nombre)
 
   }
 
@@ -103,9 +107,19 @@ renderTabla(){
    
  };
 
- export default createContainer(() => {
+ /*export default createContainer(() => {
    Meteor.subscribe('projects');
    return {
      projects: Projects.find({}, { sort: { createdAt: -1 } }).fetch(),
    };
  }, ProjectInsert);
+*/
+
+export default withTracker(() => {
+  const todosHandle = Meteor.subscribe('projects');
+  
+  return {
+     projects: Projects.find({}, { sort: { createdAt: -1 } }).fetch(),
+   };
+  
+})(ProjectInsert);
