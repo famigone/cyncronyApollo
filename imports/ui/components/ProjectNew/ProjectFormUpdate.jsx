@@ -6,66 +6,60 @@ import { withTracker } from 'meteor/react-meteor-data';
 
 // Task component - represents a single todo item
 export default class ProjectFormUpdate extends Component {
-  handleUpdate(event) {
-     event.preventDefault();
 
-     // Find the text field via the React ref
-     /*const codigo = ReactDOM.findDOMNode(this.refs.codigoInput).value.trim();
-     const nombre = ReactDOM.findDOMNode(this.refs.nombreInput).value.trim();
-
-     Projects.insert({
-       codigo,
-       nombre,
-       createdAt: new Date(), // current time
-     });
-     */
-     // Clear form
-     /*ReactDOM.findDOMNode(this.refs.codigoInput).value = '';
-     ReactDOM.findDOMNode(this.refs.nombreInput).value = '';
-     */
-     
-     this.setState({
-      codigo: ReactDOM.findDOMNode(this.refs.codigoInput).value.trim(),
-      nombre: ReactDOM.findDOMNode(this.refs.nombreInput).value.trim()
-    });
-
-   }
   
   handleSubmit(event){
-
-     this.setState({
-      codigo: ReactDOM.findDOMNode(this.refs.codigoInput).value.trim(),
-      nombre: ReactDOM.findDOMNode(this.refs.nombreInput).value.trim()
-    });
+        event.preventDefault();
+        event.stopPropagation();
+      // Here we do a "direct update" from the client instead of using a method
+    const inputValues = {
+      codigo: this.refs.codigoInput.value,
+      nombre: this.refs.nombreInput.value,      
+    }
+    Projects.update({_id: this.props.oneProject._id}, {$set: inputValues}, (error, response) => {
+      if (error) {
+        console.log(error)
+      }
+      
+    })
 
   }
 
 
     constructor(props) {
-    super(props);
-    
-//    var Projectxxx = Meteor.subscribe("projects");    
-//    var unId = this.props.key1;
-//    var unProj = Projects.findOne("qhZ8fHk54ntyguRqz");
-    
-    
+        super(props);        
+        if (!props.isLoading){
+        this.state = {      
+          codigo: props.oneProject.codigo,
+          nombre: props.oneProject.nombre}       
+        }
+        else{
+          this.state = {      
+          codigo: '',
+          nombre: ''}    
+        }  
+      }
 
-    this.state = {      
-      codigo: this.props.key1,
-      nombre: this.props.key1 ,
-    
-    };
 
-    
-  }
+
+componentWillReceiveProps(nextProps){
+   if (!this.props.isLoading){        
+        this.state = {      
+          codigo: nextProps.oneProject.codigo,
+          nombre: nextProps.oneProject.nombre}       
+        } 
+}
 
   render() {
-    const { oneProject, isLoading } = this.props;
-    if (!isLoading){
-      var unnombre = oneProject.nombre
-      var uncodigo = oneProject.codigo
-    
-    
+
+   const { oneProject, isLoading } = this.props;
+
+  if (isLoading) {
+    return (
+      <div>isLoading == true</div>
+    )
+  }
+
     return (
       <div className="col-xs-11">
        <div className="box box-solid">
@@ -78,8 +72,8 @@ export default class ProjectFormUpdate extends Component {
                                 type="text"
                                 ref="codigoInput"
                                 placeholder="Código del Proyecto"
-                                value = {oneProject.codigo}
-                                onChange = {this.handleUpdate.bind(this)}
+                                value = {this.state.codigo}                                
+                                onChange={(event) => this.setState({codigo: event.target.value})}
                               />
                           </div>
                           <div className="col-xs-6">
@@ -88,8 +82,8 @@ export default class ProjectFormUpdate extends Component {
                                 type="text"
                                 ref="nombreInput"
                                 placeholder="Título"
-                                value = {this.props.oneProject.nombre }
-                                onChange = {this.handleUpdate.bind(this)}
+                                value = {this.state.nombre}
+                                onChange={(event) => this.setState({nombre: event.target.value})}
                               />
                            </div>
                 </div>
@@ -97,7 +91,7 @@ export default class ProjectFormUpdate extends Component {
 
         </div>
         <div className="box-footer">
-        <button type="submit" className="btn btn-sm btn-primary btn-flat">Guardar</button>
+        <button type="submit" onSubmit={this.handleSubmit.bind(this)} className="btn btn-sm btn-primary btn-flat">Guardar</button>
         </div>
         </form>
      </div>
@@ -105,19 +99,11 @@ export default class ProjectFormUpdate extends Component {
 
     );
   }
-  else {return (<div></div>);}
-}}
+ 
+}
 
 ProjectFormUpdate.propTypes = {
-  // This component gets the task to display through a React prop.
-  // We can use propTypes to indicate it is required
   oneProject: React.PropTypes.object,   
   isLoading: React.PropTypes.bool, 
 };
 
-/*export default createContainer(({resumeId}) => {
-  Meteor.subscribe('updateResume', resumeId)  
-  const resume = Resumes.findOne(resumeId)
-  return { resume, isLoading }
-}, Update)
- */

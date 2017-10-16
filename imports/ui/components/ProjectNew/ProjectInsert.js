@@ -14,7 +14,7 @@ class ProjectInsert extends Component {
     super(props);
       
     this.state = {        
-      pid: "qhZ8fHk54ntyguRqz",      
+      pid: "",      
     
     };
   }
@@ -25,7 +25,7 @@ class ProjectInsert extends Component {
     });
     Meteor.subscribe('projects')
     let elPro = Projects.findOne(newState);
-    console.log(elPro.nombre)
+    //console.log(elPro.nombre)
 
   }
 
