@@ -1,15 +1,18 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'; // ES6
 
-const CallOutMessage = ({ title, description }) => (
-  <div className="callout callout-danger">
+const CallOutMessage = ({ title, description, color }) => (
+  
+  <div className={color}>
     {title && <h4>{title}</h4>}
     <p>{description}</p>
   </div>
 );
 
 CallOutMessage.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
+  title: React.PropTypes.string,
+  description:React.PropTypes.string,
+  color: React.PropTypes.string,
 };
 
 export default CallOutMessage;
