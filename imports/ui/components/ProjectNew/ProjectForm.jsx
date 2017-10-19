@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Projects } from '/imports/api/projects.js';
 
+
 // Task component - represents a single todo item
 export default class ProjectForm extends Component {
   handleSubmit(event) {
@@ -11,11 +12,23 @@ export default class ProjectForm extends Component {
      const codigo = ReactDOM.findDOMNode(this.refs.codigoInput).value.trim();
      const nombre = ReactDOM.findDOMNode(this.refs.nombreInput).value.trim();
 
-     Projects.insert({
+     const jecto = {codigo:codigo, nombre:nombre}
+     //console.log(Projects.schema.validate(jecto))
+/*     Projects.insert({
        codigo,
        nombre,
-       createdAt: new Date(), // current time
+       //createdAt: new Date(), // current time
      });
+*/
+
+ 
+   Meteor.call('projects.insert', jecto, (error, response) => {
+      if (error) {
+        console.log(error)
+      }
+    })
+
+
 
      // Clear form
      ReactDOM.findDOMNode(this.refs.codigoInput).value = '';
