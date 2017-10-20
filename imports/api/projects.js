@@ -17,7 +17,7 @@ Projects.allow({
 
     });
 
-
+/*
 Projects.attachSchema({
   nombre: {
     type: String,    
@@ -36,6 +36,7 @@ Projects.attachSchema({
         autoValue: function(){ return new Date() }
     },
 })
+*/
 
 if (Meteor.isServer) {
   // This code only runs on the server

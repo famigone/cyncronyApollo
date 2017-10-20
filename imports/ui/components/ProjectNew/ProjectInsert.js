@@ -7,13 +7,14 @@ import ProjectFormUpdate from './ProjectFormUpdate.jsx';
 import ProjectFormUpdateContainer from './ProjectFormUpdateContainer.jsx';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
+
 class ProjectInsert extends Component {
 
  constructor(props) {
     super(props);
     this.state = {      
-      pid: "qhZ8fHk54ntyguRqz",      
-    
+      pid: "",
+   
     };
   }
 
@@ -47,16 +48,17 @@ renderUpdate(pid) {
    }
 
 
+
 renderTabla(){
   return(
     <div className="col-md-11">
 <div className="box box-solid">
         <div className="box-header">
 
-
+      
 
             <div className="box-body table-responsive no-padding">
-            <table className="table table-hover">
+             <table className="table table-hover">
                <tbody>
                  <tr>
                    <th>Código</th>

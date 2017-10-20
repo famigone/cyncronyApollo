@@ -12,12 +12,13 @@ import { Projects } from '../../imports/api/projects.js'
 
 Meteor.methods({
   'projects.insert':function ({ codigo, nombre }) {
+  	codigo = Number(codigo)
     new SimpleSchema({
   nombre: {
     type: String,    
   },
   codigo: {
-    type: String,    
+    type: Number,    
   },
   createdBy: {
         type: String,
