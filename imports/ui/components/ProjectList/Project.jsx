@@ -1,4 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component} from 'react';
+import PropTypes from 'prop-types'; // ES6
+import { withTracker } from 'meteor/react-meteor-data';
 
 // Task component - represents a single todo item
 export default class Project extends Component {
@@ -16,5 +18,5 @@ export default class Project extends Component {
 Project.propTypes = {
   // This component gets the task to display through a React prop.
   // We can use propTypes to indicate it is required
-  project: PropTypes.object.isRequired,
+  project: React.PropTypes.object.isRequired,
 };

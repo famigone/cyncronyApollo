@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'; // ES6
+import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router';
 
 const SideBarMenu = ({ userCount }) => (
@@ -35,7 +37,7 @@ const SideBarMenu = ({ userCount }) => (
 );
 
 SideBarMenu.propTypes = {
-  userCount: PropTypes.number,
+  userCount: React.PropTypes.number,
 };
 
 export default SideBarMenu;

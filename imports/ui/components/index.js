@@ -1,8 +1,10 @@
 /* eslint-disable import/no-unresolved */
 import { Meteor } from 'meteor/meteor';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import Loading from '../layouts/loading/loading';
+import PropTypes from 'prop-types'; // ES6
+import { withTracker } from 'meteor/react-meteor-data';
 
 class Index extends Component {
   /**
@@ -31,8 +33,8 @@ class Index extends Component {
 }
 
 Index.propTypes = {
-  children: PropTypes.object,
-  currentUser: PropTypes.object,
+  children: React.PropTypes.object,
+  currentUser: React.PropTypes.object,
 };
  
 export default createContainer(() => ({

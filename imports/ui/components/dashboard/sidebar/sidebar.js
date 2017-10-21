@@ -1,4 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'; // ES6
+import { withTracker } from 'meteor/react-meteor-data';
 
 import SideBarUserPanel from './sidebar_user_panel';
 import SideBarSearchPanel from './sidebar_search_panel';
@@ -30,6 +32,6 @@ export default class SideBar extends Component {
 }
 
 SideBar.propTypes = {
-  user: PropTypes.object,
-  users: PropTypes.array,
+  user: React.PropTypes.object,
+  users: React.PropTypes.array,
 };

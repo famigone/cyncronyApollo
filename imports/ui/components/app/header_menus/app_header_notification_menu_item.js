@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
-
+//import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'; // ES6
 const AppHeaderNotificationMenuItem = ({ classNames, message }) => (
   <li>
     <a href="#">
@@ -9,8 +10,8 @@ const AppHeaderNotificationMenuItem = ({ classNames, message }) => (
 );
 
 AppHeaderNotificationMenuItem.propTypes = {
-  classNames: PropTypes.string,
-  message: PropTypes.string,
+  classNames: React.PropTypes.string,
+  message: React.PropTypes.string,
 };
 
 export default AppHeaderNotificationMenuItem;

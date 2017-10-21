@@ -1,4 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component} from 'react';
+import PropTypes from 'prop-types'; // ES6
+import { withTracker } from 'meteor/react-meteor-data';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Tasks } from '/imports/api/tasks.js';
 import Task from './Task.jsx';
@@ -30,7 +32,7 @@ class ListaTarea extends Component {
 
  ListaTarea.propTypes = {
 
-   tasks: PropTypes.array.isRequired,
+   tasks: React.PropTypes.array.isRequired,
  };
 
  export default createContainer(() => {

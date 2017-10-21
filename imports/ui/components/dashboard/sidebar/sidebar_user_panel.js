@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'; // ES6
+import { withTracker } from 'meteor/react-meteor-data';
 
 const SideBarUserPanel = ({ userName }) => (
   <div className="user-panel">
@@ -13,7 +15,7 @@ const SideBarUserPanel = ({ userName }) => (
 );
 
 SideBarUserPanel.propTypes = {
-  userName: PropTypes.string,
+  userName: React.PropTypes.string,
 };
 
 export default SideBarUserPanel;

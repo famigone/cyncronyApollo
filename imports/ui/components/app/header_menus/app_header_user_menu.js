@@ -1,6 +1,8 @@
 /* eslint-disable import/no-unresolved */
 import { Meteor } from 'meteor/meteor';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'; // ES6
+import { withTracker } from 'meteor/react-meteor-data';
 import { browserHistory } from 'react-router';
 
 export default class AppHeaderUserMenu extends Component {
@@ -78,5 +80,5 @@ export default class AppHeaderUserMenu extends Component {
 }
 
 AppHeaderUserMenu.propTypes = {
-  user: PropTypes.object,
+  user: React.PropTypes.object,
 };

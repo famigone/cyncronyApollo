@@ -1,6 +1,8 @@
 /* eslint-disable import/no-unresolved */
 import { Meteor } from 'meteor/meteor';
-import React, { Component, PropTypes } from 'react';
+import React, { Component} from 'react';
+import PropTypes from 'prop-types'; // ES6
+import { withTracker } from 'meteor/react-meteor-data';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import SideBar from './sidebar/sidebar';
@@ -37,9 +39,9 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  children: PropTypes.object,
-  currentUser: PropTypes.object,
-  users: PropTypes.arrayOf(PropTypes.object),
+  children: React.PropTypes.object,
+  currentUser: React.PropTypes.object,
+  users: React.PropTypes.arrayOf(PropTypes.object),
 };
 
 export default createContainer(() => {

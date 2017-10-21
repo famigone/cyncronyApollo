@@ -1,4 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'; // ES6
+import { withTracker } from 'meteor/react-meteor-data';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Projects } from '/imports/api/projects.js';
 import Project from './Project.jsx';
@@ -50,7 +52,7 @@ class ProjectList extends Component {
 
  ProjectList.propTypes = {
 
-   projects: PropTypes.array.isRequired,
+   projects: React.PropTypes.array.isRequired,
  };
 
  export default createContainer(() => {
