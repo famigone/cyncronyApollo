@@ -3,42 +3,55 @@ import ReactDOM from 'react-dom';
 import { Projects } from '/imports/api/projects.js';
 import PropTypes from 'prop-types'; // ES6
 import { withTracker } from 'meteor/react-meteor-data';
+import CallOutMessage from '../warnings/callout_message';
+import  '../../layouts/loading/loading.css';
+import LoadingSpinner from '../controls/LoadingSpinner';
 
 // Task component - represents a single todo item
 export default class ProjectFormUpdate extends Component {
-
-  
-  handleSubmit(event){
-        event.preventDefault();
-        event.stopPropagation();
-      // Here we do a "direct update" from the client instead of using a method
-    const inputValues = {
-      codigo: this.refs.codigoInput.value,
-      nombre: this.refs.nombreInput.value,      
-    }
-    Projects.update({_id: this.props.oneProject._id}, {$set: inputValues}, (error, response) => {
-      if (error) {
-        console.log(error)
-      }
-      
-    })
-
-  }
-
-
     constructor(props) {
         super(props);        
         if (!props.isLoading){
         this.state = {      
           codigo: props.oneProject.codigo,
-          nombre: props.oneProject.nombre}       
+          nombre: props.oneProject.nombre,
+          exito: false
+                      }       
+          
         }
         else{
           this.state = {      
           codigo: '',
-          nombre: ''}    
-        }  
+          nombre: '',
+          exito: false}    
+        }          
       }
+  
+  handleSubmit(event){
+        event.preventDefault();
+      //  event.stopPropagation();
+      
+     
+    
+    const inputValues = {
+      codigo: this.refs.codigoInput.value,
+      nombre: this.refs.nombreInput.value,      
+    }
+
+    let unexito = Projects.update({_id: this.props.oneProject._id}, {$set: inputValues}, (error, response) => {if (error) {console.log(error)}});   
+    
+    this.setState({exito:unexito})
+
+    
+  }
+
+
+
+  mostrarExito(){
+    if (this.state.exito) message = <CallOutMessage description="Actualización Correcta" color="callout callout-success"/>;
+    else message = <CallOutMessage description="Por favor, seleccione un proyecto" color="callout callout-info"/>;
+    return  message;
+  }
 
 
 
@@ -46,7 +59,8 @@ componentWillReceiveProps(nextProps){
    if (!this.props.isLoading){        
         this.state = {      
           codigo: nextProps.oneProject.codigo,
-          nombre: nextProps.oneProject.nombre}       
+          nombre: nextProps.oneProject.nombre,
+          exito: this.state.exito}       
         } 
 }
 
@@ -54,15 +68,16 @@ componentWillReceiveProps(nextProps){
 
    const { oneProject, isLoading } = this.props;
 
-  if (isLoading) {
+  if (isLoading) {    
     return (
-      <div>isLoading == true</div>
+      <LoadingSpinner/>
     )
   }
 
     return (
       <div className="col-xs-11">
        <div className="box box-solid">
+       {this.mostrarExito()}       
          <form className="form" onSubmit={this.handleSubmit.bind(this)} >
          <div className="box-body">
                   <div className="row">
@@ -105,5 +120,6 @@ componentWillReceiveProps(nextProps){
 ProjectFormUpdate.propTypes = {
   oneProject: React.PropTypes.object,   
   isLoading: React.PropTypes.bool, 
+  
 };
 

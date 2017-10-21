@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-//import { createContainer } from 'meteor/react-meteor-data';
+import { createContainer } from 'meteor/react-meteor-data';
 import { Projects } from '/imports/api/projects.js';
 import Insert from './Insert.jsx';
 import ProjectForm from './ProjectForm.jsx';
@@ -7,26 +7,21 @@ import ProjectFormUpdate from './ProjectFormUpdate.jsx';
 import ProjectFormUpdateContainer from './ProjectFormUpdateContainer.jsx';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
-import { withTracker } from 'meteor/react-meteor-data';
+
 class ProjectInsert extends Component {
 
  constructor(props) {
     super(props);
-      
-    this.state = {        
-      pid: "",      
-    
+    this.state = {      
+      pid: "",
+   
     };
   }
 
   onChildChanged(newState){
     this.setState({
       pid:newState
-    });
-    Meteor.subscribe('projects')
-    let elPro = Projects.findOne(newState);
-    //console.log(elPro.nombre)
-
+    });    
   }
 
   renderProjects() {
@@ -53,16 +48,17 @@ renderUpdate(pid) {
    }
 
 
+
 renderTabla(){
   return(
     <div className="col-md-11">
 <div className="box box-solid">
         <div className="box-header">
 
-
+      
 
             <div className="box-body table-responsive no-padding">
-            <table className="table table-hover">
+             <table className="table table-hover">
                <tbody>
                  <tr>
                    <th>Código</th>
@@ -92,8 +88,9 @@ renderTabla(){
               </h3>
             </section>
                  {this.renderForm()}
-                 {this.renderTabla()}
                  {this.renderUpdate(this.state.pid)}
+                 {this.renderTabla()}
+                 
          </div>
       </div>
      );
@@ -107,19 +104,9 @@ renderTabla(){
    
  };
 
- /*export default createContainer(() => {
+ export default createContainer(() => {
    Meteor.subscribe('projects');
    return {
      projects: Projects.find({}, { sort: { createdAt: -1 } }).fetch(),
    };
  }, ProjectInsert);
-*/
-
-export default withTracker(() => {
-  const todosHandle = Meteor.subscribe('projects');
-  
-  return {
-     projects: Projects.find({}, { sort: { createdAt: -1 } }).fetch(),
-   };
-  
-})(ProjectInsert);

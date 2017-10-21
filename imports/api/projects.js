@@ -16,6 +16,28 @@ Projects.allow({
         }
 
     });
+
+/*
+Projects.attachSchema({
+  nombre: {
+    type: String,    
+  },
+  codigo: {
+    type: String,    
+  },
+  createdBy: {
+        type: String,
+        optional: true,
+        autoValue: function(){ return this.userId }
+    },
+  createdAt: {
+        type: Date,
+        optional: true,
+        autoValue: function(){ return new Date() }
+    },
+})
+*/
+
 if (Meteor.isServer) {
   // This code only runs on the server
   Meteor.publish('projects', function projectsPublication() {

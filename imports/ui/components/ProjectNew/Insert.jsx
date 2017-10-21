@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default class Insert extends Component {
   constructor({ initialChecked }) {
     super();
-   // this.state = { id: "qhZ8fHk54ntyguRqz" }
+    this.state = { id: "" }
   }
 
  onClick(newState) {
