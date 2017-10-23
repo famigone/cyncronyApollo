@@ -41,6 +41,6 @@ Projects.attachSchema({
 if (Meteor.isServer) {
   // This code only runs on the server
   Meteor.publish('projects', function projectsPublication() {
-    return Projects.find();
+    return Projects.find({}, { sort: { createdAt: -1 } });
   });
 }

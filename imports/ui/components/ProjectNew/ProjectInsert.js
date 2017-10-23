@@ -107,6 +107,6 @@ renderTabla(){
  export default createContainer(() => {
    Meteor.subscribe('projects');
    return {
-     projects: Projects.find({}, { sort: { createdAt: -1 } }).fetch(),
+     projects: Projects.find({}, { limit: 10, sort: { createdAt: -1 } }).fetch(),
    };
  }, ProjectInsert);
