@@ -15,6 +15,7 @@ import ListaTarea from '../../ui/components/ListaTarea/ListaTarea';
 import ProjectList from '../../ui/components/ProjectList/ProjectList';
 import ProjectNew from '../../ui/components/ProjectNew/ProjectNew';
 import ProjectInsert from '../../ui/components/ProjectNew/ProjectInsert';
+import App from '../../ui/components/Gantt/App';
 
 export const requireAuth = (nextState, replace) => {
   // No user is authenticated redirect ro index
@@ -32,7 +33,7 @@ export const Routes = () => (
       <Route path="sign-in" name="signIn" component={SignIn} />
       <Route path="sign-up" name="signUp" component={SignUp} />
       <Route path="dashboard" name="dashboard" component={Dashboard} onEnter={requireAuth}>
-        <Route path="projects" name="projects" component={ProjectList} />
+        <Route path="projects" name="projects" component={App} />
         <Route path="projectnew" name="projectnew" component={ProjectNew} />
         <Route path="projectinsert" name="projectinsert" component={ProjectInsert} />
         <Route path="tasks" name="tasks" component={ListaTarea} />

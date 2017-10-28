@@ -9,7 +9,7 @@ import SideBarMenu from './sidebar_menu';
 export default class SideBar extends Component {
   userDisplayName() {
     const currentUser = this.props.user;
-    let name = 'Alexander Pierce';
+    let name = 'Fedex';
 
     if (currentUser) {
       name = currentUser.emails[0].address;

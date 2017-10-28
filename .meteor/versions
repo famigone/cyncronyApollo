@@ -28,6 +28,7 @@ ddp-rate-limiter@1.0.7
 ddp-server@2.0.2
 deps@1.0.12
 dhtmlx:gantt@0.0.1
+dhtmlx:gantt-data@0.0.3
 diff-sequence@1.0.7
 dispatch:mocha@0.4.1
 dynamic-import@0.1.3
