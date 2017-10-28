@@ -7,8 +7,10 @@ import ProjectFormUpdate from './ProjectFormUpdate.jsx';
 import ProjectFormUpdateContainer from './ProjectFormUpdateContainer.jsx';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
+import TableProject from './TableProject.jsx';
 
-class ProjectInsert extends Component {
+
+export default class ProjectInsert extends Component {
 
  constructor(props) {
     super(props);
@@ -24,16 +26,7 @@ class ProjectInsert extends Component {
     });    
   }
 
-  renderProjects() {
-     return this.props.projects.map((project) => (
-       <Insert 
-          key={project._id} 
-          project={project} 
-          callbackParent={(newState) => this.onChildChanged(newState) }
-      />
-     ));
-   }
-
+  
    renderForm() {
      return (
        <ProjectForm/>
@@ -51,32 +44,8 @@ renderUpdate(pid) {
 
 renderTabla(){
   return(
-    <div className="col-md-11">
-<div className="box box-solid">
-        <div className="box-header">
-
-      
-
-            <div className="box-body table-responsive no-padding">
-             <table className="table table-hover">
-               <tbody>
-                 <tr>
-                   <th>Código</th>
-                   <th>Proyecto</th>
-                 </tr>
-
-                    {this.renderProjects()}
-
-               </tbody>
-               </table>
-             </div>
-</div>
-</div>
-
-</div>
-
-  )
-}
+    <TableProject callbackParent={(newState) => this.onChildChanged(newState) }/>
+  )}
    render() {
      return (
        <div className="container">
@@ -89,7 +58,7 @@ renderTabla(){
             </section>
                  {this.renderForm()}
                  {this.renderUpdate(this.state.pid)}
-                 {this.renderTabla()}
+                 {this.renderTabla()} 
                  
          </div>
       </div>
@@ -104,9 +73,10 @@ renderTabla(){
    
  };
 
- export default createContainer(() => {
+ /*export default createContainer(() => {
    Meteor.subscribe('projects');
    return {
-     projects: Projects.find({}, { sort: { createdAt: -1 } }).fetch(),
+     projects: Projects.find({}, { limit: 10, sort: { createdAt: -1 } }).fetch(),
    };
  }, ProjectInsert);
+*/
