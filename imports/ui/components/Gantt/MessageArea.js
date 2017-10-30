@@ -8,9 +8,9 @@ class MessageArea extends Component {
 
     return (
       <div className="message-area">
-        <ul>
-          {messages}
-        </ul>
+              <ul>
+                {messages}
+              </ul>
       </div>
     );
   }

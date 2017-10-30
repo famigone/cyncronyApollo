@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Gantt from './Gantt';
 import Toolbar from './Toolbar';
 import MessageArea from './MessageArea';
+import { Tasks } from '../../../api/tasks.js'
 import './App1.css';
 
 
@@ -48,10 +49,44 @@ class App extends Component {
 
   logTaskUpdate(id, mode, task) {
     let text = task && task.text ? ` (${task.text})`: '';
-    let message = `Task ${mode}: ${id} ${text}`;
-    this.addMessage(message);
-  }
+    //let message = `Task ${mode}: ${id} ${text}`;
+    //this.addMessage(message);
+    let message = 
+      ' Duración: '+ task.duration
+    + ' Nombre: '  + task.text 
+    + ' Inicio: '  + task.start_date 
+    + ' Id: '      + task.id 
+    + ' Avance: '  + task.progress 
+    + ' Padre: '   + task.parent 
+    + ' Modo: '    + mode  //inserted updated
+    //this.addMessage(message);
 
+    const taska = {      
+      nombre:task.text, 
+      inicio:task.start_date ,
+      duracion:task.duration ,
+      avance:task.progress ,
+      parentId:task.parent ,
+      orden:task.id 
+    }
+
+      Meteor.call('tasks.insert', taska, (error, response) => {      
+      if (error) {this.addMessage(error.reason)
+        console.log(error)}
+      else {this.addMessage("insertazo")}  
+    })
+
+  
+/*if (Tasks.insert({task})) {
+    this.addMessage("pinchooooooo")
+    console.log("pinchooooooo")
+  }
+else {
+  this.addMessage("insertazo")
+}  
+*/
+
+ }
   logLinkUpdate(id, mode, link) {
     let message = `Link ${mode}: ${id}`;
     if (link) {
