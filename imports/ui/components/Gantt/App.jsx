@@ -4,10 +4,18 @@ import Toolbar from './Toolbar';
 import MessageArea from './MessageArea';
 import './App1.css';
 
+
+
 let data = {
   data: [
     {id: 1, text: 'Task #1', start_date: '15-04-2017', duration: 3, progress: 0.6},
-    {id: 2, text: 'Task #2', start_date: '18-04-2017', duration: 3, progress: 0.4}
+    {id: 2, text: 'Task #2', start_date: '18-04-2017', duration: 4, progress: 0.4},
+    {id: 3, text: 'Task #1', start_date: '19-04-2017', duration: 6, progress: 0.6},
+    {id: 4, text: 'Task #2', start_date: '21-04-2017', duration: 7, progress: 0.4},
+    {id: 5, text: 'Task #1', start_date: '25-04-2017', duration: 2, progress: 0.6},
+    {id: 6, text: 'Task #2', start_date: '28-04-2017', duration: 9, progress: 0.4},
+    {id: 7, text: 'Task #1', start_date: '31-04-2017', duration: 3, progress: 0.6},
+    {id: 8, text: 'Task #2', start_date: '01-05-2017', duration: 5, progress: 0.4},
   ],
   links: [
     {id: 1, source: 1, target: 2, type: '0'}

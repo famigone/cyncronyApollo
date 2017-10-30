@@ -6,7 +6,7 @@ import 'dhtmlx-gantt/codebase/dhtmlxgantt.css';
 export default class Gantt extends Component {
   setZoom(value){
     switch (value){
-      case 'Hours':
+      case 'Horas':
         gantt.config.scale_unit = 'day';
         gantt.config.date_scale = '%d %M';
 
@@ -16,7 +16,7 @@ export default class Gantt extends Component {
           {unit:'hour', step:1, date:'%H'}
         ];
         break;
-      case 'Days':
+      case 'Dias':
         gantt.config.min_column_width = 70;
         gantt.config.scale_unit = "week";
         gantt.config.date_scale = "#%W";
@@ -25,7 +25,7 @@ export default class Gantt extends Component {
         ];
         gantt.config.scale_height = 60;
         break;
-      case 'Months':
+      case 'Meses':
         gantt.config.min_column_width = 70;
         gantt.config.scale_unit = "month";
         gantt.config.date_scale = "%F";
@@ -34,6 +34,15 @@ export default class Gantt extends Component {
           {unit:"week", step:1, date:"#%W"}
         ];
         break;
+      case 'Años':
+        gantt.config.min_column_width = 70;
+        gantt.config.scale_unit = "year";
+        gantt.config.date_scale = "%Y";
+        gantt.config.scale_height = 60;
+        gantt.config.subscales = [
+          {unit:"month", step:1, date:"#%M"}
+        ];
+        break;  
       default:
         break;
     }
