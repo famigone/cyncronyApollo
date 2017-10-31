@@ -27,7 +27,8 @@ return Tasks.insert({
       duracion, 
       avance, 
       parentId, 
-      orden
+      orden, 
+
 
      });
 

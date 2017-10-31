@@ -48,6 +48,7 @@ class App extends Component {
   }
 
   logTaskUpdate(id, mode, task) {
+
     let text = task && task.text ? ` (${task.text})`: '';
     //let message = `Task ${mode}: ${id} ${text}`;
     //this.addMessage(message);
@@ -58,16 +59,18 @@ class App extends Component {
     + ' Id: '      + task.id 
     + ' Avance: '  + task.progress 
     + ' Padre: '   + task.parent 
-    + ' Modo: '    + mode  //inserted updated
-    //this.addMessage(message);
+    + ' Modo: '    + mode  //inserted updated deleted
+
+
+    this.addMessage(message);
 
     const taska = {      
       nombre:task.text, 
       inicio:task.start_date ,
-      duracion:task.duration ,
-      avance:task.progress ,
-      parentId:task.parent ,
-      orden:task.id 
+      duracion:Number(task.duration) ,
+      avance:Number(task.progress) ,
+      parentId:Number(task.parent) ,
+      orden:Number(task.id) 
     }
 
       Meteor.call('tasks.insert', taska, (error, response) => {      

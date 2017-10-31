@@ -45,8 +45,8 @@ Tasks.schema = new SimpleSchema({
   inicio: { type: Date },
   duracion: { type: Number },
   //projectId: { type: String, regEx: SimpleSchema.RegEx.Id },
-  avance: { type: Number, defaultValue: 0 },
-  parentId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true }, //padre
+  avance: { type: Number, decimal: true, defaultValue: 0, optional: true},
+  parentId: { type: Number, optional: true }, //padre
   activo: { type: Boolean, defaultValue: true }, //borrado lógico
   orden: { type: Number }, //id interno del componente
   createdBy: {
