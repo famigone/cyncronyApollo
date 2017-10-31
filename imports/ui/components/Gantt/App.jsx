@@ -4,6 +4,8 @@ import Toolbar from './Toolbar';
 import MessageArea from './MessageArea';
 import { Tasks } from '../../../api/tasks.js'
 import './App1.css';
+import Alert from 'react-s-alert';
+
 
 
 
@@ -62,7 +64,7 @@ class App extends Component {
     + ' Modo: '    + mode  //inserted updated deleted
 
 
-    this.addMessage(message);
+    //this.addMessage(message);
 
     const taska = {      
       nombre:task.text, 
@@ -72,12 +74,60 @@ class App extends Component {
       parentId:Number(task.parent) ,
       orden:Number(task.id) 
     }
+    var alerta= ''; 
+    switch(mode) { 
+        case 'inserted': { 
+          Meteor.call('tasks.insert', taska, (error, response) => {      
+           alerta = "La tarea se agregó correactamente" 
+          /*if (error) {this.addMessage(error.reason)
+            console.log(error)}
+          else {this.addMessage("La Tarea se agregado correctamente")}  */
+          if (error) {alerta= error.reason}
+          else {alerta = "La tarea fue agregada"}    
+          })
+          Alert.info("La tarea fue agregada!", {
+            position: 'bottom-right',
+            effect: 'scale',
+            //onShow: function () {//console.log('aye!')},
+            beep: false,
+            timeout: 3000,
+            offset: 0
+        });
+        break; 
+        } 
+        case 'updated': {          
+          Meteor.call('tasks.insert', taska, (error, response) => {                
+          if (error) {alerta= error.reason}
+          else {alerta = "La tarea fue modificada"}    
+          })
+            Alert.info("La tarea fue modificada!", {
+            position: 'bottom-right',
+            effect: 'scale',
+            //onShow: function () {//console.log('aye!')},
+            beep: false,
+            timeout: 3000,
+            offset: 0
+        });
+        break;  
+        }  
+        case 'deleted': {
+          Meteor.call('tasks.insert', taska, (error, response) => {      
+          if (error) {alerta= error.reason}
+          else {alerta = "La tarea se fue eliminada"}    
+          })
+          Alert.info("La tarea fue eliminada!", {
+            position: 'bottom-right',
+            effect: 'scale',
+            //onShow: function () {//console.log('aye!')},
+            beep: false,
+            timeout: 3000,
+            offset: 0
+        });
+        break;  
+        }        
+    }
 
-      Meteor.call('tasks.insert', taska, (error, response) => {      
-      if (error) {this.addMessage(error.reason)
-        console.log(error)}
-      else {this.addMessage("insertazo")}  
-    })
+     
 
   
 /*if (Tasks.insert({task})) {
@@ -119,9 +169,7 @@ else {
             onLinkUpdated={this.logLinkUpdate}
           />
         </div>
-        <MessageArea
-            messages={this.state.messages}
-        />
+         {/*<MessageArea messages={this.state.messages}/> */}
       </div>
     );
   }

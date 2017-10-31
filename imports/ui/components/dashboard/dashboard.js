@@ -10,12 +10,24 @@ import AppHeader from '../app/app_header';
 import AppFooter from '../app/app_footer';
 import StatisticView from './views/statistics/statistics';
 
+//alerts
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+import 'react-s-alert/dist/s-alert-css-effects/scale.css';
+import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
+import 'react-s-alert/dist/s-alert-css-effects/flip.css';
+import 'react-s-alert/dist/s-alert-css-effects/genie.css';
+import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
+import 'react-s-alert/dist/s-alert-css-effects/stackslide.css';
+
 class Dashboard extends Component {
   getContentView() {
       return this.props.children;
   }
 
   render() {
+
     const { currentUser } = this.props;
 
     const contentMinHeight = {
@@ -23,6 +35,7 @@ class Dashboard extends Component {
     };
 
     return (
+
       <div className="wrapper">
         <AppHeader user={currentUser} />
         <SideBar user={this.props.currentUser} users={this.props.users} />
@@ -32,8 +45,12 @@ class Dashboard extends Component {
         </div>
 
         <AppFooter />
+
         <div className="control-sidebar-bg"></div>
+
+        <Alert stack={{limit: 3}} />  
       </div>
+
     );
   }
 }
