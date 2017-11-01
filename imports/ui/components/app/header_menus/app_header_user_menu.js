@@ -29,9 +29,9 @@ export default class AppHeaderUserMenu extends Component {
         <a href="#" className="dropdown-toggle" data-toggle="dropdown">
           <img
             alt="img user"
-            src="/img/user2-160x160.jpg"
+            src="/img/reactib.png"
             className="user-image"
-            alt="User Image"
+            alt="Proyecto Actual"
           />
           <span className="hidden-xs">{this.userDisplayName()}</span>
         </a>
@@ -41,7 +41,7 @@ export default class AppHeaderUserMenu extends Component {
           <li className="user-header">
             <img
               alt="img user"
-              src="/img/user2-160x160.jpg"
+              src="/img/reactib.png"
               className="img-circle"
               alt="User Image"
             />

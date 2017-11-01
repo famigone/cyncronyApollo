@@ -101,7 +101,7 @@ class App extends Component {
           else {alerta = "La tarea fue modificada"}    
           })
             Alert.info("La tarea fue modificada!", {
-            position: 'bottom-right',
+            position: 'bottom',
             effect: 'scale',
             //onShow: function () {//console.log('aye!')},
             beep: false,
