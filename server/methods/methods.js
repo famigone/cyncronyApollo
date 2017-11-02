@@ -12,26 +12,18 @@ import { Tasks } from '../../imports/api/tasks.js'
 
 Meteor.methods({
   'tasks.insert':function ({ nombre, inicio, duracion, avance, parentId, orden}) {
- /* 	
-  const tarea = {      
-      nombre:taska.text, 
-      inicio:taska.start_date ,
-      duracion:taska.duration ,
-      avance:taska.progress ,
-      parentId:taska.parent ,
-      orden:taska.id 
-    }   */
-return Tasks.insert({
+  return Tasks.insert({
       nombre, 
       inicio, 
       duracion, 
       avance, 
       parentId, 
       orden, 
-
-
      });
-
-
   }
+
+ 
+  
+
+
 });

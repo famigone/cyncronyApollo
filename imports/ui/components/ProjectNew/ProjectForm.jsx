@@ -81,7 +81,7 @@ export default class ProjectForm extends Component {
 
         </div>
         <div className="box-footer">
-        <button type="submit" className="btn btn-sm btn-primary btn-flat">Guardar</button>
+        <button type="submit" className="btn btn-sm btn-primary btn-flat"><i className="fa fa-check" aria-hidden="true"></i></button>
         </div>
         </form>
      </div>

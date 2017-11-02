@@ -11,7 +11,7 @@ export default class LoadingSpinner extends Component {
             </div>
             <div className="box-body">
             <div className="text-center">
-                    <i className="fa fa-spinner fa-pulse fa-3x fa-spin loading-spinner" />
+                    <i className="fa fa-spinner fa-pulse fa-2x fa-spin loading-spinner" />
                     </div>              
             </div>
 

@@ -106,7 +106,7 @@ componentWillReceiveProps(nextProps){
 
         </div>
         <div className="box-footer">
-        <button type="submit" onSubmit={this.handleSubmit.bind(this)} className="btn btn-sm btn-primary btn-flat">Guardar</button>
+        <button type="submit" onSubmit={this.handleSubmit.bind(this)} className="btn btn-sm btn-info btn-flat"><i className="fa fa-check" aria-hidden="true"></i></button>
         </div>
         </form>
      </div>

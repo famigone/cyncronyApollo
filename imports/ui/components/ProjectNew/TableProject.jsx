@@ -5,12 +5,21 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
 import Insert from './Insert.jsx';
 import { withTracker } from 'meteor/react-meteor-data';
+import LoadingSpinner from '../controls/LoadingSpinner';
+import { ReactiveVar } from 'meteor/reactive-var'
+
+const DEFAULT_LIMIT = 5
+const LIMIT_INCREMENT = 5
+const limit = new ReactiveVar(DEFAULT_LIMIT)
+
 
 class TableProject extends Component {
 
  constructor(props) {
     super(props);
-    
+    this.state = {            
+      cant: 5
+    }
   }
 
 
@@ -24,15 +33,40 @@ renderProjects(){
      ));
 }
 
+
+   handleClick = (e) => {
+    if (e) e.preventDefault()
+    limit.set(limit.get() + LIMIT_INCREMENT)
+  }
+
+
   render(){
+   const { isLoading } = this.props;
+
+  if (isLoading) {    
+    return (
+      <LoadingSpinner/>
+    )
+  }  
   return(
     <div className="col-md-11">
 	<div className="box box-solid">
         <div className="box-header">
-
+          <h3 className="box-title">Proyectos</h3>
+            <div className="box-tools">                
+               <form className="form"  >                  
+                     <input 
+                        type="text" 
+                        name="table_search" 
+                        className="form-control pull-right" 
+                        placeholder="Nombre"
+                      />                                       
+                </form>                 
+            </div>   
+        </div>        
       
 
-            <div className="box-body table-responsive no-padding">
+            <div className="box-body table-responsive">
              <table className="table table-hover">
                <tbody>
                  <tr>
@@ -44,6 +78,12 @@ renderProjects(){
 
                </tbody>
                </table>
+              
+             </div>
+ <div className="box-footer">
+               <div className="text-right">
+               <button onClick={this.handleClick} className="btn btn-sm btn-info btn-flat">
+<i className="fa fa-plus-square" aria-hidden="true"></i></button>
              </div>
 </div>
 </div>
@@ -56,13 +96,15 @@ renderProjects(){
 
  TableProject.propTypes = {
       
-  // callbackParent: React.PropTypes.object, 
+  isLoading: React.PropTypes.bool, 
    
  };
 
   export default ProjectFormUpdateContainer = withTracker(() => {      
-   Meteor.subscribe('projects');
+   const suba = Meteor.subscribe('projects');
+   var isLoading = !suba.ready();
    return {
-     projects: Projects.find({}, { limit: 10, sort: { createdAt: -1 } }).fetch(),
+     projects: Projects.find({}, { limit: limit.get(), sort: { createdAt: 1 } }).fetch(),
+     isLoading,
    };
   })(TableProject);
