@@ -38,7 +38,7 @@ renderProjects(){
   }
 
    handleSearch = (e) => {
-    if (e) e.preventDefault()
+    if (e) e.preventDefault()    
     searchQuery.set(ReactDOM.findDOMNode(this.refs.projectName).value)
   }
 

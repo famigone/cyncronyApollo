@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'; // ES6
-import { withTracker } from 'meteor/react-meteor-data';
-import ReactDOM from 'react-dom';
-import { Projects } from '/imports/api/projects.js';
+import React, { Component } from 'react'; import PropTypes from 'prop-types';
+// ES6 import { withTracker } from 'meteor/react-meteor-data'; 
+import ReactDOM from 'react-dom'; import { Projects } from '/imports/api/projects.js'; 
 import CallOutMessage from '../warnings/callout_message';
 
 // Task component - represents a single todo item
