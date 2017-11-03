@@ -8,7 +8,7 @@ import ProjectFormUpdateContainer from './ProjectFormUpdateContainer.jsx';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
 import TableProject from './TableProject.jsx';
-
+//import TableProject from '../../containers/TableProject.js';
 
 export default class ProjectInsert extends Component {
 
