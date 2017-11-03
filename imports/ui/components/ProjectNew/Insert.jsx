@@ -10,7 +10,9 @@ export default class Insert extends Component {
  onClick(newState) {
     
     this.setState({ id: newState }); // we update our state
-    this.props.callbackParent(newState); // we notify our parent
+    this.props.callbackParent(newState); // we notify our parent    
+    Session.set( "projectActual", "asdfasdf" )
+    console.log("sesion:" + Session.get( "projectActual"))
   }
 
   render() {

@@ -23,7 +23,7 @@ export default class SideBar extends Component {
       <aside className="main-sidebar">
         <section className="sidebar">
           <SideBarUserPanel userName={this.userDisplayName()} />
-          <SideBarSearchPanel />
+          
           <SideBarMenu userCount={this.props.users.length} />
         </section>
       </aside>

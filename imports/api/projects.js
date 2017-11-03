@@ -40,9 +40,9 @@ Projects.attachSchema({
 
 if (Meteor.isServer) {
   // This code only runs on the server
-  //Meteor.publish('projects', function projectsPublication() {return Projects.find({}, { sort: { createdAt: -1 } });});
+Meteor.publish('projects', function projectsPublication() {return Projects.find({}, { sort: { createdAt: -1 } });});
 
-Meteor.publish( 'projects', function( limit, search ) {
+Meteor.publish( 'projects.search', function( limit, search ) {
   check( search, Match.OneOf( String, null, undefined ) );
 
   let query      = {},

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'; // ES6
 import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router';
 
+
 const SideBarMenu = ({ userCount }) => (
   <ul className="sidebar-menu">
-    <li className="header">MAIN NAVIGATION</li>
+    <li className="header"><center><span className="label label-primary">El PJ {Session.get( "projectActual")}</span></center></li>
 
     <li className="active treeview">
       <a href="#">
