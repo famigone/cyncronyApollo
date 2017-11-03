@@ -11,15 +11,13 @@ import { ReactiveVar } from 'meteor/reactive-var'
 const DEFAULT_LIMIT = 5
 const LIMIT_INCREMENT = 5
 const limit = new ReactiveVar(DEFAULT_LIMIT)
+const searchQuery = new ReactiveVar('')
 
 
 class TableProject extends Component {
 
  constructor(props) {
     super(props);
-    this.state = {            
-      cant: 5
-    }
   }
 
 
@@ -39,6 +37,10 @@ renderProjects(){
     limit.set(limit.get() + LIMIT_INCREMENT)
   }
 
+   handleSearch = (e) => {
+    if (e) e.preventDefault()
+    searchQuery.set(ReactDOM.findDOMNode(this.refs.projectName).value)
+  }
 
   render(){
    const { isLoading } = this.props;
@@ -54,10 +56,10 @@ renderProjects(){
         <div className="box-header">
           <h3 className="box-title">Proyectos</h3>
             <div className="box-tools">                
-               <form className="form"  >                  
+               <form className="form" onSubmit = {this.handleSearch} >                  
                      <input 
                         type="text" 
-                        name="table_search" 
+                        ref="projectName"
                         className="form-control pull-right" 
                         placeholder="Nombre"
                       />                                       
@@ -104,7 +106,10 @@ renderProjects(){
    const suba = Meteor.subscribe('projects');
    var isLoading = !suba.ready();
    return {
-     projects: Projects.find({}, { limit: limit.get(), sort: { createdAt: 1 } }).fetch(),
+     projects: Projects.find({}, { 
+            limit: limit.get()
+          , searchQuery:searchQuery.get()  
+          , sort: { createdAt: 1 } }).fetch(),
      isLoading,
    };
   })(TableProject);
