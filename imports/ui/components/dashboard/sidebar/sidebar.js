@@ -24,7 +24,7 @@ export default class SideBar extends Component {
         <section className="sidebar">
           <SideBarUserPanel userName={this.userDisplayName()} />
           
-          <SideBarMenu userCount={this.props.users.length} />
+          <SideBarMenu userCount={this.props.users.length} projectActual={this.props.projectActual} />
         </section>
       </aside>
     );
@@ -34,4 +34,5 @@ export default class SideBar extends Component {
 SideBar.propTypes = {
   user: React.PropTypes.object,
   users: React.PropTypes.array,
+  projectActual: React.PropTypes.string,
 };

@@ -12,25 +12,8 @@ import { Projects } from '../../imports/api/projects.js'
 
 Meteor.methods({
   'projects.insert':function ({ codigo, nombre }) {
-  	codigo = Number(codigo)
-    new SimpleSchema({
-  nombre: {
-    type: String,    
-  },
-  codigo: {
-    type: Number,    
-  },
-  createdBy: {
-        type: String,
-        optional: true,
-        autoValue: function(){ return this.userId }
-    },
-  createdAt: {
-        type: Date,
-        optional: true,
-        autoValue: function(){ return new Date() }
-    },
-}).validate({ codigo, nombre });
+  	
+
 
 
 

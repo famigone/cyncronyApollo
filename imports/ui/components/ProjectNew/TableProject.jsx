@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-//import { createContainer } from 'meteor/react-meteor-data';
+import { createContainer } from 'meteor/react-meteor-data';
 import { Projects } from '/imports/api/projects.js';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'; // ES6
@@ -8,18 +8,17 @@ import { withTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../controls/LoadingSpinner';
 import { ReactiveVar } from 'meteor/reactive-var'
 
+
 const DEFAULT_LIMIT = 5
 const LIMIT_INCREMENT = 5
 const limit = new ReactiveVar(DEFAULT_LIMIT)
-const searchQuery = new ReactiveVar(null)
+const searchQuery = new ReactiveVar('')
 
 
- class TableProject extends Component {
+class TableProject extends Component {
 
  constructor(props) {
     super(props);
-    this.state = { searchTerm: null };
-    this.handleSearch = this.handleSearch.bind(this);    
   }
 
 
@@ -39,7 +38,10 @@ renderProjects(){
     limit.set(limit.get() + LIMIT_INCREMENT)
   }
 
-
+   handleSearch = (e) => {
+    if (e) e.preventDefault()    
+    searchQuery.set(ReactDOM.findDOMNode(this.refs.projectName).value)
+  }
 
   render(){
    const { isLoading } = this.props;
@@ -53,7 +55,7 @@ renderProjects(){
     <div className="col-md-11">
 	<div className="box box-solid">
         <div className="box-header">
-          <h3 className="box-title">Proyectos: {Session.get("projectActual")}</h3>
+          <h3 className="box-title">Proyectos</h3>
             <div className="box-tools">                
                <form className="form" onSubmit = {this.handleSearch} >                  
                      <input 
@@ -61,7 +63,6 @@ renderProjects(){
                         ref="projectName"
                         className="form-control pull-right" 
                         placeholder="Nombre"
-                        onKeyUp={ this.handleSearch}
                       />                                       
                 </form>                 
             </div>   
@@ -99,10 +100,10 @@ renderProjects(){
  TableProject.propTypes = {
       
   isLoading: React.PropTypes.bool, 
-  searchQuery: React.PropTypes.object, 
+   
  };
 
- export default TableProject = withTracker(() => {      
+  export default ProjectFormUpdateContainer = withTracker(() => {      
    const suba = Meteor.subscribe('projects');
    var isLoading = !suba.ready();
    return {
@@ -113,5 +114,3 @@ renderProjects(){
      isLoading,
    };
   })(TableProject);
-
-

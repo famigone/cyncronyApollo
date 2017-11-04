@@ -38,7 +38,7 @@ class Dashboard extends Component {
 
       <div className="wrapper">
         <AppHeader user={currentUser} />
-        <SideBar user={this.props.currentUser} users={this.props.users} />
+        <SideBar user={this.props.currentUser} users={this.props.users} projectActual={this.props.projectActual}/>
 
         <div className="content-wrapper" style={contentMinHeight} >
             {this.getContentView()}
@@ -48,7 +48,7 @@ class Dashboard extends Component {
 
         <div className="control-sidebar-bg"></div>
 
-        <Alert stack={{limit: 3}} />  
+        <Alert stack={{limit: 3}} html={true} />  
       </div>
 
     );
@@ -59,6 +59,7 @@ Dashboard.propTypes = {
   children: React.PropTypes.object,
   currentUser: React.PropTypes.object,
   users: React.PropTypes.arrayOf(PropTypes.object),
+  projectActual: React.PropTypes.string
 };
 
 export default createContainer(() => {
@@ -70,5 +71,6 @@ export default createContainer(() => {
   return {
     currentUser: Meteor.user(),
     users: Meteor.users.find().fetch(),
+    projectActual: Session.get("projectActual")
   };
 }, Dashboard);

@@ -4,9 +4,9 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Link } from 'react-router';
 
 
-const SideBarMenu = ({ userCount }) => (
+const SideBarMenu = ({ userCount, projectActual }) => (
   <ul className="sidebar-menu">
-    <li className="header"><center><span className="label label-primary">El PJ {Session.get( "projectActual")}</span></center></li>
+    <li className="header"><center><span className="label label-primary">{projectActual}</span></center></li>
 
     <li className="active treeview">
       <a href="#">
@@ -39,6 +39,7 @@ const SideBarMenu = ({ userCount }) => (
 
 SideBarMenu.propTypes = {
   userCount: React.PropTypes.number,
+  projectActual: React.PropTypes.string
 };
 
-export default SideBarMenu;
+export default SideBarMenu;   

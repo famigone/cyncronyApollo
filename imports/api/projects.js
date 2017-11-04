@@ -17,13 +17,14 @@ Projects.allow({
 
     });
 
-/*
-Projects.attachSchema({
+
+Projects.schema = new SimpleSchema({
   nombre: {
     type: String,    
   },
   codigo: {
     type: String,    
+    max: 10,  
   },
   createdBy: {
         type: String,
@@ -35,8 +36,10 @@ Projects.attachSchema({
         optional: true,
         autoValue: function(){ return new Date() }
     },
-})
-*/
+});
+
+Projects.attachSchema(Projects.schema);
+
 
 if (Meteor.isServer) {
   // This code only runs on the server
