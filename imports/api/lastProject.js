@@ -23,13 +23,17 @@ LastProject.deny({
 
 
 LastProject.schema = new SimpleSchema({
-  projectId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  projectId: { type: String, 
+              regEx: SimpleSchema.RegEx.Id },
   userId: {
         type: String,
         optional: true,
         autoValue: function(){ return this.userId }
     },
-  taskId: { type: String },    
+  taskId: { 
+     type: String, 
+     regEx: SimpleSchema.RegEx.Id ,
+     optional: true }   
 });
 
 LastProject.attachSchema(LastProject.schema);

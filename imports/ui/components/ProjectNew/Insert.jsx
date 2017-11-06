@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Projects } from '/imports/api/projects.js';
 import Alert from 'react-s-alert';
+import { LastProject } from '/imports/api/lastProject.js';
 
 // Task component - represents a single todo item
 export default class Insert extends Component {
@@ -10,13 +11,34 @@ export default class Insert extends Component {
     this.state = { id: "" }
   }
 
- onClick(newState) {
+ setLastProject(pk){
+  //const sub = Meteor.subscribe('lastProject');   
+  // veo si existe
+  let existe = LastProject.find({userId: Meteor.userId()})
+  if (existe){
+     //si ya existe update
+     console.log("existeeeeeeeeee")
+     //LastProject.update(projectId, {$set: { checked: !this.props.task.checked },})
+  }else{
+    //no existe así que inserto      
+    const ultimo = {projectId : pk,                 
+                    tareaId : null}
+    Meteor.call('lastProject.insert', ultimo, (error, response) => {      
+          alerta = "La tarea se agregó correactamente" 
+          if (error) {console.log(error.reason)}
+          else {console.log("La tarea fue agregada")}    
+          })              
     
-    this.setState({ id: newState }); // we update our state
-    this.props.callbackParent(newState); // we notify our parent    
-    const pja = Projects.findOne(newState)
-    Session.set( "projectActual", pja.codigo )
 
+  }
+  
+
+  
+
+ }
+
+notifyLastProject(pja){
+  // alertamos que se seteó un nuevo proyecto
     Alert.info("Projecto Actual: <b>"
               + pja.codigo
               + '</b>', {
@@ -27,6 +49,18 @@ export default class Insert extends Component {
             timeout: 3000,
             offset: 0
         });
+}
+
+ onClick(newState) {
+    
+    this.setState({ id: newState }); // we update our state
+    this.props.callbackParent(newState); // we notify our parent    
+    const pja = Projects.findOne(newState)
+    Session.set( "projectActual", pja.codigo )
+
+    this.setLastProject(newState);
+    this.notifyLastProject(pja);
+    
     
   }
 

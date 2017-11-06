@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor'
 import { Tasks } from '../../imports/api/tasks.js'
-
+import { LastProject } from '../../imports/api/lastProject.js'
 
 /**
  * Methods are used to run code on the server and optionally, send a response
@@ -20,9 +20,15 @@ Meteor.methods({
       parentId, 
       orden, 
      });
-  }
+},
 
- 
+
+  'lastProject.insert':function ({ projectId, taskId}) {  
+  return LastProject.insert({
+      projectId,       
+      taskId
+     });
+  } 
   
 
 
