@@ -28,8 +28,18 @@ Meteor.methods({
       projectId,       
       taskId
      });
-  } 
+  }, 
   
+  'lastProject.update':function ({ userId, projectId, taskId}) {  
+  return LastProject.update(userId, {
+      $set: { projectId: projectId}
+              //taskId: taskId },
+    });
+
+  } 
+
+
+
 
 
 });

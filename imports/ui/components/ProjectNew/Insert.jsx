@@ -17,12 +17,12 @@ export default class Insert extends Component {
   let existe = LastProject.find({userId: Meteor.userId()})
   if (existe){
      //si ya existe update
-    const ultimo = {projectId : pk,                 
+    const ultimo = {projectId : pk,
+                    userId : Meteor.userId(),                 
                     tareaId : null}
-    Meteor.call('lastProject.update', ultimo, (error, response) => {      
-          alerta = "La tarea se agregó correactamente" 
-          if (error) {console.log(error.reason)}
-          else {console.log("La tarea fue agregada")}    
+    Meteor.call('lastProject.update', ultimo, (error, response) => {                
+    if (error) {console.log(error.reason)}
+          //else {console.log("Terrible updetazo")}    
           })              
   }else{
     //no existe así que inserto      
