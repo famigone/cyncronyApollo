@@ -6,8 +6,7 @@ import { Link } from 'react-router';
 
 const SideBarMenu = ({ userCount, projectActual }) => (
   <ul className="sidebar-menu">
-    <li className="header"><center><span className="label label-primary">{projectActual}</span></center></li>
-
+    <li className="header"><center>PROYECTO: <span className="label label-primary">{projectActual}</span></center></li>    
     <li className="active treeview">
       <a href="#">
         <i className="fa fa-dashboard" />

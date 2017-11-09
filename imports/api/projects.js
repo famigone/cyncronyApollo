@@ -49,7 +49,7 @@ Meteor.publish( 'projects.search', function( limit, search ) {
   check( search, Match.OneOf( String, null, undefined ) );
 
   let query      = {},
-      projection = { limit: limit, sort: { createdAt: 1 } };
+      projection = { limit: limit, sort: { createdAt: -1 } };
 
   if ( search ) {
     let regex = new RegExp( search, 'i' );

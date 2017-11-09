@@ -12,24 +12,25 @@ export default class Insert extends Component {
   }
 
  setLastProject(pk){
-  //const sub = Meteor.subscribe('lastProject');   
+  const sub = Meteor.subscribe('lastProject');   
   // veo si existe
-  let existe = LastProject.find({userId: Meteor.userId()})
-  if (existe){
+  let existe = LastProject.findOne({userId: Meteor.userId()})
+  //console.log(existe)
+  if ((existe)){
      //si ya existe update
-    const ultimo = {projectId : pk,
-                    userId : Meteor.userId(),                 
-                    tareaId : null}
-    Meteor.call('lastProject.update', ultimo, (error, response) => {                
+    console.log("va a actualizar")
+    const ultimo = {newProjectId : pk}
+                    //userId : Meteor.userId(),                 
+                    //taskId : null
+    Meteor.call('lastProject.updateLast', ultimo, (error, response) => {                
     if (error) {console.log(error.reason)}
-          //else {console.log("Terrible updetazo")}    
+          else {console.log("todo un exito el update le puso:"+ultimo.projectId)}    
           })              
   }else{
-    //no existe así que inserto      
+    console.log("va a insertar")
     const ultimo = {projectId : pk,                 
-                    tareaId : null}
+                    taskId : null}
     Meteor.call('lastProject.insert', ultimo, (error, response) => {      
-          alerta = "La tarea se agregó correactamente" 
           if (error) {console.log(error.reason)}
           else {console.log("La tarea fue agregada")}    
           })              
