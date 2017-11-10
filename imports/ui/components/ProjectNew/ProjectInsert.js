@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Projects } from '/imports/api/projects.js';
-import Insert from './Insert.jsx';
+//import Insert from './Insert.jsx';
 import ProjectForm from './ProjectForm.jsx';
 import ProjectFormUpdate from './ProjectFormUpdate.jsx';
 import ProjectFormUpdateContainer from './ProjectFormUpdateContainer.jsx';

@@ -25,7 +25,7 @@ class TableProject extends Component {
 renderProjects(){
 	     return this.props.projects.map((project) => (
        <Insert 
-           key={project._id} 
+          key={project._id} 
           project={project} 
           callbackParent={ this.props.callbackParent }
       />

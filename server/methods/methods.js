@@ -66,7 +66,7 @@ export const updateLast = new ValidatedMethod({
     newProjectId: { type: String, regEx: SimpleSchema.RegEx.Id }    
   }).validator(),
   run({newProjectId}) {
-    LastProject.update(Meteor.userId, {
+    LastProject.update({userId: Meteor.userId}, {
       $set: { projectId: newProjectId },
     });
   },

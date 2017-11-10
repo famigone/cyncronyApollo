@@ -4,6 +4,8 @@ import React, { Component} from 'react';
 import PropTypes from 'prop-types'; // ES6
 import { withTracker } from 'meteor/react-meteor-data';
 import { createContainer } from 'meteor/react-meteor-data';
+import { LastProject } from '/imports/api/lastProject';
+import { Projects } from '/imports/api/projects';
 
 import SideBar from './sidebar/sidebar';
 import AppHeader from '../app/app_header';
@@ -26,8 +28,23 @@ class Dashboard extends Component {
       return this.props.children;
   }
 
-  render() {
+  preparar(){
+     if (!this.props.isLoading){
+      
+      const pl  = LastProject.findOne({userId: Meteor.userId()})      
+        if (pl){
 
+          const subp = Meteor.subscribe('projects')          
+          const one  = Projects.findOne(pl.projectId)
+          if (one) {
+            Session.set("lastProject", one.codigo)
+            console.log(Session.get("lastProject")) 
+          }
+        }
+      }
+  }
+  render() {
+    this.preparar()
     const { currentUser } = this.props;
 
     const contentMinHeight = {
@@ -59,18 +76,23 @@ Dashboard.propTypes = {
   children: React.PropTypes.object,
   currentUser: React.PropTypes.object,
   users: React.PropTypes.arrayOf(PropTypes.object),
-  projectActual: React.PropTypes.string
+  projectActual: React.PropTypes.string,
+  isLoading: React.PropTypes.bool
 };
 
-export default createContainer(() => {
-  /**
-   * Add subscription here
-   */
-  Meteor.subscribe('users');
 
-  return {
-    currentUser: Meteor.user(),
-    users: Meteor.users.find().fetch(),
-    projectActual: Session.get("projectActual")
-  };
-}, Dashboard);
+
+export default dashboardContainer = withTracker(() => {      
+    Meteor.subscribe('users');
+    const subl = Meteor.subscribe('lastProject');
+    const subp = Meteor.subscribe('projects')
+    var isLoading = !(subl.ready() && subp.ready());        
+
+       return {
+        currentUser: Meteor.user(),
+        users: Meteor.users.find().fetch(),
+        projectActual: Session.get("projectActual"),
+        isLoading: isLoading
+
+    }; 
+})(Dashboard);

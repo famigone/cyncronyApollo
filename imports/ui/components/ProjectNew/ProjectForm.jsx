@@ -8,7 +8,7 @@ export default class ProjectForm extends Component {
   constructor(){
     super();
     this.state = {            
-      errorHay:false          ,
+      errorHay:false,
       errorMsg:"",      
       okHay:false
     };
