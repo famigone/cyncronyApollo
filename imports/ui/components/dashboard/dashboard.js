@@ -11,6 +11,7 @@ import SideBar from './sidebar/sidebar';
 import AppHeader from '../app/app_header';
 import AppFooter from '../app/app_footer';
 import StatisticView from './views/statistics/statistics';
+import LoadingSpinner from '../controls/LoadingSpinner';
 
 //alerts
 import Alert from 'react-s-alert';
@@ -28,34 +29,41 @@ class Dashboard extends Component {
       return this.props.children;
   }
 
-  preparar(){
-     if (!this.props.isLoading){
-      
+  shouldComponentUpdate(){
+    //console.log(this.props.isLoading)  
+     if (!this.props.isLoading){      
       const pl  = LastProject.findOne({userId: Meteor.userId()})      
         if (pl){
-
-          const subp = Meteor.subscribe('projects')          
+          //const subp = Meteor.subscribe('projects')          
           const one  = Projects.findOne(pl.projectId)
           if (one) {
             Session.set("lastProject", one.codigo)
-            console.log(Session.get("lastProject")) 
+            //console.log(Session.get("lastProject")) 
           }
         }
       }
+      return true;
   }
   render() {
-    this.preparar()
+    //this.preparar()
     const { currentUser } = this.props;
-
+    const { isLoading } = this.props;
     const contentMinHeight = {
       minHeight: `${window.innerHeight - 101}px`,
     };
+    
 
+  if (isLoading) {    
+    return (
+      <LoadingSpinner/>
+    )
+  }      
+  const codigo = Projects.findOne(this.props.projectActual.projectId).codigo
     return (
 
       <div className="wrapper">
         <AppHeader user={currentUser} />
-        <SideBar user={this.props.currentUser} users={this.props.users} projectActual={this.props.projectActual}/>
+        <SideBar user={this.props.currentUser} users={this.props.users} projectActual={codigo}/>
 
         <div className="content-wrapper" style={contentMinHeight} >
             {this.getContentView()}
@@ -76,7 +84,7 @@ Dashboard.propTypes = {
   children: React.PropTypes.object,
   currentUser: React.PropTypes.object,
   users: React.PropTypes.arrayOf(PropTypes.object),
-  projectActual: React.PropTypes.string,
+  //projectActual: React.PropTypes.string,
   isLoading: React.PropTypes.bool
 };
 
@@ -86,12 +94,15 @@ export default dashboardContainer = withTracker(() => {
     Meteor.subscribe('users');
     const subl = Meteor.subscribe('lastProject');
     const subp = Meteor.subscribe('projects')
-    var isLoading = !(subl.ready() && subp.ready());        
-
+    var isLoading = !(subl.ready() && subp.ready());            
+    
+    
        return {
         currentUser: Meteor.user(),
         users: Meteor.users.find().fetch(),
-        projectActual: Session.get("projectActual"),
+        //projectActual: Session.get("projectActual"),
+        projectActual: LastProject.findOne({userId: Meteor.userId()}),
+
         isLoading: isLoading
 
     }; 
