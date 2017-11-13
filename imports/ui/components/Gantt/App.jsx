@@ -5,7 +5,7 @@ import MessageArea from './MessageArea';
 import { Tasks } from '../../../api/tasks.js'
 import './App1.css';
 import Alert from 'react-s-alert';
-
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 
 
@@ -157,6 +157,11 @@ else {
     });
   }  
   
+  botonVer(){
+
+  }
+
+
   render() {
     gantt.config.buttons_left=["dhx_save_btn","dhx_cancel_btn","dhx_delete_btn"];    
     gantt.config.buttons_right = ["go_task_btn"];
@@ -165,6 +170,9 @@ else {
           if(button_id == "go_task_btn"){
               var id = gantt.getState().lightbox;
               console.log(id)
+              browserHistory.push('/dashboard/projectinsert')
+
+              //this.props.history.push('/some/path')
               //gantt.getTask(id).progress = 1;
               //gantt.updateTask(id);
               //gantt.hideLightbox();

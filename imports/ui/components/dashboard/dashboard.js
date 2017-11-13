@@ -6,6 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { createContainer } from 'meteor/react-meteor-data';
 import { LastProject } from '/imports/api/lastProject';
 import { Projects } from '/imports/api/projects';
+import { Link } from 'react-router';
 
 import SideBar from './sidebar/sidebar';
 import AppHeader from '../app/app_header';
