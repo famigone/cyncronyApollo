@@ -1,0 +1,32 @@
+<style type="text/css">
+    .complete_button{
+                background: #ACCAAC;
+        color: #454545;
+        border: 1px solid #94AD94;  
+    }
+
+    .go_task_btn{
+        background: #ACCAAC;
+        color: #454545;
+        border: 1px solid #94AD94;        
+    }
+    .dhx_btn_set.complete_button_set{
+        background: #ACCAAC;
+        color: #454545;
+        border: 1px solid #94AD94;
+    }
+    .completed_task{
+        border:1px solid #94AD94;
+    }
+    .completed_task .gantt_task_progress{
+        background: #ACCAAC;
+    }
+
+    .dhtmlx-completed{
+        border-color: #669e60;
+    }
+    .dhtmlx-completed div {
+        background: #81c97a;
+    }
+
+</style>

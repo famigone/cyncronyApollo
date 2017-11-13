@@ -164,13 +164,24 @@ else {
 
   render() {
     gantt.config.buttons_left=["dhx_save_btn","dhx_cancel_btn","dhx_delete_btn"];    
-    gantt.config.buttons_right = ["go_task_btn"];
+    gantt.config.buttons_right = ["complete_button","go_task_btn"];
     gantt.locale.labels["go_task_btn"] = 'VER';
+    gantt.locale.labels["complete_button"] = "COMPLETAR";
     gantt.attachEvent("onLightboxButton", function(button_id, node, e){
+       if(button_id == "complete_button"){
+              var id = gantt.getState().lightbox;
+              gantt.getTask(id).progress = 1;
+              gantt.updateTask(id);
+              gantt.hideLightbox();
+        }
+
           if(button_id == "go_task_btn"){
               var id = gantt.getState().lightbox;
               console.log(id)
               browserHistory.push('/dashboard/projectinsert')
+              //gantt.updateTask(id)
+              gantt.hideLightbox();
+
 
               //this.props.history.push('/some/path')
               //gantt.getTask(id).progress = 1;
