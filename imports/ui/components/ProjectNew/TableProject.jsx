@@ -110,7 +110,7 @@ renderProjects(){
      projects: Projects.find({}, { 
             limit: limit.get()
           , searchQuery:searchQuery.get()  
-          , sort: { createdAt: 1 } }).fetch(),
+          , sort: { createdAt: -1 } }).fetch(),
      isLoading,
    };
   })(TableProject);

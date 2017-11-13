@@ -49,6 +49,9 @@ class App extends Component {
     this.setState({messages});
   }
 
+
+
+
   logTaskUpdate(id, mode, task) {
 
     let text = task && task.text ? ` (${task.text})`: '';
@@ -155,6 +158,19 @@ else {
   }  
   
   render() {
+    gantt.config.buttons_left=["dhx_save_btn","dhx_cancel_btn","dhx_delete_btn"];    
+    gantt.config.buttons_right = ["go_task_btn"];
+    gantt.locale.labels["go_task_btn"] = 'VER';
+    gantt.attachEvent("onLightboxButton", function(button_id, node, e){
+          if(button_id == "go_task_btn"){
+              var id = gantt.getState().lightbox;
+              console.log(id)
+              //gantt.getTask(id).progress = 1;
+              //gantt.updateTask(id);
+              //gantt.hideLightbox();
+          }
+      });
+
     return (
       <div>
         <Toolbar
