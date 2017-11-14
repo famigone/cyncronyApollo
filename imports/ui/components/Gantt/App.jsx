@@ -6,7 +6,8 @@ import { Tasks } from '../../../api/tasks.js'
 import './App1.css';
 import Alert from 'react-s-alert';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-
+import { withTracker } from 'meteor/react-meteor-data';
+import LoadingSpinner from '../controls/LoadingSpinner';
 
 
 let data = {
@@ -87,7 +88,7 @@ class App extends Component {
           else {this.addMessage("La Tarea se agregado correctamente")}  */
           if (error) {alerta= error.reason}
           else {alerta = "La tarea fue agregada"}    
-          })
+          })          
           Alert.info("La tarea fue agregada!", {
             position: 'bottom-right',
             effect: 'scale',
@@ -163,6 +164,12 @@ else {
 
 
   render() {
+     const { isLoading } = this.props;
+      if (isLoading) {    
+        return (
+          <LoadingSpinner/>
+        )
+      }  
     gantt.config.buttons_left=["dhx_save_btn","dhx_cancel_btn","dhx_delete_btn"];    
     gantt.config.buttons_right = ["complete_button","go_task_btn"];
     gantt.locale.labels["go_task_btn"] = 'VER';
@@ -191,6 +198,7 @@ else {
       });
 
     return (
+
       <div>
         <Toolbar
             zoom={this.state.currentZoom}
@@ -209,4 +217,13 @@ else {
     );
   }
 }
-export default App;
+
+export default AppContainer = withTracker(() => {      
+   const suba = Meteor.subscribe('tasks');
+   var isLoading = !suba.ready();
+   return {
+     tasks: Tasks.find({}, {           
+           sort: { orden: -1 } }).fetch(),
+     isLoading,
+   };
+  })(App);

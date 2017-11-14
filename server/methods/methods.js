@@ -73,7 +73,9 @@ export const updateLast = new ValidatedMethod({
 });
 
 
-
+Meteor.publish('tasks', function() {
+  return Tasks.find({projectId: Session.get("actualProject")});
+});
 
 export const insert = new ValidatedMethod({
   name: 'lastProject.insert',
