@@ -73,8 +73,8 @@ export const updateLast = new ValidatedMethod({
 });
 
 
-Meteor.publish('tasks', function() {
-  return Tasks.find({projectId: Session.get("actualProject")});
+Meteor.publish('tasks', function(pid) {
+  return Tasks.find({projectId: pid});
 });
 
 export const insert = new ValidatedMethod({
@@ -98,9 +98,38 @@ export const insert = new ValidatedMethod({
     LastProject.insert(lastp);
   },
 });
+/*
+export const insertTask = new ValidatedMethod({
+  name: 'tasks.insert',
+   validate: new SimpleSchema({
+    projectId: { type: String, 
+                regEx: SimpleSchema.RegEx.Id },
+    taskId: { type: String, 
+             regEx: SimpleSchema.RegEx.Id ,
+          optional: true },
+  }).validator(),
+  run({ projectId, taskId }) {
+    
+    const lastp = {
+      projectId,
+      taskId,
+      userId: Meteor.userId,
+      createdAt: new Date(),
+    };
 
-
-
+    LastProject.insert(lastp);
+  },
+});
+*/
+Meteor.methods({
+    'tasks.insert': function(oneTask){                
+        
+            Tasks.insert({
+            oneTask
+            });
+        
+    }
+});
 
 // Get list of all method names on Todos
 const TODOS_METHODS = _.pluck([

@@ -4,12 +4,12 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 export const Tasks = new Mongo.Collection('tasks');
 
-if (Meteor.isServer) {
+/*if (Meteor.isServer) {
   // This code only runs on the server
   Meteor.publish('tasks', function tasksPublication() {
     return Tasks.find();
   });
-}
+}*/
 
 // Deny all client-side updates since we will be using methods to manage this collection
 Tasks.deny({
@@ -44,7 +44,7 @@ Tasks.deny({
 Tasks.schema = new SimpleSchema({
   //id: { type: String },  quiero usar el orden en vez del id
   text: { type: String },
-  start_date: { type: Date },
+  start_date: { type: String },
   duration: { type: Number },
   progress: { type: Number
             , decimal: true
@@ -52,7 +52,8 @@ Tasks.schema = new SimpleSchema({
             , optional: true},
   projectId: { type: String
              , regEx: SimpleSchema.RegEx.Id
-             , autoValue: function(){ return Session.get("actualProject"); } },  
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },  
   parentId: { type: Number
             , optional: true }, //padre
   activo: { type: Boolean

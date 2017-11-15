@@ -60,10 +60,13 @@ class Dashboard extends Component {
     )
   }      
   const codigo = Projects.findOne(this.props.projectActual.projectId).codigo
+  //seteo para todo el entorno el id del projecto actual
+  Session.set("lastProjectId", LastProject.findOne({userId: Meteor.userId()}).id)   
     return (
 
       <div className="wrapper">
         <AppHeader user={currentUser} />
+
         <SideBar user={this.props.currentUser} users={this.props.users} projectActual={codigo}/>
 
         <div className="content-wrapper" style={contentMinHeight} >

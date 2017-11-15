@@ -22,7 +22,7 @@ let data = {
     {id: 8, text: 'Task #2', start_date: '01-05-2017', duration: 5, progress: 0.4},
   ],
   links: [
-    {id: 1, source: 1, target: 2, type: '0'}
+    {id: 1, source: 1, target: 2, type: '1'}
   ]
 };
 
@@ -71,21 +71,20 @@ class App extends Component {
     //this.addMessage(message);
 
     const taska = {      
-      nombre:task.text, 
-      inicio:task.start_date ,
-      duracion:Number(task.duration) ,
-      avance:Number(task.progress) ,
-      parentId:Number(task.parent) ,
+      text:task.text, 
+      start_date:task.start_date ,
+      duration:Number(task.duration) ,
+      progress:Number(task.progress) ,
+      parent:Number(task.parent) ,
       orden:Number(task.id) 
     }
     var alerta= ''; 
     switch(mode) { 
         case 'inserted': { 
-          Meteor.call('tasks.insert', taska, (error, response) => {      
-           alerta = "La tarea se agregó correactamente" 
-          /*if (error) {this.addMessage(error.reason)
+          Meteor.call('tasks.insert', taska, (error, response) => {                 
+          if (error) {this.addMessage(error.reason)
             console.log(error)}
-          else {this.addMessage("La Tarea se agregado correctamente")}  */
+          else {this.addMessage("La Tarea se agregado correctamente")}  
           if (error) {alerta= error.reason}
           else {alerta = "La tarea fue agregada"}    
           })          
@@ -170,6 +169,7 @@ else {
           <LoadingSpinner/>
         )
       }  
+    console.log(this.props.tasks)
     gantt.config.buttons_left=["dhx_save_btn","dhx_cancel_btn","dhx_delete_btn"];    
     gantt.config.buttons_right = ["complete_button","go_task_btn"];
     gantt.locale.labels["go_task_btn"] = 'VER';
@@ -219,7 +219,7 @@ else {
 }
 
 export default AppContainer = withTracker(() => {      
-   const suba = Meteor.subscribe('tasks');
+   const suba = Meteor.subscribe('tasks', Session.get("projectLastId"));
    var isLoading = !suba.ready();
    return {
      tasks: Tasks.find({}, {           

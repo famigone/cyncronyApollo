@@ -66,7 +66,7 @@ notifyLastProject(pja){
     this.props.callbackParent(newState); // we notify our parent    
     const pja = Projects.findOne(newState)
     Session.set( "projectActual", pja.codigo )
-
+    Session.set( "projectActualId", pja.id )
     this.setLastProject(newState);
     this.notifyLastProject(pja);
     

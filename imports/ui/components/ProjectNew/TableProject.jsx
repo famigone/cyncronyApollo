@@ -104,7 +104,7 @@ renderProjects(){
  };
 
   export default ProjectFormUpdateContainer = withTracker(() => {      
-   const suba = Meteor.subscribe('projects');
+   const suba = Meteor.subscribe('projects', Session.get("projectActualId"));
    var isLoading = !suba.ready();
    return {
      projects: Projects.find({}, { 
