@@ -8,6 +8,8 @@ import Alert from 'react-s-alert';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { withTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../controls/LoadingSpinner';
+import { LastProject } from '/imports/api/lastProject';
+import { Projects } from '/imports/api/projects';
 
 
 let data = {
@@ -51,7 +53,44 @@ class App extends Component {
   }
 
 
+  insertTask(taska){
+  //console.log(taska)
+          Meteor.call('tasks.insert', taska, (error, response) => {                 
+          if (error) {console.log(error)}                    
+          else{Alert.info("La tarea fue agregada!", {
+            position: 'bottom-right',
+            effect: 'scale',
+            //onShow: function () {//console.log('aye!')},
+            beep: false,
+            timeout: 3000,
+            offset: 0
+        });}
+          })          
+        }
+          
+  
 
+  updateTask(taska){
+    //console.log(taska)
+    //no tengo el id de la base de datos en el objeto. Tengo que incorporarlo. 
+    //const oneTask= Tasks.findOne({projectId:taska.projectId, orden:taska.orden})
+    //console.log(taska.projectId)
+    //console.log(taska.orden)
+    Meteor.call('tasks.update', taska, (error, response) => {                
+           if (error) {console.log(error)}          
+           else {
+            Alert.info("La tarea fue modificada!", {
+            position: 'bottom',
+            effect: 'scale',
+            //onShow: function () {//console.log('aye!')},
+            beep: false,
+            timeout: 3000,
+            offset: 0
+        }); 
+           } 
+          })
+            
+  }
 
   logTaskUpdate(id, mode, task) {
 
@@ -74,44 +113,25 @@ class App extends Component {
       text:task.text, 
       start_date:task.start_date ,
       duration:Number(task.duration) ,
-      progress:Number(task.progress) ,
+      progress:Number(task.progress) || 0, //si es nulo le clava un cero!
       parent:Number(task.parent) ,
-      orden:Number(task.id) 
+      orden:Number(task.id) ,
+      projectId: this.props.pid, 
+      activo: true, 
+      orden: task.id, 
+
     }
+    //if (!this.props.isLoading) console.log(this.props.pid)
+    //console.log(Session.get("projectActual"))
     var alerta= ''; 
     switch(mode) { 
         case 'inserted': { 
-          Meteor.call('tasks.insert', taska, (error, response) => {                 
-          if (error) {this.addMessage(error.reason)
-            console.log(error)}
-          else {this.addMessage("La Tarea se agregado correctamente")}  
-          if (error) {alerta= error.reason}
-          else {alerta = "La tarea fue agregada"}    
-          })          
-          Alert.info("La tarea fue agregada!", {
-            position: 'bottom-right',
-            effect: 'scale',
-            //onShow: function () {//console.log('aye!')},
-            beep: false,
-            timeout: 3000,
-            offset: 0
-        });
-        break; 
+          this.insertTask(taska)
+          break; 
         } 
         case 'updated': {          
-          Meteor.call('tasks.insert', taska, (error, response) => {                
-          if (error) {alerta= error.reason}
-          else {alerta = "La tarea fue modificada"}    
-          })
-            Alert.info("La tarea fue modificada!", {
-            position: 'bottom',
-            effect: 'scale',
-            //onShow: function () {//console.log('aye!')},
-            beep: false,
-            timeout: 3000,
-            offset: 0
-        });
-        break;  
+          this.updateTask(taska)
+          break;  
         }  
         case 'deleted': {
           Meteor.call('tasks.insert', taska, (error, response) => {      
@@ -169,7 +189,7 @@ else {
           <LoadingSpinner/>
         )
       }  
-    console.log(this.props.tasks)
+    //console.log(this.props.tasks)
     gantt.config.buttons_left=["dhx_save_btn","dhx_cancel_btn","dhx_delete_btn"];    
     gantt.config.buttons_right = ["complete_button","go_task_btn"];
     gantt.locale.labels["go_task_btn"] = 'VER';
@@ -219,11 +239,17 @@ else {
 }
 
 export default AppContainer = withTracker(() => {      
-   const suba = Meteor.subscribe('tasks', Session.get("projectLastId"));
-   var isLoading = !suba.ready();
-   return {
-     tasks: Tasks.find({}, {           
-           sort: { orden: -1 } }).fetch(),
-     isLoading,
-   };
+    
+    const subl = Meteor.subscribe('lastProject')
+    const subp = Meteor.subscribe('projects')
+    const suba = Meteor.subscribe('tasks', Session.get("projectLastId"));
+    var isLoading = !(subl.ready() && subp.ready() && suba.ready());            
+
+    var isLoading = !suba.ready(); 
+    return {
+      tasks: Tasks.find({}, {           
+            sort: { orden: -1 } }).fetch(),
+      isLoading,      
+      pid: LastProject.findOne({userId: Meteor.userId()}).projectId,
+    };
   })(App);

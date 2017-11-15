@@ -44,17 +44,18 @@ Tasks.deny({
 Tasks.schema = new SimpleSchema({
   //id: { type: String },  quiero usar el orden en vez del id
   text: { type: String },
-  start_date: { type: String },
+  start_date: { type: Date },
   duration: { type: Number },
   progress: { type: Number
             , decimal: true
             , defaultValue: 0
-            , optional: true},
+            , optional: true}
+            ,
   projectId: { type: String
              , regEx: SimpleSchema.RegEx.Id
             // , autoValue: function(){ return Session.get("projectActual") } 
            },  
-  parentId: { type: Number
+  parent: { type: Number
             , optional: true }, //padre
   activo: { type: Boolean
           , defaultValue: true }, //borrado lógico

@@ -30,7 +30,7 @@ import { withTracker } from 'meteor/react-meteor-data';
             else {console.log("todo un exito el update le puso:"+ultimo.projectId)}    
             })              
     }else{
-      console.log("va a insertar")
+     // console.log("va a insertar")
       const ultimo = {projectId : pk,                 
                       taskId : null}
       Meteor.call('lastProject.insert', ultimo, (error, response) => {      
