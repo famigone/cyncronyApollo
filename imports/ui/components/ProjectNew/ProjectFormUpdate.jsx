@@ -11,10 +11,11 @@ import LoadingSpinner from '../controls/LoadingSpinner';
 export default class ProjectFormUpdate extends Component {
     constructor(props) {
         super(props);        
-        if (!props.isLoading){
+        if (!this.props.isLoading && (!this.props.oneProject==null)){
+        
         this.state = {      
-          codigo: props.oneProject.codigo,
-          nombre: props.oneProject.nombre,
+          codigo: this.props.oneProject.codigo,
+          nombre: this.props.oneProject.nombre,
           exito: false
                       }       
           

@@ -33,12 +33,15 @@ class App extends Component {
     super(props);
     this.state = {
       currentZoom: 'Days',
-      messages: []
+      messages: [],
     };
 
     this.handleZoomChange = this.handleZoomChange.bind(this);
     this.logTaskUpdate = this.logTaskUpdate.bind(this);
     this.logLinkUpdate = this.logLinkUpdate.bind(this);
+
+    
+
   }
   
   addMessage(message) {
@@ -71,11 +74,7 @@ class App extends Component {
   
 
   updateTask(taska){
-    //console.log(taska)
-    //no tengo el id de la base de datos en el objeto. Tengo que incorporarlo. 
-    //const oneTask= Tasks.findOne({projectId:taska.projectId, orden:taska.orden})
-    //console.log(taska.projectId)
-    //console.log(taska.orden)
+
     Meteor.call('tasks.update', taska, (error, response) => {                
            if (error) {console.log(error)}          
            else {
@@ -150,19 +149,9 @@ class App extends Component {
         }        
     }
 
-     
+    
 
-  
-/*if (Tasks.insert({task})) {
-    this.addMessage("pinchooooooo")
-    console.log("pinchooooooo")
-  }
-else {
-  this.addMessage("insertazo")
-}  
-*/
-
- }
+   }
   logLinkUpdate(id, mode, link) {
     let message = `Link ${mode}: ${id}`;
     if (link) {
@@ -183,13 +172,13 @@ else {
 
 
   render() {
-     const { isLoading } = this.props;
+     const { isLoading,  } = this.props;
       if (isLoading) {    
         return (
           <LoadingSpinner/>
         )
       }  
-    //console.log(this.props.tasks)
+    console.log(this.props.tasks)
     gantt.config.buttons_left=["dhx_save_btn","dhx_cancel_btn","dhx_delete_btn"];    
     gantt.config.buttons_right = ["complete_button","go_task_btn"];
     gantt.locale.labels["go_task_btn"] = 'VER';
@@ -204,7 +193,7 @@ else {
 
           if(button_id == "go_task_btn"){
               var id = gantt.getState().lightbox;
-              console.log(id)
+             // console.log(id)
               browserHistory.push('/dashboard/projectinsert')
               //gantt.updateTask(id)
               gantt.hideLightbox();
@@ -241,14 +230,14 @@ else {
 export default AppContainer = withTracker(() => {      
     
     const subl = Meteor.subscribe('lastProject')
-    const subp = Meteor.subscribe('projects')
-    const suba = Meteor.subscribe('tasks', Session.get("projectLastId"));
+    const subp = Meteor.subscribe('projects')    
+    const suba = Meteor.subscribe('tasks', LastProject.findOne({userId: Meteor.userId()}).projectId)
     var isLoading = !(subl.ready() && subp.ready() && suba.ready());            
-
-    var isLoading = !suba.ready(); 
+    /*if (!isLoading) {
+        const subl = Meteor.subscribe('tasks', LastProject.findOne({userId: Meteor.userId()}).projectId)
+    }*/
     return {
-      tasks: Tasks.find({}, {           
-            sort: { orden: -1 } }).fetch(),
+      tasks: Tasks.find().fetch(),
       isLoading,      
       pid: LastProject.findOne({userId: Meteor.userId()}).projectId,
     };
