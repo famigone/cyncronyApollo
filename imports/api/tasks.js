@@ -59,7 +59,8 @@ Tasks.schema = new SimpleSchema({
             , optional: true }, //padre
   activo: { type: Boolean
           , defaultValue: true }, //borrado lógico
-  orden: { type: Number }, //id interno del componente
+  id: { type: Number }, //id interno del componente          
+  //orden: { type: Number }, //id interno del componente
   createdBy: {
         type: String,
         optional: true,

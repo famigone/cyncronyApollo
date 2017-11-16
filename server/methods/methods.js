@@ -74,7 +74,7 @@ export const updateLast = new ValidatedMethod({
 
 
 Meteor.publish('tasks', function(pid) {
-  return Tasks.find({projectId: pid});
+  return Tasks.find({projectId: pid, activo:true});
 });
 
 export const insert = new ValidatedMethod({
@@ -120,7 +120,7 @@ export const insertTask = new ValidatedMethod({
             , optional: true }, //padre
   activo: { type: Boolean
           , defaultValue: true }, //borrado lógico
-  orden: { type: Number }, //id interno del componente
+  id: { type: Number }, //id interno del componente
   createdBy: {
         type: String,
         optional: true,
@@ -158,7 +158,8 @@ export const updateTask = new ValidatedMethod({
             , optional: true }, //padre
   activo: { type: Boolean
           , defaultValue: true }, //borrado lógico
-  orden: { type: Number }, //id interno del componente
+  id: { type: Number }, //id interno del componente
+  //orden: { type: Number }, //id interno del componente
   createdBy: {
         type: String,
         optional: true,
@@ -172,14 +173,38 @@ export const updateTask = new ValidatedMethod({
   }).validator(),
   run(oneTask) {  
     //const oneTaskDb = Tasks.findOne({projectId:oneTask.projectId, orden:oneTasks.orden})
-    //console.log("la tarea orden es:"+ oneTask.orden)
+    //console.log("la tarea _id es:"+ oneTask._id)
+    //console.log("la tarea id es:"+ oneTask.id)
     //console.log("la tarea pid es:"+ oneTask.projectId)
-    Tasks.update({projectId:oneTask.projectId, orden:oneTask.orden}, {
+    Tasks.update({projectId:oneTask.projectId, id:oneTask.id}, {
       $set: { text: oneTask.text,
               start_date: oneTask.start_date,
               duration: oneTask.duration,
               progress: oneTask.progress
       },
+    });
+  },
+});
+
+
+
+export const deleteTask = new ValidatedMethod({
+  name: 'tasks.delete',
+  validate: new SimpleSchema({
+  projectId: { type: String
+             , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },  
+  id: { type: Number }, //id interno del componente
+  //orden: { type: Number }, //id interno del componente
+  }).validator(),
+  run(oneTask) {  
+    //const oneTaskDb = Tasks.findOne({projectId:oneTask.projectId, orden:oneTasks.orden})
+    //console.log("la tarea _id es:"+ oneTask._id)
+    //console.log("la tarea id es:"+ oneTask.id)
+    //console.log("la tarea pid es:"+ oneTask.projectId)
+    Tasks.update({projectId:oneTask.projectId, id:oneTask.id}, {
+      $set: { activo: false},
     });
   },
 });
@@ -191,7 +216,8 @@ const TODOS_METHODS = _.pluck([
   updateLast,
   insert,
   insertTask,
-  updateTask
+  updateTask,
+  deleteTask,
 ], 'name');
 
 if (Meteor.isServer) {

@@ -70,8 +70,8 @@ export default class Gantt extends Component {
     });
 
     gantt.attachEvent('onAfterTaskDelete', (id) => {
-      if(this.props.onTaskUpdated) {
-        this.props.onTaskUpdated(id, 'deleted');
+      if(this.props.onTaskDeleted) {
+        this.props.onTaskDeleted(id, 'deleted');
       }
     });
 
