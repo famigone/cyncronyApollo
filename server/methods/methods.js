@@ -74,6 +74,7 @@ export const updateLast = new ValidatedMethod({
 
 
 Meteor.publish('tasks', function(pid) {
+  console.log("Filtrando pid: "+pid)
   return Tasks.find({projectId: pid, activo:true});
 });
 

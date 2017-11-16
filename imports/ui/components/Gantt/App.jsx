@@ -34,6 +34,7 @@ class App extends Component {
     this.state = {
       currentZoom: 'Days',
       messages: [],
+      pid: Session.get("projectActual")
     };
 
     this.handleZoomChange = this.handleZoomChange.bind(this);
@@ -113,6 +114,11 @@ logTaskDelete (id, mode){
         }); 
            } 
           })
+}
+
+componentWillUnmount(){
+  console.log("desmontoooooooo")
+  this.props.tasks = null
 }
 
   logTaskUpdate(id, mode, task) {
@@ -204,16 +210,10 @@ logTaskDelete (id, mode){
         )
       }  
     //console.log(this.props.tasks)
-    this.configurarGantt()
+    this.configurarGantt()    
+    console.log(this.props.pid)    
+  
 // objeto con dos propiedades de tipo arreglo de objetos (una para task otra para links) 
-let datan = {
-  data: [
-    {id: 1, text: 'Task #1', start_date: '15-04-2017', duration: 3, progress: 0.6},
-    {id: 2, text: 'Task #2', start_date: '18-04-2017', duration: 4, progress: 0.4},    
-  ],
-  links: [{id: 1, source: 1, target: 2, type: '1'}]
-};
-
     let data = {data: this.props.tasks, 
                links: [{id: 1, source: 1, target: 2, type: '1'}]
                 }
@@ -250,5 +250,6 @@ export default AppContainer = withTracker(() => {
       tasks: Tasks.find().fetch(),
       isLoading,      
       pid: LastProject.findOne({userId: Meteor.userId()}).projectId,
+      
     };
   })(App);
