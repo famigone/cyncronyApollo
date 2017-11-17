@@ -74,6 +74,9 @@ Tasks.schema = new SimpleSchema({
 });
 
 
+
+
+
 Tasks.attachSchema(Tasks.schema);
 
 

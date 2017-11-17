@@ -4,7 +4,7 @@ import { Projects } from '/imports/api/projects.js';
 import Alert from 'react-s-alert';
 import { LastProject } from '/imports/api/lastProject.js';
 import { withTracker } from 'meteor/react-meteor-data';
-
+import LoadingSpinner from '../controls/LoadingSpinner';
 // Task component - represents a single todo item
  class Insert extends Component {
   constructor({ initialChecked }) {
@@ -61,19 +61,20 @@ notifyLastProject(pja){
 }
 
  onClick(newState) {
-    
-    this.setState({ id: newState }); // we update our state
-    this.props.callbackParent(newState); // we notify our parent    
-    const pja = Projects.findOne(newState)
-    Session.set( "projectActual", pja.codigo )
-    Session.set( "projectActualId", pja.id )
-    this.setLastProject(newState);
-    this.notifyLastProject(pja);
-    
+    if (!this.props.isLoading){
+        this.setState({ id: newState }); // we update our state
+        this.props.callbackParent(newState); // we notify our parent    
+        const pja = Projects.findOne(newState)
+        Session.set( "projectActual", pja.codigo )
+        Session.set( "projectActualId", pja._id )        
+        this.setLastProject(newState);
+        this.notifyLastProject(pja);
+    }
     
   }
 
   render() {
+
     return (
       <tr onClick={() => this.onClick(this.props.project._id)}>
       <td>{this.props.project.codigo}</td>

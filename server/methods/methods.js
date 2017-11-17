@@ -7,58 +7,6 @@ import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { Tasks } from '../../imports/api/tasks.js'
 import { LastProject } from '../../imports/api/lastProject.js'
 
-/**
- * Methods are used to run code on the server and optionally, send a response
- * to the client (ex: APIs, do computations, work with the DB, etc).
- * In Meteor, methods are functions defined as values of a simple
- * object that is in turn, passed to the Meteor.methods function
- */
-
-/*
-Meteor.methods({
-  'tasks.insert':function ({ nombre, inicio, duracion, avance, parentId, orden}) {
-  return Tasks.insert({
-      nombre, 
-      inicio, 
-      duracion, 
-      avance, 
-      parentId, 
-      orden, 
-     });
-},
-
-
-  'lastProject.insert':function ({ projectId, taskId}) {  
-  return LastProject.insert({
-      projectId,       
-      taskId
-     });
-  }, 
-  
-  'lastProject.update':function ({ userId, projectId, taskId}) {  
-  //console.log('en update: '+projectId)  
-  return LastProject.update(userId, {
-      $set: { projectId: projectId}
-              //taskId: taskId },
-    });
-
-  },  
-
-   export const upsertDocument = new ValidatedMethod({
-  name: 'documents.upsert',
-  validate: new SimpleSchema({
-    _id: { type: String, optional: true },
-    title: { type: String, optional: true },
-    body: { type: String, optional: true },
-  }).validator(),
-  run(document) {
-    return Documents.upsert({ _id: document._id }, { $set: document });
-  },
-});
-
-
-
-});*/
 
 export const updateLast = new ValidatedMethod({
   name: 'lastProject.updateLast',
@@ -73,10 +21,12 @@ export const updateLast = new ValidatedMethod({
 });
 
 
-Meteor.publish('tasks', function(pid) {
-  console.log("Filtrando pid: "+pid)
-  return Tasks.find({projectId: pid, activo:true});
+Meteor.publish('tasks', function() {
+  console.log("Resul: ")
+  return Tasks.find({activo:true});
+  
 });
+
 
 export const insert = new ValidatedMethod({
   name: 'lastProject.insert',
