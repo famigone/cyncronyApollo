@@ -21,13 +21,13 @@ import { withTracker } from 'meteor/react-meteor-data';
     //console.log(existe)
     if ((existe)){
        //si ya existe update
-      console.log("va a actualizar")
+      //console.log("va a actualizar")
       const ultimo = {newProjectId : pk}
                       //userId : Meteor.userId(),                 
                       //taskId : null
       Meteor.call('lastProject.updateLast', ultimo, (error, response) => {                
       if (error) {console.log(error.reason)}
-            else {console.log("todo un exito el update le puso:"+ultimo.projectId)}    
+            //else {console.log("todo un exito el update le puso:"+ultimo.projectId)}    
             })              
     }else{
      // console.log("va a insertar")
@@ -35,7 +35,7 @@ import { withTracker } from 'meteor/react-meteor-data';
                       taskId : null}
       Meteor.call('lastProject.insert', ultimo, (error, response) => {      
             if (error) {console.log(error.reason)}
-            else {console.log("La tarea fue agregada")}    
+            //else {console.log("La tarea fue agregada")}    
             })              
   }  
 

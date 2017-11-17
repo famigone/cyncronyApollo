@@ -135,6 +135,7 @@ export const insertTask = new ValidatedMethod({
   }).validator()
 ,  run(oneTask) {      
     //console.log(oneTask)
+    oneTask.activo = true
     Tasks.insert(oneTask);
   },
 });

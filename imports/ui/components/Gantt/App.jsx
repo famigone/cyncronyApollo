@@ -130,7 +130,7 @@ componentWillUnmount(){
       parent:Number(task.parent) ,
       id:Number(task.id) ,
       projectId: this.props.pid, 
-      activo: task.activo, 
+      activo: task.activo||true, 
       id: task.id, 
 
     }
@@ -245,7 +245,7 @@ export default AppContainer = withTracker(() => {
     const subp = Meteor.subscribe('projects')    
     const suba = Meteor.subscribe('tasks', LastProject.findOne({userId: Meteor.userId()}).projectId)
     var isLoading = !(subl.ready() && subp.ready() && suba.ready());            
-
+    if (!isLoading) {console.log("Recalculando con " + Session.get("projectActual"))}//LastProject.findOne({userId: Meteor.userId()}).codigo)}    
     return {
       tasks: Tasks.find().fetch(),
       isLoading,      
