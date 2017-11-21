@@ -72,10 +72,10 @@ componentWillUnmount() {
   
 }
   componentDidMount() {
-  console.log("flag: "+gantt.flag)
+  //console.log("flag: "+gantt.flag)
   if (!gantt.flag) {
     gantt.flag = true;
-    console.log("flag: "+gantt.flag)
+    //console.log("flag: "+gantt.flag)
     gantt.attachEvent('onAfterTaskAdd', (id, task) => {
       if(this.props.onTaskUpdated) {
         this.props.onTaskUpdated(id, 'inserted', task);

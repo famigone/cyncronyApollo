@@ -237,12 +237,13 @@ export default AppContainer = withTracker(() => {
     const subl = Meteor.subscribe('lastProject')
     const subp = Meteor.subscribe('projects')    
     const suba = Meteor.subscribe('tasks', LastProject.findOne({userId: Meteor.userId()}).projectId)
+    pid = LastProject.findOne({userId: Meteor.userId()}).projectId
     var isLoading = !(subl.ready() && subp.ready() && suba.ready());            
     //if (!isLoading) {console.log("Recalculando con " + Session.get("projectActual"))}//LastProject.findOne({userId: Meteor.userId()}).codigo)}    
     return {
-      tasks: Tasks.find().fetch(),
+      tasks: Tasks.find({projectId:pid}).fetch(),
       isLoading,      
-      pid: LastProject.findOne({userId: Meteor.userId()}).projectId,
+      pid: pid,
       
     };
   })(App);
