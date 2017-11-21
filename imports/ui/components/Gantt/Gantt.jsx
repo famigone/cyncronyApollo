@@ -4,11 +4,13 @@ import 'dhtmlx-gantt';
 import 'dhtmlx-gantt/codebase/dhtmlxgantt.css';
 
 export default class Gantt extends Component {
+
   constructor(props){
     super(props);
-
+    
+    
   }
-
+   
   setZoom(value){
     switch (value){
       case 'Horas':
@@ -55,8 +57,7 @@ export default class Gantt extends Component {
 
   shouldComponentUpdate(nextProps ){
     return this.props.zoom !== nextProps.zoom;
-    console.log("ComponentUpdate")
-    console.log("Cant "+gantt.getTaskCount())
+    
   }
 
   componentDidUpdate() {
@@ -71,8 +72,10 @@ componentWillUnmount() {
   
 }
   componentDidMount() {
-    //console.log("DidMount")
-    //console.log("Cant "+gantt.getTaskCount())
+  console.log("flag: "+gantt.flag)
+  if (!gantt.flag) {
+    gantt.flag = true;
+    console.log("flag: "+gantt.flag)
     gantt.attachEvent('onAfterTaskAdd', (id, task) => {
       if(this.props.onTaskUpdated) {
         this.props.onTaskUpdated(id, 'inserted', task);
@@ -109,9 +112,10 @@ componentWillUnmount() {
         this.props.onLinkUpdated(id, 'deleted');
       }
     });
+  }
     gantt.init(this.ganttContainer);
     gantt.parse(this.props.tasks);
-    console.log(this.props.tasks)
+    //console.log(this.props.tasks)
   }
 
   render() {    
