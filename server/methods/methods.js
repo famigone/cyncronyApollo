@@ -22,7 +22,8 @@ export const updateLast = new ValidatedMethod({
 
 
 Meteor.publish('tasks', function() {
-  console.log("Resul: ")
+  //console.log("Resul: "+pid)
+  //return Tasks.find({activo:true, projectId: pid});
   return Tasks.find({activo:true});
   
 });

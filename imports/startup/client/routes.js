@@ -17,6 +17,7 @@ import ProjectNew from '../../ui/components/ProjectNew/ProjectNew';
 import ProjectInsert from '../../ui/components/ProjectNew/ProjectInsert';
 import App from '../../ui/components/Gantt/App';
 
+
 export const requireAuth = (nextState, replace) => {
   // No user is authenticated redirect ro index
   if (Meteor.user() === null) {
