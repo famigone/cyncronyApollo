@@ -3,6 +3,7 @@ import Gantt from './Gantt';
 import Toolbar from './Toolbar';
 import MessageArea from './MessageArea';
 import { Tasks } from '../../../api/tasks.js'
+import { Links } from '../../../api/links.js'
 import './App1.css';
 import Alert from 'react-s-alert';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
@@ -16,12 +17,6 @@ let datal = {
   data: [
     {id: 1, text: 'Task #1', start_date: '15-04-2017', duration: 3, progress: 0.6},
     {id: 2, text: 'Task #2', start_date: '18-04-2017', duration: 4, progress: 0.4},
-    {id: 3, text: 'Task #1', start_date: '19-04-2017', duration: 6, progress: 0.6},
-    {id: 4, text: 'Task #2', start_date: '21-04-2017', duration: 7, progress: 0.4},
-    {id: 5, text: 'Task #1', start_date: '25-04-2017', duration: 2, progress: 0.6},
-    {id: 6, text: 'Task #2', start_date: '28-04-2017', duration: 9, progress: 0.4},
-    {id: 7, text: 'Task #1', start_date: '31-04-2017', duration: 3, progress: 0.6},
-    {id: 8, text: 'Task #2', start_date: '01-05-2017', duration: 5, progress: 0.4},
   ],
   links: [
     {id: 1, source: 1, target: 2, type: '1'}
@@ -42,6 +37,7 @@ class App extends Component {
     this.logTaskUpdate = this.logTaskUpdate.bind(this);
     this.logTaskDelete = this.logTaskDelete.bind(this);
     this.logLinkUpdate = this.logLinkUpdate.bind(this);
+    this.logLinkDelete = this.logLinkDelete.bind(this);
 
     
 
@@ -89,10 +85,11 @@ class App extends Component {
 
   
 logTaskDelete (id, mode){
+
       taska = {
         id:id,
         projectId : this.props.pid
-      }
+      }      
       Meteor.call('tasks.delete', taska, (error, response) => {                          
            if (error) {console.log(error)}          
            else {
@@ -108,10 +105,9 @@ logTaskDelete (id, mode){
           })
 }
 
-/*componentWillUnmount(){
-  console.log("desmontoooooooo")
-  this.props.tasks = null
-}*/
+
+
+
 
   logTaskUpdate(id, mode, task) {
     const taska = {      
@@ -126,9 +122,7 @@ logTaskDelete (id, mode){
       id: task.id, 
 
     }
-    //if (!this.props.isLoading) console.log(this.props.pid)
-    //console.log(Session.get("projectActual"))
-    var alerta= ''; 
+    
     switch(mode) { 
         case 'inserted': { 
           this.insertTask(taska)
@@ -139,7 +133,7 @@ logTaskDelete (id, mode){
           break;  
         }  
         case 'deleted': {
-        
+           this.deleteTask(taska)        
         break;  
         }        
     }
@@ -147,12 +141,93 @@ logTaskDelete (id, mode){
     
 
    }
+
+
+/*******************************LINKS************************************/
+
+insertLink(linka){
+  
+          Meteor.call('links.insert', linka, (error, response) => {                 
+          if (error) {console.log(error)}                    
+          else{Alert.info("El link fue agregado!", {
+            position: 'bottom-right',
+            effect: 'scale',  
+            beep: false,
+            timeout: 3000,
+            offset: 0
+        });}
+          })          
+        }
+          
+  
+
+  updateLink(linka){
+
+    Meteor.call('links.update', linka, (error, response) => {                          
+           if (error) {console.log(error)}          
+           else {
+            Alert.info("El Link fue modificado!", {
+            position: 'bottom',
+            effect: 'scale',
+            //onShow: function () {//console.log('aye!')},
+            beep: false,
+            timeout: 3000,
+            offset: 0
+        }); 
+           } 
+          })
+            
+  }
+
+  
+logLinkDelete (id, mode){
+
+      linka = {
+        id:Number (id),
+        projectId : this.props.pid
+      }      
+      Meteor.call('links.delete', linka, (error, response) => {                          
+           if (error) {console.log(error)}          
+           else {
+            Alert.info("El link fue eliminado!", {
+            position: 'bottom',
+            effect: 'scale',
+            //onShow: function () {//console.log('aye!')},
+            beep: false,
+            timeout: 3000,
+            offset: 0
+        }); 
+           } 
+          })
+}
+
+
   logLinkUpdate(id, mode, link) {
-    let message = `Link ${mode}: ${id}`;
-    if (link) {
-      message += ` ( source: ${link.source}, target: ${link.target} )`;
+     const linka = {      
+     type:link.type ,
+      source:link.source ,
+      target:link.target ,      
+      projectId: this.props.pid, 
+      activo: link.activo||true, 
+      id: link.id, 
+
     }
-    this.addMessage(message)
+    
+    switch(mode) { 
+        case 'inserted': { 
+          this.insertLink(linka)
+          break; 
+        } 
+        case 'updated': {          
+          this.updateLink(linka)
+          break;  
+        }  
+        case 'deleted': {
+           this.deleteLink(linka)        
+        break;  
+        }        
+    }
+
   }
 
   handleZoomChange(zoom) {
@@ -207,8 +282,9 @@ logTaskDelete (id, mode){
     //console.log(this.props.tasks)    
   
 // objeto con dos propiedades de tipo arreglo de objetos (una para task otra para links) 
-    let data = {data: this.props.tasks, 
-               links: [{id: 1, source: 1, target: 2, type: '1'}]
+    let data = {
+               data : this.props.tasks, 
+               links: this.props.links, 
                 }
     return (
 
@@ -222,8 +298,10 @@ logTaskDelete (id, mode){
             tasks={data}
             zoom={this.state.currentZoom}
             onTaskUpdated={this.logTaskUpdate}
-            //onTaskDeleted={this.logTaskDelete}
+            onTaskDeleted={this.logTaskDelete}
             onLinkUpdated={this.logLinkUpdate}
+            onLinkDeleted={this.logLinkDelete}
+            
           />
         </div>
          {/*<MessageArea messages={this.state.messages}/> */}
@@ -233,15 +311,17 @@ logTaskDelete (id, mode){
 }
 
 export default AppContainer = withTracker(() => {      
-    
+        
     const subl = Meteor.subscribe('lastProject')
-    const subp = Meteor.subscribe('projects')    
-    const suba = Meteor.subscribe('tasks', LastProject.findOne({userId: Meteor.userId()}).projectId)
     pid = LastProject.findOne({userId: Meteor.userId()}).projectId
-    var isLoading = !(subl.ready() && subp.ready() && suba.ready());            
+    const subp = Meteor.subscribe('projects')    
+    const suba = Meteor.subscribe('tasks', pid)
+    const subi = Meteor.subscribe('links', pid)    
+    var isLoading = !(subl.ready() && subp.ready() && suba.ready() && subi.ready());            
     //if (!isLoading) {console.log("Recalculando con " + Session.get("projectActual"))}//LastProject.findOne({userId: Meteor.userId()}).codigo)}    
     return {
       tasks: Tasks.find({projectId:pid}).fetch(),
+      links: Links.find({projectId:pid}).fetch(),
       isLoading,      
       pid: pid,
       

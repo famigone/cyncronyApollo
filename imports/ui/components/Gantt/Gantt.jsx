@@ -108,8 +108,8 @@ componentWillUnmount() {
     });
 
     gantt.attachEvent('onAfterLinkDelete', (id, link) => {
-      if(this.props.onLinkUpdated) {
-        this.props.onLinkUpdated(id, 'deleted');
+      if(this.props.onLinkDeleted) {
+        this.props.onLinkDeleted(id, 'deleted');
       }
     });
   }

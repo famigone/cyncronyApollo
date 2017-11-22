@@ -6,7 +6,7 @@ export const Tasks = new Mongo.Collection('tasks');
 
 // Deny all client-side updates since we will be using methods to manage this collection
 Tasks.deny({
-  insert() { return false ; },
+  insert() { return true; },
   update() { return true; },
   remove() { return true; },
 });

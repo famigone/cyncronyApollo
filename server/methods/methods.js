@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor'
-
 import { _ } from 'meteor/underscore';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { Tasks } from '../../imports/api/tasks.js'
+import { Links } from '../../imports/api/links.js'
 import { LastProject } from '../../imports/api/lastProject.js'
 
 
@@ -22,9 +22,12 @@ export const updateLast = new ValidatedMethod({
 
 
 Meteor.publish('tasks', function() {
-  //console.log("Resul: "+pid)
-  //return Tasks.find({activo:true, projectId: pid});
   return Tasks.find({activo:true});
+  
+});
+
+Meteor.publish('links', function() {
+  return Links.find({activo:true});
   
 });
 
@@ -92,6 +95,64 @@ export const insertTask = new ValidatedMethod({
 });
 
 
+export const insertLink = new ValidatedMethod({
+  name: 'links.insert',
+  validate: new SimpleSchema({
+    id: { type: Number },
+  source: { type: String },
+  target: { type: String },              
+  type: { type: String}, 
+  projectId: {type: String} ,
+  activo: { type: Boolean
+          , defaultValue: true }, //borrado lógico
+  }).validator()
+,  run(oneLink) {      
+    //console.log(oneTask)
+    oneLink.activo = true
+    Links.insert(oneLink);
+  },
+});
+
+export const updateLink = new ValidatedMethod({
+   name: 'links.update',
+  validate: new SimpleSchema({
+    id: { type: Number },
+  source: { type: String },
+  projectId: {type: String},
+  target: { type: String },              
+  type: { type: String},  
+  activo: { type: Boolean
+          , defaultValue: true }, //borrado lógico
+  }).validator(),
+  run(oneLink) {  
+
+    Links.update({projectId:oneLink.projectId, id:oneLink.id}, {
+      $set: { source: oneLink.source,
+              target: oneLink.target,                          
+      },
+    });
+  },
+});
+
+
+
+export const deleteLink = new ValidatedMethod({
+  name: 'links.delete',
+  validate: new SimpleSchema({
+  projectId: { type: String
+             , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },  
+  id: { type: Number }, //id interno del componente
+  //orden: { type: Number }, //id interno del componente
+  }).validator(),
+  run(oneLink) {  
+    
+    Links.update({projectId:oneLink.projectId, id:oneLink.id}, {
+      $set: { activo: false},
+    });
+  },
+});
 
 export const updateTask = new ValidatedMethod({
   name: 'tasks.update',
@@ -125,10 +186,7 @@ export const updateTask = new ValidatedMethod({
     },
   }).validator(),
   run(oneTask) {  
-    //const oneTaskDb = Tasks.findOne({projectId:oneTask.projectId, orden:oneTasks.orden})
-    //console.log("la tarea _id es:"+ oneTask._id)
-    //console.log("la tarea id es:"+ oneTask.id)
-    //console.log("la tarea pid es:"+ oneTask.projectId)
+
     Tasks.update({projectId:oneTask.projectId, id:oneTask.id}, {
       $set: { text: oneTask.text,
               start_date: oneTask.start_date,
@@ -151,11 +209,7 @@ export const deleteTask = new ValidatedMethod({
   id: { type: Number }, //id interno del componente
   //orden: { type: Number }, //id interno del componente
   }).validator(),
-  run(oneTask) {  
-    //const oneTaskDb = Tasks.findOne({projectId:oneTask.projectId, orden:oneTasks.orden})
-    //console.log("la tarea _id es:"+ oneTask._id)
-    //console.log("la tarea id es:"+ oneTask.id)
-    //console.log("la tarea pid es:"+ oneTask.projectId)
+  run(oneTask) {      
     Tasks.update({projectId:oneTask.projectId, id:oneTask.id}, {
       $set: { activo: false},
     });
@@ -164,8 +218,7 @@ export const deleteTask = new ValidatedMethod({
 
 
 // Get list of all method names on Todos
-const TODOS_METHODS = _.pluck([
-  
+const TODOS_METHODS = _.pluck([  
   updateLast,
   insert,
   insertTask,
