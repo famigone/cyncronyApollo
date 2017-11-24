@@ -255,7 +255,7 @@ logLinkDelete (id, mode){
           if(button_id == "go_task_btn"){
               var id = gantt.getState().lightbox;
              // console.log(id)
-              browserHistory.push('/dashboard/projectinsert')
+              browserHistory.push('/dashboard/board/'+id)
               //gantt.updateTask(id)
               gantt.hideLightbox();
 

@@ -16,7 +16,7 @@ import ProjectList from '../../ui/components/ProjectList/ProjectList';
 import ProjectNew from '../../ui/components/ProjectNew/ProjectNew';
 import ProjectInsert from '../../ui/components/ProjectNew/ProjectInsert';
 import App from '../../ui/components/Gantt/App';
-import Board from '../../ui/components/Boards/Board';
+import TaskBoard from '../../ui/components/Boards/Board';
 
 
 export const requireAuth = (nextState, replace) => {
@@ -41,7 +41,7 @@ export const Routes = () => (
         <Route path="projectnew" name="projectnew" component={ProjectNew} />
         <Route path="projectinsert" name="projectinsert" component={ProjectInsert} />
         <Route path="tasks" name="tasks" component={ListaTarea} />
-        <Route path="boards/:id" name="boards" component={Board} />
+        <Route path="board/:id" name="boards" component={TaskBoard} />
 
       </Route>
     </Route>
