@@ -11,7 +11,6 @@ export class BoardHead extends Component {
   render() {
    const progress = parseInt(this.props.taska.progress * 100)  
    return (
-        		
    <div className="info-box bg-aqua">
             <span className="info-box-icon"><i className="fa fa-circle-o" /></span>
 
@@ -29,7 +28,7 @@ export class BoardHead extends Component {
 
           </div>
 
-      
+
       
 
     );

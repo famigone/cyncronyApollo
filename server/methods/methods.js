@@ -4,6 +4,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { Tasks } from '../../imports/api/tasks.js'
+import { BoardCards } from '../../imports/api/boardCards.js'
 import { Links } from '../../imports/api/links.js'
 import { LastProject } from '../../imports/api/lastProject.js'
 
@@ -20,7 +21,9 @@ export const updateLast = new ValidatedMethod({
   },
 });
 
-
+/***********************************************************************************/
+/*****************************PUBLISH********************************************/
+/***********************************************************************************/
 Meteor.publish('tasks', function() {
   return Tasks.find({activo:true});
   
@@ -30,6 +33,57 @@ Meteor.publish('links', function() {
   return Links.find({activo:true});
   
 });
+
+Meteor.publish('boardCards', function() {
+  return BoardCards.find({activo:true});
+  
+});
+/***********************************************************************************/
+/***********************************************************************************/
+/***********************************************************************************/
+
+export const insertBoardCard = new ValidatedMethod({
+  name: 'boardCards.insert',
+  validate: new SimpleSchema({
+  title: { type: String },
+  description: { type: String },
+  limite_date: {
+        type: Date,
+        optional: true,
+        autoValue: function(){ return null }
+    },
+  solved: { type: Boolean
+           ,optional: true
+        ,autoValue: function(){ return false } },            
+  projectId: { type: String
+             , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },  
+  taskId: { type: Number
+             , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },             
+  activo: { type: Boolean
+          , optional: true
+          , autoValue: function(){ return true }}, //borrado lógico
+  createdBy: {
+        type: String,
+        optional: true,
+        autoValue: function(){ return this.userId }
+    },
+  createdAt: {
+        type: Date,
+        optional: true,
+        autoValue: function(){ return new Date() }
+    }
+  }).validator()
+,  run(oneCard) {      
+    //console.log(oneTask)
+    oneCard.activo = true
+    BoardCards.insert(oneCard);
+  },
+});
+
 
 
 export const insert = new ValidatedMethod({

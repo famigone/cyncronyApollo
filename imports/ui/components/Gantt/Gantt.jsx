@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import 'dhtmlx-gantt';
 import 'dhtmlx-gantt/codebase/dhtmlxgantt.css';
-
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 export default class Gantt extends Component {
 
   constructor(props){
@@ -94,6 +94,30 @@ componentWillUnmount() {
         this.props.onTaskDeleted(id, 'deleted');
       }
     });
+/*******************************************************************/
+gantt.attachEvent("onLightboxButton", function(button_id, node, e){
+       if(button_id == "complete_button"){
+              var id = gantt.getState().lightbox;
+              gantt.getTask(id).progress = 1;
+              gantt.updateTask(id);
+              gantt.hideLightbox();
+        }
+
+          if(button_id == "go_task_btn"){
+              var id = gantt.getState().lightbox;
+              console.log(id)
+              browserHistory.push('/dashboard/board/'+id)
+              //gantt.updateTask(id)
+              gantt.hideLightbox();
+
+
+              //this.props.history.push('/some/path')
+              //gantt.getTask(id).progress = 1;
+              //gantt.updateTask(id);
+              //gantt.hideLightbox();
+          }
+      });
+
 /*******************************************************************/
     gantt.attachEvent('onAfterLinkAdd', (id, link) => {
       if(this.props.onLinkUpdated) {

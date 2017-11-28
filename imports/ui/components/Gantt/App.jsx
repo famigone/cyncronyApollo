@@ -244,28 +244,7 @@ logLinkDelete (id, mode){
 
    
 
-    gantt.attachEvent("onLightboxButton", function(button_id, node, e){
-       if(button_id == "complete_button"){
-              var id = gantt.getState().lightbox;
-              gantt.getTask(id).progress = 1;
-              gantt.updateTask(id);
-              gantt.hideLightbox();
-        }
-
-          if(button_id == "go_task_btn"){
-              var id = gantt.getState().lightbox;
-             // console.log(id)
-              browserHistory.push('/dashboard/board/'+id)
-              //gantt.updateTask(id)
-              gantt.hideLightbox();
-
-
-              //this.props.history.push('/some/path')
-              //gantt.getTask(id).progress = 1;
-              //gantt.updateTask(id);
-              //gantt.hideLightbox();
-          }
-      });
+    
   }
 
 
