@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Projects } from '/imports/api/projects';
 import { Tasks } from '/imports/api/tasks';
+import { BoardCards } from '/imports/api/boardCards';
 import { LastProject } from '/imports/api/lastProject';
 import { withTracker } from 'meteor/react-meteor-data';
 import { BoardHead } from './BoardHead';
@@ -14,86 +15,42 @@ import Alert from 'react-s-alert';
 
 
 export class TaskBoard extends Component {
-
  constructor(props) {
     super(props);
-    this.state = {      
-      boardData:  {
-  lanes: [
-    {
-      id: 'lane1',
-      title: 'Planned Tasks',
-      label: '2/2',
-      cards: [
-        {id: 'Card1', title: 'Write Blog', description: 'Can AI make memes', label: '30 mins'},
-      {id: 'Card2', title: 'Pay Rent', description: 'Transfer via NEFT', label: '5 mins', metadata: {sha: 'be312a1'}}
-      ]
-    },
-    {
-      id: 'lane2',
-      title: 'Completed',
-      label: '0/0',
-      cards: []
-    }
-  ]
-}
-   
-    };
   }
 
+renderCards(){
 
-
-
-
-  render() {
-    const data = {
-  lanes: [
-    {
-      id: 'lane1',
-      title: 'Planned Tasks',
-      label: '2/2',
-      cards: [
-        {id: 'Card1', title: 'Write Blog', description: 'Can AI make memes', label: '30 mins'},
-      {id: 'Card2', title: 'Pay Rent', description: 'Transfer via NEFT', label: '5 mins', metadata: {sha: 'be312a1'}}
-      ]
-    },
-    {
-      id: 'lane2',
-      title: 'Completed',
-      label: '0/0',
-      cards: []
-    }
-  ]
+	return this.props.cards.map((card) => (
+	<div  style={{margin:5}}>	
+       <BoardCard     
+       	  key={card._id} 	
+          card={card} 
+      />
+    </div>  
+     ));
 }
-      const { isLoading,  } = this.props;
+
+  render() {   
+      const { isLoading, cards } = this.props;
       if (isLoading) {    
         return (
           <LoadingSpinner/>
         )
       }     
-     //console.log(this.props.taska) 
     return (
-      //this.cabecera() 
-      <div>
-
-          
-            <BoardHead taska={this.props.taska}/>      
-          
-
+    <div>	
+    <BoardHead taska={this.props.taska}/>                                         
+    		<div>
             <BoardActions 
                 pid={this.props.pid} 
                 tid={this.props.id}
-            />             
-
-
-       
-                    <div style={{margin: 10}}>
-                      <BoardCard/>
-                    </div>
-      </div>
-      
-    
-
+            /> 
+            </div>            
+            <div className="row">                          
+                {this.renderCards()}                    
+        	</div>
+      </div>    
     );
   }
 }
@@ -105,21 +62,22 @@ export class TaskBoard extends Component {
    
  };*/
 
-export default TaskBoardContainer = withTracker(({ params: { id } }) => {      
+export default BoardContainer = withTracker(({ params: { id } }) => {      
         
     const subl = Meteor.subscribe('lastProject')
     pid = LastProject.findOne({userId: Meteor.userId()}).projectId
     const subp = Meteor.subscribe('projects')    
-    //const subt = Meteor.subscribe('tasks', pid)    
     const subt = Meteor.subscribe('tasks') 
-    //const aidiso = Number(id) 
-    const taska = Tasks.findOne({id:parseInt(id)});     
-    var isLoading = !(subp.ready() && subt.ready()); 
+    const subb = Meteor.subscribe('boardCards') 
+    const taska = Tasks.findOne({id:parseInt(id)});         
+    const cards = BoardCards.find().fetch({projectId:pid, taskId:id});
+    var isLoading = !(subp.ready() && subt.ready() && subb.ready());     
     //if (!isLoading) {console.log("EL ID ESSSSSSSSSSSS:"+ Tasks.findOne(id).text)   }
     return {
       taska: taska,            
       isLoading,      
       pid: pid,      
-      id:id
+      id:id,
+      cards: cards
     };
   })(TaskBoard);

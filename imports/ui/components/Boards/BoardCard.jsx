@@ -13,15 +13,15 @@ export class BoardCard extends Component {
   
    return (
         		
- <div className="row">
-        <div className="col-md-3">
+ 
+         <div className="col-md-4 col-sm-6 col-xs-12">
 
           <div className="box box-widget">
             <div className="box-header with-border">
               <div className="user-block">
                 <img className="img-circle" src="/img/user2-160x160.jpg" alt="User Image"/>
-                <span className="username"><a href="#">Jonathan Burke Jr.</a></span>
-                <span className="description">Shared publicly - 7:30 PM Today</span>
+                <span className="username"><a href="#">{this.props.card.title}</a></span>
+                <span className="description">{this.props.card.createdBy} - 7:30 PM Today</span>
               </div>
 
               <div className="box-tools">
@@ -37,7 +37,7 @@ export class BoardCard extends Component {
             <div className="box-body">
               <img className="img-responsive pad" src="../dist/img/photo2.png" alt="Photo"/>
 
-              <p>I took this photo this morning. What do you guys think?</p>
+              <p>{this.props.card.text}</p>
               <button type="button" className="btn btn-default btn-xs"><i className="fa fa-share"></i> Share</button>
               <button type="button" className="btn btn-default btn-xs"><i className="fa fa-thumbs-o-up"></i> Like</button>
               <span className="pull-right text-muted">127 likes - 3 comments</span>
@@ -67,7 +67,7 @@ export class BoardCard extends Component {
 
         
 
-      </div>
+  
      
       
 
@@ -75,9 +75,9 @@ export class BoardCard extends Component {
   }
 }
 
-/*Board.propTypes = {
+/*BoardCard.propTypes = {
       
-  id: React.PropTypes.number, 
-  isLoading: React.PropTypes.bool
+  card: React.PropTypes.object, 
    
- };*/
+ };
+*/

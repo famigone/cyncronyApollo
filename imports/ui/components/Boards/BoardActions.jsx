@@ -65,7 +65,7 @@ export class BoardActions extends Component {
     );
 
     return (
-      <div style={{margin: 10}}>
+      <div style={{margin: 5}}>
 
         <button onClick={this.open} className="btn  bg-navy btn-flat"><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
 
