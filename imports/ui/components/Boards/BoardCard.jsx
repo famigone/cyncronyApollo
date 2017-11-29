@@ -10,9 +10,15 @@ import Alert from 'react-s-alert';
 
 export class BoardCard extends Component {
   render() {
-  
-   return (
-        		
+  console.log(this.props.user)  
+  const { isLoading } = this.props;
+      if (isLoading) {    
+        return (
+          <LoadingSpinner/>
+        )
+      }   
+
+   return (        		
  
          <div className="col-md-4 col-sm-6 col-xs-12">
 
@@ -21,7 +27,7 @@ export class BoardCard extends Component {
               <div className="user-block">
                 <img className="img-circle" src="/img/user2-160x160.jpg" alt="User Image"/>
                 <span className="username"><a href="#">{this.props.card.title}</a></span>
-                <span className="description">{this.props.card.createdBy} - 7:30 PM Today</span>
+                <span className="description">{this.props.card.createdBy}{this.props.user} - 7:30 PM Today</span>
               </div>
 
               <div className="box-tools">
@@ -35,12 +41,12 @@ export class BoardCard extends Component {
             </div>
 
             <div className="box-body">
-              <img className="img-responsive pad" src="../dist/img/photo2.png" alt="Photo"/>
+             {/*  <img className="img-responsive pad" src="../dist/img/photo2.png" alt="Photo"/> */}
 
-              <p>{this.props.card.text}</p>
+              <p>{this.props.card.description}</p>
               <button type="button" className="btn btn-default btn-xs"><i className="fa fa-share"></i> Share</button>
               <button type="button" className="btn btn-default btn-xs"><i className="fa fa-thumbs-o-up"></i> Like</button>
-              <span className="pull-right text-muted">127 likes - 3 comments</span>
+              <span className="pull-right text-muted">lalalal - 3 comments</span>
             </div>
 
             <div className="box-footer box-comments">
@@ -81,3 +87,15 @@ export class BoardCard extends Component {
    
  };
 */
+export default BoardCardContainer = withTracker(({ params: { card } }) => {      
+            
+    const subb = Meteor.subscribe('boardCards')         
+    const suba = Meteor.subscribe('users');
+    var isLoading = !(suba.ready() && subb.ready());     
+    //if (!isLoading) {console.log("EL ID ESSSSSSSSSSSS:"+ Tasks.findOne(id).text)   }
+    return {      
+      user: Meteor.users.findOne(card.createdBy),
+      isLoading: isLoading,
+      card: card
+    };
+  })(BoardCard);

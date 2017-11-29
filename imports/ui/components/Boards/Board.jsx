@@ -14,7 +14,7 @@ import Alert from 'react-s-alert';
 
 
 
-export class TaskBoard extends Component {
+export class Board extends Component {
  constructor(props) {
     super(props);
   }
@@ -22,7 +22,7 @@ export class TaskBoard extends Component {
 renderCards(){
 
 	return this.props.cards.map((card) => (
-	<div  style={{margin:5}}>	
+	<div key={card._id}  style={{margin:5}}>	
        <BoardCard     
        	  key={card._id} 	
           card={card} 
@@ -70,7 +70,8 @@ export default BoardContainer = withTracker(({ params: { id } }) => {
     const subt = Meteor.subscribe('tasks') 
     const subb = Meteor.subscribe('boardCards') 
     const taska = Tasks.findOne({id:parseInt(id)});         
-    const cards = BoardCards.find().fetch({projectId:pid, taskId:id});
+    const cards = BoardCards.find({}, 
+                    {sort: { createdAt: -1 } }).fetch()
     var isLoading = !(subp.ready() && subt.ready() && subb.ready());     
     //if (!isLoading) {console.log("EL ID ESSSSSSSSSSSS:"+ Tasks.findOne(id).text)   }
     return {
@@ -80,4 +81,4 @@ export default BoardContainer = withTracker(({ params: { id } }) => {
       id:id,
       cards: cards
     };
-  })(TaskBoard);
+  })(Board);
