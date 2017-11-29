@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Alert from 'react-s-alert';
 import { BoardCards } from '/imports/api/boardCards';
-import { Modal, Popover, Tooltip, OverlayTrigger, FormControl } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
+import { Button, Modal, Popover, Tooltip, OverlayTrigger, FormControl } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 
 
@@ -52,6 +51,7 @@ export class BoardActions extends Component {
      ReactDOM.findDOMNode(this.refs.description).value = '';
      this.close()
    }
+
   render() {
     const popover = (
       <Popover id="modal-popover" title="popover">

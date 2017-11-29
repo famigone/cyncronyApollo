@@ -5,6 +5,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { Tasks } from '../../imports/api/tasks.js'
 import { BoardCards } from '../../imports/api/boardCards.js'
+import { BoardCardComments } from '../../imports/api/boardCardComments.js'
 import { Links } from '../../imports/api/links.js'
 import { LastProject } from '../../imports/api/lastProject.js'
 
@@ -39,10 +40,48 @@ Meteor.publish('boardCards', function() {
   
 });
 
+Meteor.publish('boardCardComments', function() {
+  return BoardCardComments.find({activo:true});
+  
+});
 
 /***********************************************************************************/
 /***********************************************************************************/
 /***********************************************************************************/
+
+export const insertBoardCardComments = new ValidatedMethod({
+  name: 'boardCardComments.insert',
+  validate: new SimpleSchema({
+  
+  text: { type: String },  
+  boardCardId: { type: String
+             , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },  
+  taskId: { type: Number
+          , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },             
+  activo: { type: Boolean
+          , optional: true
+          , autoValue: function(){ return true }}, //borrado lógico
+  createdBy: {
+        type: String,
+        optional: true,
+        autoValue: function(){ return this.userId }
+    },
+  createdAt: {
+        type: Date,
+        optional: true,
+        autoValue: function(){ return new Date() }
+    },
+  }).validator()
+,  run(oneCard) {      
+    //console.log(oneTask)
+    oneCard.activo = true
+    BoardCardComments.insert(oneCard);
+  },
+});
 
 export const insertBoardCard = new ValidatedMethod({
   name: 'boardCards.insert',

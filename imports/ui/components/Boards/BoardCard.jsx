@@ -7,10 +7,107 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { BoardCardComment } from './BoardCardComment';
 import LoadingSpinner from '../controls/LoadingSpinner';
 import Alert from 'react-s-alert';
-
+import { Button, Modal, Popover, Tooltip, OverlayTrigger, FormControl } from 'react-bootstrap';
+import ReactDOM from 'react-dom';
 export class BoardCard extends Component {
+   constructor() {
+    super();
+    
+    this.state = { showModal: false };
+    this.open = this.open.bind(this)
+    this.close = this.close.bind(this)
+  }
+renderComments(){
+  console.log("Comentarios: "+this.props.comments)
+  if (this.props.comments){
+      return this.props.comments.map((comment) => (
+      <div key={comment._id}>    
+         <BoardCardComment
+            comment={comment}
+          />
+      </div>  
+     ));
+   }   
+  }
+
+
+  close() {
+    this.setState({ showModal: false });    
+  }
+
+  open() {
+    this.setState({ showModal: true });
+  }
+
+ handleSubmit(event) {
+     event.preventDefault();
+    // console.log(this.props.tid)
+
+     const comment = ReactDOM.findDOMNode(this.refs.comment).value.trim();
+     
+
+     const jecto = {text : comment
+            , boardCardId   : this.props.card._id
+            , taskId      : Number(this.props.card.taskId)
+          }
+ 
+      Meteor.call('boardCardComments.insert', jecto, (error, response) => {
+      if (error) {   
+        console.log(error)   
+        this.setState({errorMsg : error.reason, errorHay:true, okHay:false})        
+      }
+      else {
+        this.setState({okHay:true, errorHay:false})
+      }
+    })
+     // Clear form     
+
+     ReactDOM.findDOMNode(this.refs.comment).value = '';     
+     this.close()
+   }
+
+  renderModal(){
+    return(
+    <Modal show={this.state.showModal} onHide={this.close}>
+        <form className="form" onSubmit={this.handleSubmit.bind(this)} >
+          <Modal.Header closeButton>
+            <Modal.Title>{this.props.card.title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            
+         <div className="box-body">                              
+                              <FormControl 
+                              ref="comment"
+                              componentClass="textarea" 
+                              placeholder="Haz un Comentario!" />
+
+                  <div className="row">
+
+                          <div className="col-xs-6">
+                         </div>     
+                         <div className="col-xs-6">
+                           </div>
+                </div>
+
+
+        </div>
+        <div className="box-footer">
+        
+        </div>        
+          </Modal.Body>
+          <Modal.Footer>
+            <button type="submit" className="btn btn-sm btn-primary btn-flat"><i className="fa fa-check" aria-hidden="true"></i></button>
+            
+            <Button onClick={this.close} className="btn btn-sm btn-primary btn-flat"><i className="fa fa-times" aria-hidden="true"></i></Button>
+          </Modal.Footer>
+        </form>  
+        </Modal>
+        )
+  }
+
+
   render() {
-  console.log(this.props.user)  
+  //console.log(this.props.user)  
   const { isLoading } = this.props;
       if (isLoading) {    
         return (
@@ -18,10 +115,14 @@ export class BoardCard extends Component {
         )
       }   
 
-   return (        		
- 
-         <div className="col-md-4 col-sm-6 col-xs-12">
+   return (
+ <div>        
 
+      {this.renderModal()}
+
+
+
+         <div className="col-md-4 col-sm-6 col-xs-12" onClick={this.open}>
           <div className="box box-widget">
             <div className="box-header with-border">
               <div className="user-block">
@@ -50,8 +151,8 @@ export class BoardCard extends Component {
             </div>
 
             <div className="box-footer box-comments">
-              <BoardCardComment/>
-              <BoardCardComment/>
+              {this.renderComments()}
+              
 
               
 
@@ -73,6 +174,7 @@ export class BoardCard extends Component {
 
         
 
+</div>
   
      
       
@@ -89,13 +191,14 @@ export class BoardCard extends Component {
 */
 export default BoardCardContainer = withTracker(({ params: { card } }) => {      
             
-    const subb = Meteor.subscribe('boardCards')         
+    const subb = Meteor.subscribe('boardCardComments')             
     const suba = Meteor.subscribe('users');
     var isLoading = !(suba.ready() && subb.ready());     
-    //if (!isLoading) {console.log("EL ID ESSSSSSSSSSSS:"+ Tasks.findOne(id).text)   }
     return {      
       user: Meteor.users.findOne(card.createdBy),
       isLoading: isLoading,
-      card: card
+      card: card, 
+      //comments: BoardCardComments.find({cardId: Number(card._id)}).fetch()
+      comments: BoardCardComments.find().fetch()
     };
   })(BoardCard);

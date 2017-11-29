@@ -39,3 +39,14 @@ export class BoardCardComment extends Component {
   isLoading: React.PropTypes.bool
    
  };*/
+export default BoardCardCommentContainer = withTracker(({ params: { comment } }) => {      
+            
+    //const subb = Meteor.subscribe('boardCards')             
+    const suba = Meteor.subscribe('users');
+    var isLoading = !(suba.ready());     
+    return {      
+      user: Meteor.users.findOne(card.createdBy),
+      isLoading: isLoading,
+      comment: comment      
+    };
+  })(BoardCardComment);
