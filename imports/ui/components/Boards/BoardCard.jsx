@@ -9,16 +9,19 @@ import LoadingSpinner from '../controls/LoadingSpinner';
 import Alert from 'react-s-alert';
 import { Button, Modal, Popover, Tooltip, OverlayTrigger, FormControl } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
+
 export class BoardCard extends Component {
    constructor() {
     super();
-    
+    console.log(this.props)    
     this.state = { showModal: false };
     this.open = this.open.bind(this)
     this.close = this.close.bind(this)
+
   }
+
 renderComments(){
-  console.log("Comentarios: "+this.props.comments)
+  //console.log("Comentarios: "+this.props.comments)
   if (this.props.comments){
       return this.props.comments.map((comment) => (
       <div key={comment._id}>    
@@ -105,24 +108,9 @@ renderComments(){
         )
   }
 
-
-  render() {
-  //console.log(this.props.user)  
-  const { isLoading } = this.props;
-      if (isLoading) {    
-        return (
-          <LoadingSpinner/>
-        )
-      }   
-
-   return (
- <div>        
-
-      {this.renderModal()}
-
-
-
-         <div className="col-md-4 col-sm-6 col-xs-12" onClick={this.open}>
+renderCard(){
+  return(
+  <div className="col-md-4 col-sm-6 col-xs-12" onClick={this.open}>
           <div className="box box-widget">
             <div className="box-header with-border">
               <div className="user-block">
@@ -171,7 +159,26 @@ renderComments(){
           </div>
 
         </div>
+)
+}
 
+  render() {
+  console.log(this.props.cha)  
+  const { isLoading } = this.props;
+      if (isLoading) {    
+        return (
+          <LoadingSpinner/>
+        )
+      }   
+
+   return (
+ <div>        
+
+      {this.renderModal()}
+      {this.renderCard()}
+
+
+         
         
 
 </div>
@@ -189,16 +196,17 @@ renderComments(){
    
  };
 */
-export default BoardCardContainer = withTracker(({ params: { card } }) => {      
-            
-    const subb = Meteor.subscribe('boardCardComments')             
-    const suba = Meteor.subscribe('users');
-    var isLoading = !(suba.ready() && subb.ready());     
-    return {      
-      user: Meteor.users.findOne(card.createdBy),
-      isLoading: isLoading,
-      card: card, 
-      //comments: BoardCardComments.find({cardId: Number(card._id)}).fetch()
-      comments: BoardCardComments.find().fetch()
+export default BoardCardContainer = withTracker(({ params: { card , key } }) => {            
+    const subb  = Meteor.subscribe('boardCardComments') 
+    const comments = BoardCardComments.find().fetch()         
+    const cha = "chacha"
+    var isLoading = !(subb.ready());
+    console.log("cha es "+cha)
+    //if (!isLoading) {console.log("EL ID ESSSSSSSSSSSS:")   }
+    return {    
+      isLoading,            
+      card: card,
+      comments: comments,
+      cha: cha
     };
   })(BoardCard);

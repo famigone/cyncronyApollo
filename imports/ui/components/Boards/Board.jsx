@@ -72,8 +72,9 @@ export default BoardContainer = withTracker(({ params: { id } }) => {
     const taska = Tasks.findOne({id:parseInt(id)});         
     const cards = BoardCards.find({taskId: Number(id)}, 
                     {sort: { createdAt: -1 } }).fetch()
-    var isLoading = !(subp.ready() && subt.ready() && subb.ready());     
-    //if (!isLoading) {console.log("EL ID ESSSSSSSSSSSS:"+ Tasks.findOne(id).text)   }
+    var isLoading = !(subp.ready() && subt.ready() && subb.ready());
+    
+    //if (!isLoading) {console.log("EL ID ESSSSSSSSSSSS:")   }
     return {
       taska: taska,            
       isLoading,      
