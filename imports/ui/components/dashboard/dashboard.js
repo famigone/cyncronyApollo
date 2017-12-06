@@ -45,6 +45,26 @@ class Dashboard extends Component {
       }
       return true;
   }
+
+inicializar(){
+  //crear proyecto
+const jecto = {codigo:'DEMO', nombre:'DEMO'}
+ 
+      Meteor.call('projects.insert', jecto, (error, response) => {
+      if (error) {   
+        console.log(error)           
+      }})
+  //insertar lastProject
+  const jectoId = Projects.findOne()
+  //console.log(jectoId)
+   const ultimo = {projectId : jectoId._id,                 
+                      taskId : null}
+      Meteor.call('lastProject.insert', ultimo, (error, response) => {      
+            if (error) {console.log(error.reason)}
+            //else {console.log("La tarea fue agregada")}    
+            })       
+}
+
   render() {
     //this.preparar()
     const { currentUser } = this.props;
@@ -60,10 +80,19 @@ class Dashboard extends Component {
     )
   }   
   
-  
-  const codigo = Projects.findOne(this.props.projectActual.projectId).codigo 
+  if (!this.props.projectActual) {
+      this.inicializar()
+      var codigo = "DEMO"
+    }else{  
+      
+      var pid = this.props.projectActual.projectId
+      //console.log(pid)
+      var codigo = Projects.findOne({_id:pid}).codigo 
+      
+  }
+ 
   //seteo para todo el entorno el id del projecto actual
-  Session.set("lastProjectId", LastProject.findOne({userId: Meteor.userId()}).id)   
+  Session.set("lastProjectId", LastProject.findOne({userId: Meteor.userId()}).projectId)   
   
     return (
 
@@ -102,7 +131,6 @@ export default dashboardContainer = withTracker(() => {
     const subl = Meteor.subscribe('lastProject');
     const subp = Meteor.subscribe('projects')
     var isLoading = !(subl.ready() && subp.ready());            
-    
     
        return {
         currentUser: Meteor.user(),

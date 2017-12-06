@@ -6,7 +6,7 @@ import { BoardCards } from '/imports/api/boardCards';
 import { LastProject } from '/imports/api/lastProject';
 import { withTracker } from 'meteor/react-meteor-data';
 import { BoardHead } from './BoardHead';
-import { BoardCard } from './BoardCard';
+import  BoardCardContainer  from './BoardCard';
 import { BoardActions } from './BoardActions';
 import LoadingSpinner from '../controls/LoadingSpinner';
 import Alert from 'react-s-alert';
@@ -23,7 +23,7 @@ renderCards(){
 
 	return this.props.cards.map((card) => (
 	<div key={card._id}  style={{margin:5}}>	
-       <BoardCard     
+       <BoardCardContainer     
        	  key={card._id} 	
           card={card} 
       />

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Projects } from '/imports/api/projects';
 import { Tasks } from '/imports/api/tasks';
 import { LastProject } from '/imports/api/lastProject';
+import { BoardCardComments } from '/imports/api/boardCardComments';
 import { withTracker } from 'meteor/react-meteor-data';
-import { BoardCardComment } from './BoardCardComment';
+import  BoardCardComment  from './BoardCardComment';
 import LoadingSpinner from '../controls/LoadingSpinner';
 import Alert from 'react-s-alert';
 import { Button, Modal, Popover, Tooltip, OverlayTrigger, FormControl } from 'react-bootstrap';
@@ -25,7 +26,7 @@ renderComments(){
   if (this.props.comments){
       return this.props.comments.map((comment) => (
       <div key={comment._id}>    
-         <BoardCardComment
+         <BoardCardCommentContainer
             comment={comment}
           />
       </div>  
@@ -116,7 +117,7 @@ renderCard(){
               <div className="user-block">
                 <img className="img-circle" src="/img/user2-160x160.jpg" alt="User Image"/>
                 <span className="username"><a href="#">{this.props.card.title}</a></span>
-                <span className="description">{this.props.card.createdBy}{this.props.user} - 7:30 PM Today</span>
+                <span className="description">{this.props.usuario.username}{this.props.user} - {moment(this.props.card.createdAt).format("DD/MM/YY")}</span>
               </div>
 
               <div className="box-tools">
@@ -196,17 +197,17 @@ renderCard(){
    
  };
 */
-export default BoardCardContainer = withTracker(({ params: { card , key } }) => {            
+export default BoardCardContainer = withTracker(({ card  } ) => {            
     const subb  = Meteor.subscribe('boardCardComments') 
     const comments = BoardCardComments.find().fetch()         
-    const cha = "chacha"
+
     var isLoading = !(subb.ready());
-    console.log("cha es "+cha)
+   
     //if (!isLoading) {console.log("EL ID ESSSSSSSSSSSS:")   }
     return {    
       isLoading,            
       card: card,
       comments: comments,
-      cha: cha
+      usuario:  Meteor.users.findOne({_id:card.createdBy})
     };
   })(BoardCard);

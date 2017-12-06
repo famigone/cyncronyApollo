@@ -16,13 +16,13 @@ export class BoardHead extends Component {
 
             <div className="info-box-content">
               <span className="info-box-text">{this.props.taska.text}</span>
-              <span className="info-box-number"> {"Inicio: " + this.props.taska.start_date }</span>
+              <span className="info-box-number"> {"Inicio: " + moment(this.props.taska.start_date).format("DD/MM/YY") }</span>
 
               <div className="progress">
                 <div className="progress-bar" style={{width: progress+"%"}}></div>
               </div>
               <span className="progress-description">
-                    40% Increase in 30 Days
+                    {parseInt(this.props.taska.progress*100)}% de avance
                   </span>
             </div>
 

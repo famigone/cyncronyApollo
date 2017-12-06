@@ -18,11 +18,10 @@ export class BoardCardComment extends Component {
 
                 <div className="comment-text">
                       <span className="username">
-                        Maria Gonzales
-                        <span className="text-muted pull-right">8:03 PM Today</span>
+                        {this.props.user.username}
+                        <span className="text-muted pull-right">{moment(this.props.comment.createdAt).format("DD/MM/YY h:mm a")}</span>
                       </span>
-                  It is a long established fact that a reader will be distracted
-                  by the readable content of a page when looking at its layout.
+                  {this.props.comment.text}
                 </div>
 
               </div>
@@ -39,13 +38,13 @@ export class BoardCardComment extends Component {
   isLoading: React.PropTypes.bool
    
  };*/
-export default BoardCardCommentContainer = withTracker(({ params: { comment } }) => {      
+export default BoardCardCommentContainer = withTracker(( { comment } ) => {      
             
     //const subb = Meteor.subscribe('boardCards')             
     const suba = Meteor.subscribe('users');
     var isLoading = !(suba.ready());     
     return {      
-      user: Meteor.users.findOne(card.createdBy),
+      user: Meteor.users.findOne(comment.createdBy),
       isLoading: isLoading,
       comment: comment      
     };
