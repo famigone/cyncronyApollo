@@ -199,7 +199,7 @@ renderCard(){
 */
 export default BoardCardContainer = withTracker(({ card  } ) => {            
     const subb  = Meteor.subscribe('boardCardComments') 
-    const comments = BoardCardComments.find().fetch()         
+    const comments = BoardCardComments.find({boardCardId:card._id}).fetch()         
 
     var isLoading = !(subb.ready());
    
