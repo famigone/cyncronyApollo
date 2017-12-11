@@ -61,7 +61,9 @@ export const insertBoardCardComments = new ValidatedMethod({
   taskId: { type: Number
           , regEx: SimpleSchema.RegEx.Id
             // , autoValue: function(){ return Session.get("projectActual") } 
-           },             
+           }, 
+                       
+            
   activo: { type: Boolean
           , optional: true
           , autoValue: function(){ return true }}, //borrado lógico
@@ -88,6 +90,9 @@ export const insertBoardCard = new ValidatedMethod({
   validate: new SimpleSchema({
   title: { type: String },
   description: { type: String },
+
+  doctitle: { type: String , optional: true},
+  docdescription: { type: String , optional: true},
   limite_date: {
         type: Date,
         optional: true,
@@ -103,7 +108,12 @@ export const insertBoardCard = new ValidatedMethod({
   taskId: { type: Number
              , regEx: SimpleSchema.RegEx.Id
             // , autoValue: function(){ return Session.get("projectActual") } 
-           },             
+           },  
+  fileteId: { type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: true,
+       // autoValue: function(){ return null }
+        },            
   activo: { type: Boolean
           , optional: true
           , autoValue: function(){ return true }}, //borrado lógico

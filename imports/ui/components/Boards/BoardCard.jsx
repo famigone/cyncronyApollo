@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Projects } from '/imports/api/projects';
 import { Tasks } from '/imports/api/tasks';
 import { LastProject } from '/imports/api/lastProject';
+import  Filetes  from '/imports/api/images';
 import { BoardCardComments } from '/imports/api/boardCardComments';
 import { withTracker } from 'meteor/react-meteor-data';
 import  BoardCardComment  from './BoardCardComment';
@@ -85,18 +86,12 @@ renderComments(){
                               componentClass="textarea" 
                               placeholder="Haz un Comentario!" />
 
-                  <div className="row">
 
-                          <div className="col-xs-6">
-                         </div>     
-                         <div className="col-xs-6">
-                           </div>
-                </div>
-
+            
 
         </div>
         <div className="box-footer">
-        
+      
         </div>        
           </Modal.Body>
           <Modal.Footer>
@@ -109,9 +104,29 @@ renderComments(){
         )
   }
 
+renderAdjunto(){
+  if (this.props.tieneFilete)
+  return (
+
+<div className="attachment-block clearfix">
+               <center><h1><i className="fa fa-paperclip attachment-img"></i></h1></center> 
+                <div className="attachment-pushed">
+                  <h4 className="attachment-heading"><a href={this.props.unFilete.link() }  target="_blank">{this.props.card.doctitle}</a></h4>
+
+                  <div className="attachment-text">
+                    {this.props.card.docdescription} 
+                  </div>
+        
+                </div>
+     
+              </div>
+    )
+}
 renderCard(){
+  //instanciamos el filete
+
   return(
-  <div className="col-md-4 col-sm-6 col-xs-12" onClick={this.open}>
+  <div className="col-md-4 col-sm-6 col-xs-12">
           <div className="box box-widget">
             <div className="box-header with-border">
               <div className="user-block">
@@ -130,16 +145,19 @@ renderCard(){
 
             </div>
 
-            <div className="box-body">
+            <div className="box-body" >
              {/*  <img className="img-responsive pad" src="../dist/img/photo2.png" alt="Photo"/> */}
 
               <p>{this.props.card.description}</p>
+              {this.renderAdjunto()}
+
               <button type="button" className="btn btn-default btn-xs"><i className="fa fa-share"></i> Share</button>
               <button type="button" className="btn btn-default btn-xs"><i className="fa fa-thumbs-o-up"></i> Like</button>
               <span className="pull-right text-muted">lalalal - 3 comments</span>
+
             </div>
 
-            <div className="box-footer box-comments">
+            <div className="box-footer box-comments"  onClick={this.open}>
               {this.renderComments()}
               
 
@@ -147,15 +165,7 @@ renderCard(){
 
             </div>
 
-            <div className="box-footer">
-              <form action="#" method="post">
-                <img className="img-responsive img-circle img-sm" src="/img/user2-160x160.jpg" alt="Alt Text"/>
-
-                <div className="img-push">
-                  <input type="text" className="form-control input-sm" placeholder="Press enter to post comment"/>
-                </div>
-              </form>
-            </div>
+            
 
           </div>
 
@@ -200,7 +210,8 @@ renderCard(){
 export default BoardCardContainer = withTracker(({ card  } ) => {            
     const subb  = Meteor.subscribe('boardCardComments') 
     const comments = BoardCardComments.find({boardCardId:card._id}).fetch()         
-
+    const filete = Filetes.findOne(card.fileteId)
+    const tieneFilete = !(card.fileteId==null)
     var isLoading = !(subb.ready());
    
     //if (!isLoading) {console.log("EL ID ESSSSSSSSSSSS:")   }
@@ -208,6 +219,8 @@ export default BoardCardContainer = withTracker(({ card  } ) => {
       isLoading,            
       card: card,
       comments: comments,
-      usuario:  Meteor.users.findOne({_id:card.createdBy})
+      usuario:  Meteor.users.findOne({_id:card.createdBy}),
+      unFilete: filete,
+      tieneFilete: tieneFilete
     };
   })(BoardCard);

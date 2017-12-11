@@ -7,7 +7,7 @@ import { LastProject } from '/imports/api/lastProject';
 import { withTracker } from 'meteor/react-meteor-data';
 import { BoardHead } from './BoardHead';
 import  BoardCardContainer  from './BoardCard';
-import { BoardActions } from './BoardActions';
+import  BoardActionsContainer  from './BoardActions';
 import LoadingSpinner from '../controls/LoadingSpinner';
 import Alert from 'react-s-alert';
 //import Board from 'react-trello'
@@ -42,7 +42,7 @@ renderCards(){
     <div>	
     <BoardHead taska={this.props.taska}/>                                         
     		<div>
-            <BoardActions 
+            <BoardActionsContainer 
                 pid={this.props.pid} 
                 tid={this.props.id}
             /> 

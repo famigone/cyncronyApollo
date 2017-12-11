@@ -17,6 +17,7 @@ import ProjectNew from '../../ui/components/ProjectNew/ProjectNew';
 import ProjectInsert from '../../ui/components/ProjectNew/ProjectInsert';
 import App from '../../ui/components/Gantt/App';
 import TaskBoard from '../../ui/components/Boards/Board';
+import FileUploadComponent from '../../ui/components/Boards/FileUpload';
 
 
 export const requireAuth = (nextState, replace) => {
@@ -42,7 +43,7 @@ export const Routes = () => (
         <Route path="projectinsert" name="projectinsert" component={ProjectInsert} />
         <Route path="tasks" name="tasks" component={ListaTarea} />
         <Route path="board/:id" name="boards" component={TaskBoard} />
-
+        <Route path="file" name="file" component={FileUploadComponentContainer} />
       </Route>
     </Route>
     <Route path="*" name="not-found" component={NotFound} />
