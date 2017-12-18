@@ -15,7 +15,7 @@ import ReactDOM from 'react-dom';
 export class BoardCard extends Component {
    constructor() {
     super();
-    console.log(this.props)    
+    //console.log(this.props)    
     this.state = { showModal: false };
     this.open = this.open.bind(this)
     this.close = this.close.bind(this)
@@ -174,7 +174,7 @@ renderCard(){
 }
 
   render() {
-  console.log(this.props.cha)  
+  //console.log(this.props.cha)  
   const { isLoading } = this.props;
       if (isLoading) {    
         return (

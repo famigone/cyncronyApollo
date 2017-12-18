@@ -4,6 +4,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { Tasks } from '../../imports/api/tasks.js'
+import { TaskUser } from '../../imports/api/taskUser.js'
 import { BoardCards } from '../../imports/api/boardCards.js'
 import { BoardCardComments } from '../../imports/api/boardCardComments.js'
 import { Links } from '../../imports/api/links.js'
@@ -27,6 +28,11 @@ export const updateLast = new ValidatedMethod({
 /***********************************************************************************/
 Meteor.publish('tasks', function() {
   return Tasks.find({activo:true});
+  
+});
+
+Meteor.publish('taskUser', function() {
+  return TaskUser.find({activo:true});
   
 });
 
@@ -198,6 +204,33 @@ export const insertTask = new ValidatedMethod({
     Tasks.insert(oneTask);
   },
 });
+
+
+export const insertTaskUser = new ValidatedMethod({
+  name: 'taskUser.insert',
+  validate: new SimpleSchema({
+    projectId: { type: String
+             , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },  
+  taskId: { type: String
+             , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },
+  userId: { type: String
+             , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },           
+  activo: { type: Boolean
+          , defaultValue: true }, //borrado lógico
+  }).validator()
+,  run(oneTaskUser) {      
+    //console.log(oneTask)
+    TaskUser.activo = true
+    TaskUser.insert(oneTaskUser);
+  },
+});
+
 
 
 export const insertLink = new ValidatedMethod({

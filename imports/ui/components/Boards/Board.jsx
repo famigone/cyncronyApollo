@@ -8,6 +8,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { BoardHead } from './BoardHead';
 import  BoardCardContainer  from './BoardCard';
 import  BoardActionsContainer  from './BoardActions';
+//mport  Masonry  from './Masonry';
 import LoadingSpinner from '../controls/LoadingSpinner';
 import Alert from 'react-s-alert';
 //import Board from 'react-trello'

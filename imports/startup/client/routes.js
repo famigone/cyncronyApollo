@@ -18,7 +18,7 @@ import ProjectInsert from '../../ui/components/ProjectNew/ProjectInsert';
 import App from '../../ui/components/Gantt/App';
 import TaskBoard from '../../ui/components/Boards/Board';
 import FileUploadComponent from '../../ui/components/Boards/FileUpload';
-
+import PermisosContainer from '../../ui/components/permisos/permisos';
 
 export const requireAuth = (nextState, replace) => {
   // No user is authenticated redirect ro index
@@ -44,6 +44,7 @@ export const Routes = () => (
         <Route path="tasks" name="tasks" component={ListaTarea} />
         <Route path="board/:id" name="boards" component={TaskBoard} />
         <Route path="file" name="file" component={FileUploadComponentContainer} />
+        <Route path="permisos" name="permisos" component={PermisosContainer} />
       </Route>
     </Route>
     <Route path="*" name="not-found" component={NotFound} />

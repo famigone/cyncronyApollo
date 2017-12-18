@@ -9,27 +9,26 @@ const SideBarMenu = ({ userCount, projectActual }) => (
     <li className="header"><center>PROYECTO: <span className="label label-primary">{projectActual}</span></center></li>    
     <li className="active treeview">
       <a href="#">
-        <i className="fa fa-dashboard" />
+        <i className="fa fa-fire" />
         <span>Proyectos</span> <i className="fa fa-angle-left pull-right" />
       </a>
       <ul className="treeview-menu">
-        <li className="active">
-          <Link to={'/dashboard/statistics'}><i className="fa fa-circle-o" /> Dashboard</Link></li>
-        <li className="active">
-          <Link to={'/dashboard/projects'}><i className="fa fa-circle-o" />Mis Proyectos </Link></li>
-        <li className="active">
-          <Link to={'/dashboard/projectnew'}><i className="fa fa-circle-o" />Nuevo </Link></li>
-            <li className="active">
-              <Link to={'/dashboard/projectinsert'}><i className="fa fa-circle-o" />Insert </Link></li>
+      <li className="active">
+              <Link to={'/dashboard/projectinsert'}><i className="fa fa-flag text-orange" />Mis Proyectos </Link></li>
 
         <li className="active">
-          <Link to={'/dashboard/tasks'}><i className="fa fa-circle-o" /> Tareas </Link></li>
+          <Link to={'/dashboard/projects'}><i className="fa fa-tasks text-blue" />Gantt </Link></li>
+        <li className="active">
+          <Link to={'/dashboard/permisos'}><i className="fa fa-circle-o text-red" />Responsables </Link></li>
+            
+        <li className="active">
+          <Link to={'/dashboard/tasks'}><i className="fa fa-pie-chart text-purple" /> Analisis </Link></li>
 
       </ul>
     </li>
     <li>
       <Link to={'#'} >
-        <i className="fa fa-users" /> <span> Users </span>
+        <i className="fa fa-users" /> <span> Usuarios </span>
         <small className="label pull-right bg-blue" > {userCount} </small>
       </Link>
     </li>
