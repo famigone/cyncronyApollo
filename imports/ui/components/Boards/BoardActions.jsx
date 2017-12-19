@@ -69,7 +69,7 @@ export class BoardActions extends Component {
         });
 
         uploadInstance.on('uploaded', function (error, fileObj) {
-          console.log('TERMINOOOOO uploaded: ', fileObj._id);
+          //console.log('TERMINOOOOO uploaded: ', fileObj._id);
           self.setState({subio:true,
                           fileteId:fileObj._id
           })  

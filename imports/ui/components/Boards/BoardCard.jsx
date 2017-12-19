@@ -107,11 +107,13 @@ renderComments(){
 renderAdjunto(){
   if (this.props.tieneFilete)
   return (
-
+<a href={this.props.unFilete.link() }  target="_blank">
 <div className="attachment-block clearfix">
-               <center><h1><i className="fa fa-paperclip attachment-img"></i></h1></center> 
+              
+             <div  style={{float:"left"}}><h1 className="attachment-img">{this.icon()}</h1></div>   
                 <div className="attachment-pushed">
-                  <h4 className="attachment-heading"><a href={this.props.unFilete.link() }  target="_blank">{this.props.card.doctitle}</a></h4>
+                  
+                  <h4 className="attachment-heading">{this.props.card.doctitle}</h4>
 
                   <div className="attachment-text">
                     {this.props.card.docdescription} 
@@ -120,8 +122,36 @@ renderAdjunto(){
                 </div>
      
               </div>
+              </a>
     )
 }
+
+icon(){
+   rta= null
+   file = this.props.unFilete
+   //console.log("XXXXXTiene: "+this.props.tieneFilete)
+   //console.log("XXXXfile: "+this.props.unFilete)
+
+   if (this.props.tieneFilete && (!(file==null))){
+       
+            if (file.isVideo) return (<i className="fa fa-file-video-o" aria-hidden="true"></i>)
+       else if (file.isAudio) return (<i className="fa fa-file-audio-o" aria-hidden="true"></i>)
+       else if (file.isImage) return (<i className="fa fa-file-image-o" aria-hidden="true"></i>)
+       else if (file.isText)  return (<i className="fa fa-file-text" aria-hidden="true"></i>)
+       else if (file.isPDF)   return (<i className="fa fa-file-pdf-o" aria-hidden="true"></i> )
+       else if (file.mime='application/vnd.ms-excel') return (<i className="fa fa-file-excel-o"></i>)
+       else if (file.mime='application/msword')       return (<i className="fa fa-file-word-o" aria-hidden="true"></i>)
+       else if (file.mime='application/vnd.ms-powerpoint') return (<i className="fa fa-file-powerpoint-o" aria-hidden="true"></i>)
+       else return (<i className="fa fa-file" aria-hidden="true"></i>)
+}
+//console.log(rta)
+  return(    
+    rta
+    )
+}
+
+
+
 renderCard(){
   //instanciamos el filete
 
@@ -153,7 +183,7 @@ renderCard(){
 
               <button type="button" className="btn btn-default btn-xs"><i className="fa fa-share"></i> Share</button>
               <button type="button" className="btn btn-default btn-xs"><i className="fa fa-thumbs-o-up"></i> Like</button>
-              <span className="pull-right text-muted">lalalal - 3 comments</span>
+              <span className="pull-right text-muted">{this.props.comments.length} comments</span>
 
             </div>
 

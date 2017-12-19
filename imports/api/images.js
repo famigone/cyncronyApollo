@@ -8,10 +8,11 @@ const Filetes = new FilesCollection({
   allowClientCode: false, // Disallow remove files from Client
   onBeforeUpload: function (file) {
     // Allow upload files under 10MB, and only in png/jpg/jpeg formats
-    if (file.size <= 1024 * 1024 * 10 && /png|jpe?g/i.test(file.extension)) {
+    //if (file.size <= 1024 * 1024 * 10 && /png|jpe?g/i.test(file.extension)) {
+      if (file.size <= 1024 * 1024 * 10) {
       return true;
     }
-    return 'Please BITCH';
+    return 'File size Not alowed';
   }
 });
 
