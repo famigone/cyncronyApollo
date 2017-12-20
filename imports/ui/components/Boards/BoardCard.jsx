@@ -188,6 +188,7 @@ renderCard(){
             </div>
 
             <div className="box-footer box-comments"  onClick={this.open}>
+            <i><small>Click for comment</small></i>
               {this.renderComments()}
               
 

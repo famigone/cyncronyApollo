@@ -33,7 +33,13 @@ TaskUser.schema = new SimpleSchema({
 });
 
 
-
+TaskUser.helpers({
+  username() {
+    // Meteor.subscribe('users');
+     elUser = Meteor.users.findOne({_id:this.userId})
+     //console.log("XXXXXXXX"+elUser.username)
+    return (elUser.username)
+}});
 
 
 TaskUser.attachSchema(TaskUser.schema);

@@ -11,6 +11,7 @@ import { Links } from '../../imports/api/links.js'
 import { LastProject } from '../../imports/api/lastProject.js'
 
 
+
 export const updateLast = new ValidatedMethod({
   name: 'lastProject.updateLast',
   validate: new SimpleSchema({    
@@ -31,8 +32,8 @@ Meteor.publish('tasks', function() {
   
 });
 
-Meteor.publish('taskUser', function() {
-  return TaskUser.find({activo:true});
+Meteor.publish('taskUser', function(tid) {
+  return TaskUser.find({activo:true, taskId:tid});
   
 });
 
@@ -335,7 +336,24 @@ export const updateTask = new ValidatedMethod({
   },
 });
 
+export const deleteTaskUser = new ValidatedMethod({
+  name: 'taskUser.delete',
+  validate: new SimpleSchema({
+  
+  taskUserId: { type: String
+             , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },
 
+  }).validator(),
+  run(oneTaskUser) {  
+    
+    TaskUser.update({_id: oneTaskUser.taskUserId}, {
+      $set: { activo: false},
+    });
+   // console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+  },
+});
 
 export const deleteTask = new ValidatedMethod({
   name: 'tasks.delete',
@@ -362,6 +380,7 @@ const TODOS_METHODS = _.pluck([
   insertTask,
   updateTask,
   deleteTask,
+  deleteTaskUser,
 ], 'name');
 
 if (Meteor.isServer) {

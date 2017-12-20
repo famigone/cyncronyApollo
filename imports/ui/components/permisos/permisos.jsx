@@ -135,7 +135,7 @@ renderTabla(){
             <section className="content-header">
               <h3>
                 RESPONSABLES
-                <small> Clickea en una tarea y luego asignale responsables </small>
+                <small> Clickea en una tarea para asignar responsables </small>
               </h3>
             </section>	
      {this.renderTabla()}
