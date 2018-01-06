@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { TaskUser } from '/imports/api/taskUser.js';
 import { withTracker } from 'meteor/react-meteor-data';
 
+
 export class TaskUsers extends Component {
 
 renderAllUser(){
@@ -19,6 +20,9 @@ renderAllUser(){
 
 renderResponsables(){
  // const sub = Meteor.subscribe('users');
+ if (this.props.isLoadingU)
+  {  return (<LoadingSpinner/>)
+  }  
   return this.props.responsables.map((resp) => (
     <tr key= {resp._id} onClick={() => this.delete(resp._id)}>
         <td>{resp.username()}</td>
@@ -88,14 +92,16 @@ delete(taskUserId){
 }
 export default TaskUserContainer = withTracker(({ task  } ) => {            
     const subb  = Meteor.subscribe('taskUser', task._id) 
-     Meteor.subscribe('users');
+    const subu = Meteor.subscribe('users');
     var isLoading = !(subb.ready());
+    var isLoadingU = !(subu.ready());
    
     //if (!isLoading) {console.log("EL ID ESSSSSSSSSSSS:")   }
     return {    
       isLoading,            
       task: task,
       users: Meteor.users.find().fetch(),
-      responsables : TaskUser.find().fetch()
+      responsables : TaskUser.find().fetch(),
+      isLoadingU,
     };
   })(TaskUsers);

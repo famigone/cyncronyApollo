@@ -11,14 +11,14 @@ import SignUp from '../../ui/components/sign_up';
 import Dashboard from '../../ui/components/dashboard/dashboard';
 import Statistics from '../../ui/components/dashboard/views/statistics/statistics';
 import { NotFound } from '../../ui/pages/not_found/not_found';
-import ListaTarea from '../../ui/components/ListaTarea/ListaTarea';
-import ProjectList from '../../ui/components/ProjectList/ProjectList';
+import Analisis from '../../ui/components/analisis/Analisis';
 import ProjectNew from '../../ui/components/ProjectNew/ProjectNew';
 import ProjectInsert from '../../ui/components/ProjectNew/ProjectInsert';
 import App from '../../ui/components/Gantt/App';
 import TaskBoard from '../../ui/components/Boards/Board';
 import FileUploadComponent from '../../ui/components/Boards/FileUpload';
 import PermisosContainer from '../../ui/components/permisos/permisos';
+import UsuariosContainer from '../../ui/components/usuarios/Usuarios';
 
 export const requireAuth = (nextState, replace) => {
   // No user is authenticated redirect ro index
@@ -41,11 +41,12 @@ export const Routes = () => (
         <Route path="projects" name="projects" component={App} />
         <Route path="projectnew" name="projectnew" component={ProjectNew} />
         <Route path="projectinsert" name="projectinsert" component={ProjectInsert} />
-        <Route path="tasks" name="tasks" component={ListaTarea} />
+        <Route path="analisis" name="analisis" component={Analisis} />
         <Route path="board/:id" name="boards" component={TaskBoard} />
         <Route path="file" name="file" component={FileUploadComponentContainer} />
         <Route path="permisos" name="permisos" component={PermisosContainer} />
-      </Route>
+        <Route path="usuarios" name="usuarios" component={UsuariosContainer} />
+      </Route>        
     </Route>
     <Route path="*" name="not-found" component={NotFound} />
   </Router>

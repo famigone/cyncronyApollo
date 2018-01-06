@@ -35,10 +35,9 @@ TaskUser.schema = new SimpleSchema({
 
 TaskUser.helpers({
   username() {
-    // Meteor.subscribe('users');
-     elUser = Meteor.users.findOne({_id:this.userId})
-     //console.log("XXXXXXXX"+elUser.username)
-    return (elUser.username)
+     Meteor.subscribe('users');
+     const elUser = Meteor.users.findOne(this.userId)
+     return (elUser.username)
 }});
 
 

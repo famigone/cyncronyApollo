@@ -8,7 +8,7 @@ const AppHeader = () => (
 
     <a href="#" className="logo">
       <span className="logo-mini"><b>P</b>M</span>
-      <span className="logo-lg"><b>reactib</b>PM</span>
+      <span className="logo-lg">c<b>y</b>ncron<b>y</b></span>
     </a>
 
     <nav className="navbar navbar-static-top">

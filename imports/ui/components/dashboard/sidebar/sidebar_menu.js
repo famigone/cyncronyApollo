@@ -22,15 +22,14 @@ const SideBarMenu = ({ userCount, projectActual }) => (
           <Link to={'/dashboard/permisos'}><i className="fa fa-circle-o text-red" />Responsables </Link></li>
             
         <li className="active">
-          <Link to={'/dashboard/tasks'}><i className="fa fa-pie-chart text-purple" /> Analisis </Link></li>
+          <Link to={'/dashboard/analisis'}><i className="fa fa-pie-chart text-purple" /> Analisis </Link></li>
 
       </ul>
     </li>
-    <li>
-      <Link to={'#'} >
-        <i className="fa fa-users" /> <span> Usuarios </span>
-        <small className="label pull-right bg-blue" > {userCount} </small>
-      </Link>
+    
+    
+     <li className="active">
+      <Link to={'/dashboard/usuarios'}><i className="fa fa-users text-lightblue" /> Usuarios </Link>
     </li>
   </ul>
 );

@@ -372,6 +372,20 @@ export const deleteTask = new ValidatedMethod({
   },
 });
 
+export const insertUser = new ValidatedMethod({
+  name: 'user.insert',
+  validate: new SimpleSchema({
+  username: { type: String },
+  text: { type: String },
+  id: { type: Number }, //id interno del componente
+  //orden: { type: Number }, //id interno del componente
+  }).validator(),
+  run(newUserData) {      
+ return Accounts.createUser(newUserData);
+  },
+});
+
+
 
 // Get list of all method names on Todos
 const TODOS_METHODS = _.pluck([  
