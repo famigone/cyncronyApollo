@@ -1,4 +1,7 @@
-# Meteor + React + AdminLTE
+# cyncrony
+## Open Source App for Project Management
+ Mongo - Meteor - React 
+
 [![bitHound Code](https://www.bithound.io/github/jeescu/meteor-react-admin-lte/badges/code.svg)](https://www.bithound.io/github/jeescu/meteor-react-admin-lte)
 [![bitHound Dependencies](https://www.bithound.io/github/jeescu/meteor-react-admin-lte/badges/dependencies.svg)](https://www.bithound.io/github/jeescu/meteor-react-admin-lte/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/jeescu/meteor-react-admin-lte/badges/devDependencies.svg)](https://www.bithound.io/github/jeescu/meteor-react-admin-lte/master/dependencies/npm)
@@ -20,33 +23,9 @@ Meteor project boilerplate in [ES6](https://es6.io/) and [React](https://faceboo
 * dispatch:mocha
 
 ### Basic features
-* Authentication
-* Routing (Uses [React Router](https://github.com/ReactTraining/react-router) as standard for React)
+* Gantt Diagram
+* Trello's like Board for each task
+* Users assignment
+* Performance statistics
 
-### Installation
-```
-> git clone https://github.com/jeescu/meteor-react-admin-lte.git <yourapp>
-> cd <yourapp> && rm -rf .git
-> npm install
-```
 
-### Running Tests
-Using [Mocha](https://mochajs.org/) as test driver package and [PhantomJS](http://phantomjs.org/) for browser driver.
-Also included test utilities, [Enzyme](https://github.com/airbnb/enzyme) and [Chai](http://chaijs.com/api/). See test examples in `test/` folder.
-
-```
-> npm test
-```
-
-### Linting
-Uses [Airbnb style guide](https://github.com/airbnb/javascript). Just modify your rules in `.eslintrc`.
-Lint will also run automatically on precommit, making sure your code is still ES6 standard! You can modify the precommit command list on `package.json` if you want to add more cool stuffs.
-
-```
-> npm run lint
-```
-
-### Own the project and start coding!
-```
-> npm start
-```
