@@ -1,5 +1,6 @@
-# cyncrony
-## Amazing Open Source App for Project Management  
+# Amazing Open Source App for Project Management  
+
+![cyncronywhite](https://user-images.githubusercontent.com/4053540/34652334-2bc2de72-f3bb-11e7-880b-3925d8c53930.png)
  
 Stack and Components: [ES6](https://es6.io/), [Meteor](https://www.meteor.com/) and [React](https://facebook.github.io/react/) using [AdminLTE 2.3.11](http://almsaeedstudio.com/themes/AdminLTE/documentation/index.html) styles and [DhtmlxGantt Standard](https://dhtmlx.com/docs/products/dhtmlxGantt/?fromMenu) gantt chart.
 
