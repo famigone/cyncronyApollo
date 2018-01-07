@@ -12,7 +12,7 @@ export default class SideBar extends Component {
     let name = 'Fedex';
 
     if (currentUser) {
-      name = currentUser.emails[0].address;
+      name = currentUser.username;
     }
 
     return name;

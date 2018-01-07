@@ -1,7 +1,7 @@
 # cyncrony
-## Open Source App for Project Management
+## Amazing Open Source App for Project Management  
  
-Meteor project boilerplate in [ES6](https://es6.io/), [Meteor](https://www.meteor.com/) and [React](https://facebook.github.io/react/) using [AdminLTE 2.3.11](http://almsaeedstudio.com/themes/AdminLTE/documentation/index.html) styles and [DhtmlxGantt Standard](https://dhtmlx.com/docs/products/dhtmlxGantt/?fromMenu) gantt chart.
+Stack and Components: [ES6](https://es6.io/), [Meteor](https://www.meteor.com/) and [React](https://facebook.github.io/react/) using [AdminLTE 2.3.11](http://almsaeedstudio.com/themes/AdminLTE/documentation/index.html) styles and [DhtmlxGantt Standard](https://dhtmlx.com/docs/products/dhtmlxGantt/?fromMenu) gantt chart.
 
 
 ![Boilerplate screenshot](https://raw.githubusercontent.com/jeescu/meteor-react-admin-lte/master/public/img/Screenshot%20from%202016-06-24%2009%3A52%3A37.png)

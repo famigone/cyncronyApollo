@@ -8,7 +8,7 @@ import { browserHistory } from 'react-router';
 export default class AppHeaderUserMenu extends Component {
   userDisplayName() {
     const currentUser = this.props.user;
-    let name = 'Alexander Pierce';
+    let name = 'cyncrony';
 
     if (currentUser) {
       name = currentUser.emails[0].address;
@@ -46,7 +46,7 @@ export default class AppHeaderUserMenu extends Component {
               alt="User Image"
             />
             <p>
-              {this.userDisplayName()} - Admin <small>Admin since Jun. 2016</small>
+              {this.userDisplayName()}  <small>Orchestrate your Projects</small>
             </p>
           </li>
 

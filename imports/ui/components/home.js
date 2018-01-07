@@ -4,20 +4,20 @@ import { Link } from 'react-router';
 const Home = () => (
   <div className="lockscreen-wrapper">
     <div className="lockscreen-logo">
-      <a href="../../index2.html"><b>Reactib</b>PM</a>
+      <a href="../../index2.html">c<b>y</b>ncron<b>y</b></a>
     </div>
 
-    <div className="lockscreen-name text-center"><b>ReactibPM</b></div>
+    <div className="lockscreen-name text-center">c<b>y</b>ncron<b>y</b></div>
 
     <div className="text-center">
       <Link to={'/sign-in'}>Sign in </Link>or
       <Link to={'/sign-up'}> Register</Link>
     </div>
     <div className="lockscreen-footer text-center">
-      Copyright © 2014-2015&nbsp;
-      <b><a href="http://reactib.com" className="text-black">React with us</a></b>
+     
+      <b><a href="http://cyncrony.com" className="text-black">Orchestrate your Projects</a></b>
       <br />
-      All rights reserved
+      GPLv2
     </div>
   </div>
 );

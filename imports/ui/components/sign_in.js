@@ -69,7 +69,7 @@ export default class SignIn extends Component {
     return (
       <div className="login-box">
         <div className="login-logo">
-          <a href="/"><b>Admin</b>LTE</a>
+          <a href="http://cyncrony.com">c<b>y</b>ncron<b>y</b></a>
         </div>
 
         <div className="login-box-body">

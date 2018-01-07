@@ -3,9 +3,9 @@ import React from 'react';
 const AppFooter = () => (
   <footer className="main-footer">
     <div className="pull-right hidden-xs">
-      <b>Version</b> 2.3.11
+      <b>Version</b> 0.01
     </div>
-    <strong>Copyright &copy;  <a href="http://reactib.com">REACTIB</a> - </strong> React With Us
+    <strong> Developed by <a href="http://cyncrony.com">cyncrony</a>  </strong> 
   </footer>
 );
 
