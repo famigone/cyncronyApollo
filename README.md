@@ -1,5 +1,5 @@
 
-<center>![cyncronywhite](https://user-images.githubusercontent.com/4053540/34652334-2bc2de72-f3bb-11e7-880b-3925d8c53930.png)</center>
+![cyncronywhite](https://user-images.githubusercontent.com/4053540/34652334-2bc2de72-f3bb-11e7-880b-3925d8c53930.png)
 
 # Amazing Open Source App for Project Management  
 
