@@ -1,7 +1,7 @@
 
 ![cyncronywhitesmall](https://user-images.githubusercontent.com/4053540/34652416-3ac01e20-f3bc-11e7-950a-26ed938a4644.png)
 
-# Amazing Open Source App for Project Management  
+# Open Source App for Project Management  
 
  
 Stack and Components: [ES6](https://es6.io/), [Meteor](https://www.meteor.com/) and [React](https://facebook.github.io/react/) using [AdminLTE 2.3.11](http://almsaeedstudio.com/themes/AdminLTE/documentation/index.html) styles and [DhtmlxGantt Standard](https://dhtmlx.com/docs/products/dhtmlxGantt/?fromMenu) gantt chart.

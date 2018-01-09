@@ -29,7 +29,7 @@ export default class AppHeaderUserMenu extends Component {
         <a href="#" className="dropdown-toggle" data-toggle="dropdown">
           <img
             alt="img user"
-            src="/img/reactib.png"
+            src="/img/logoCyncrony.png"
             className="user-image"
             alt="Proyecto Actual"
           />
@@ -41,12 +41,12 @@ export default class AppHeaderUserMenu extends Component {
           <li className="user-header">
             <img
               alt="img user"
-              src="/img/reactib.png"
+              src="/img/cyncronyWhiteSmall2.png"
               className="img-circle"
               alt="User Image"
             />
             <p>
-              {this.userDisplayName()}  <small>Orchestrate your Projects</small>
+                <small>Orchestrate your Projects</small>
             </p>
           </li>
 
