@@ -10,6 +10,7 @@ import { _ } from 'meteor/underscore';
 import Filetes  from '/imports/api/images';
 import CallOutMessage from '../warnings/callout_message';
 
+
 export class BoardActions extends Component {
    constructor() {
     super();
@@ -18,7 +19,10 @@ export class BoardActions extends Component {
                    progress: 0,
                    inProgress: false,
                    subio:false,
-                   fileteId:null
+                   fileteId:null,
+                     suggestions: [
+        
+      ]
                     };
     this.open = this.open.bind(this)
     this.close = this.close.bind(this)
@@ -26,6 +30,17 @@ export class BoardActions extends Component {
 
   }
 
+
+  handleDelete (i) {
+    const tags = this.state.tags.slice(0)
+    tags.splice(i, 1)
+    this.setState({ tags })
+  }
+
+  handleAddition (tag) {
+    const tags = [].concat(this.state.tags, tag)
+    this.setState({ tags })
+  }
 
 
   /////////////////////////////////////////////////////////////////////////////////
@@ -60,11 +75,11 @@ export class BoardActions extends Component {
 
         // These are the event functions, don't need most of them, it shows where we are in the process
         uploadInstance.on('start', function () {
-          console.log('Starting');
+          //console.log('Starting');
         });
 
         uploadInstance.on('end', function (error, fileObj) {
-          console.log('On end File Object: ', fileObj);
+          //console.log('On end File Object: ', fileObj);
 
         });
 
@@ -91,7 +106,7 @@ export class BoardActions extends Component {
         });
 
         uploadInstance.on('progress', function (progress, fileObj) {
-          console.log('Upload Percentage: ' + progress);
+         // console.log('Upload Percentage: ' + progress);
           // Update our progress bar
           self.setState({
             progress: progress
@@ -106,7 +121,7 @@ export class BoardActions extends Component {
   // This is our progress bar, bootstrap styled
   // Remove this function if not needed
   showUploads() {
-    console.log('**********************************', this.state.uploading);
+    //console.log('**********************************', this.state.uploading);
 
     if (!_.isEmpty(this.state.uploading)) {
       return <div>
@@ -177,6 +192,10 @@ renderSubio(){
                 return  <CallOutMessage description="Archivo enviado exitosamente!" color="callout callout-info"/>;  
             }
 }
+ 
+ onChange = (value) => {
+    console.log('Value received from onChange: ' + value)
+  }
 
   render() {
     const popover = (
@@ -198,6 +217,8 @@ renderSubio(){
         
       
         <Modal show={this.state.showModal} onHide={this.close}>
+
+        
         <form className="form" onSubmit={this.handleSubmit.bind(this)} >
           <Modal.Header closeButton>
             <Modal.Title>Nueva Tarjeta</Modal.Title>

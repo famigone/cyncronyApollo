@@ -25,9 +25,10 @@ Stack and Components: [ES6](https://es6.io/), [Meteor](https://www.meteor.com/) 
 ### Add cards to the task's board
 ![tarjeta](https://user-images.githubusercontent.com/4053540/34652037-ae2d400e-f3b7-11e7-99b5-8fa944ae7eaa.png)
 
+### Performance Analitycs 
+![analisis](https://user-images.githubusercontent.com/4053540/34751678-c6e728a4-f58c-11e7-93d1-b846c2d9419c.png)
 
-
-### Prerequisites
+### Prerequisi nn,n,n,n,tes
 * Node v6.9 or higher
 * Npm v3 or higher
 * Meteor v1.4.x

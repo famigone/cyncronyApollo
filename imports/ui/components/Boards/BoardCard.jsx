@@ -11,17 +11,35 @@ import LoadingSpinner from '../controls/LoadingSpinner';
 import Alert from 'react-s-alert';
 import { Button, Modal, Popover, Tooltip, OverlayTrigger, FormControl } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
+import TagsInput from 'react-tagsinput'
+import './myCss.css'
+import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
 
 export class BoardCard extends Component {
    constructor() {
     super();
     //console.log(this.props)    
-    this.state = { showModal: false };
+    this.state = { showModal: false,
+      showModalTag: false,
+      tags: [],
+
+     };
     this.open = this.open.bind(this)
     this.close = this.close.bind(this)
+    this.openTag = this.openTag.bind(this)
+    this.closeTag = this.closeTag.bind(this)
+    this.renderModalTag = this.renderModalTag.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.addTag = this.addTag.bind(this)
 
   }
 
+handleChange(tags) {
+    this.setState({tags})
+  }
+addTag(tag){
+  console.log(tag)
+}
 renderComments(){
   //console.log("Comentarios: "+this.props.comments)
   if (this.props.comments){
@@ -43,7 +61,13 @@ renderComments(){
   open() {
     this.setState({ showModal: true });
   }
+ closeTag() {
+    this.setState({ showModalTag: false });    
+  }
 
+  openTag() {
+    this.setState({ showModalTag: true });
+  }
  handleSubmit(event) {
      event.preventDefault();
     // console.log(this.props.tid)
@@ -104,6 +128,39 @@ renderComments(){
         )
   }
 
+handleChange(tags) {
+    this.setState({tags})
+  }
+
+
+renderModalTag(){
+  //console.log("sisisis")
+    return(
+    <Modal show={this.state.showModalTag} onHide={this.closeTag}>
+          <Modal.Header closeButton>
+            <Modal.Title>Etiqueta tu Tarjeta  </Modal.Title>
+            <i>Elije una etiqueta o ingresa una nueva y luego presiona ENTER</i>
+          </Modal.Header>
+          <Modal.Body>
+            
+         <div className="box-body">                              
+        <TagsInput 
+            value={this.state.tags} 
+            onChange={this.handleChange}
+        />
+            
+
+        </div>
+        <div className="box-footer">
+      
+        </div>        
+          </Modal.Body>
+          <Modal.Footer>
+             <Button onClick={this.closeTag} className="btn btn-sm btn-primary btn-flat"><i className="fa fa-times" aria-hidden="true"></i></Button>
+          </Modal.Footer>
+        </Modal>
+        )
+  }
 renderAdjunto(){
   if (this.props.tieneFilete)
   return (
@@ -181,8 +238,13 @@ renderCard(){
               <p>{this.props.card.description}</p>
               {this.renderAdjunto()}
 
-              <button type="button" className="btn btn-default btn-xs"><i className="fa fa-share"></i> Share</button>
-              <button type="button" className="btn btn-default btn-xs"><i className="fa fa-thumbs-o-up"></i> Like</button>
+              <button 
+                  type="button" 
+                  onClick={this.openTag} 
+                  className="btn btn-default btn-xs">
+                  <i className="fa fa-tag text-blue" aria-hidden="true" >Etiquetar</i> 
+                   
+              </button>
               <span className="pull-right text-muted">{this.props.comments.length} comments</span>
 
             </div>
@@ -215,7 +277,7 @@ renderCard(){
 
    return (
  <div>        
-
+      {this.renderModalTag()}
       {this.renderModal()}
       {this.renderCard()}
 

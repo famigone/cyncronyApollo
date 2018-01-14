@@ -55,15 +55,15 @@ const FileUploadComponent = React.createClass({
 
         // These are the event functions, don't need most of them, it shows where we are in the process
         uploadInstance.on('start', function () {
-          console.log('Starting');
+          //console.log('Starting');
         });
 
         uploadInstance.on('end', function (error, fileObj) {
-          console.log('On end File Object: ', fileObj);
+         // console.log('On end File Object: ', fileObj);
         });
 
         uploadInstance.on('uploaded', function (error, fileObj) {
-          console.log('uploaded: ', fileObj);
+         // console.log('uploaded: ', fileObj);
 
           // Remove the filename from the upload box
           self.refs['fileinput'].value = '';
@@ -77,11 +77,11 @@ const FileUploadComponent = React.createClass({
         });
 
         uploadInstance.on('error', function (error, fileObj) {
-          console.log('Error during upload: ' + error);
+          //console.log('Error during upload: ' + error);
         });
 
         uploadInstance.on('progress', function (progress, fileObj) {
-          console.log('Upload Percentage: ' + progress);
+          //console.log('Upload Percentage: ' + progress);
           // Update our progress bar
           self.setState({
             progress: progress
@@ -96,7 +96,7 @@ const FileUploadComponent = React.createClass({
   // This is our progress bar, bootstrap styled
   // Remove this function if not needed
   showUploads() {
-    console.log('**********************************', this.state.uploading);
+   // console.log('**********************************', this.state.uploading);
 
     if (!_.isEmpty(this.state.uploading)) {
       return <div>
