@@ -6,6 +6,7 @@ import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { Tasks } from '../../imports/api/tasks.js'
 import { TaskUser } from '../../imports/api/taskUser.js'
 import { BoardCards } from '../../imports/api/boardCards.js'
+import { CardTags } from '../../imports/api/cardTags.js'
 import { BoardCardComments } from '../../imports/api/boardCardComments.js'
 import { Links } from '../../imports/api/links.js'
 import { LastProject } from '../../imports/api/lastProject.js'
@@ -29,6 +30,11 @@ export const updateLast = new ValidatedMethod({
 /***********************************************************************************/
 Meteor.publish('tasks', function() {
   return Tasks.find({activo:true});
+  
+});
+
+Meteor.publish('cardTags', function() {
+  return CardTags.find({activo:true});
   
 });
 
@@ -142,7 +148,33 @@ export const insertBoardCard = new ValidatedMethod({
   },
 });
 
-
+export const insertCardTags = new ValidatedMethod({
+  name: 'cardTags.insert',
+  validate: new SimpleSchema({
+    boardCardId: { type: String
+             , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },
+  tag: { type: String },
+            
+  projectId: { type: String
+             , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           },  
+  activo: { type: Boolean
+          , optional: true
+          , autoValue: function(){ return true }}, //borrado lógico
+  taskId: { type: Number
+          , regEx: SimpleSchema.RegEx.Id
+            // , autoValue: function(){ return Session.get("projectActual") } 
+           }, 
+  }).validator()
+,  run(oneTag) {      
+    //console.log(oneTask)
+    oneTag.activo = true
+    CardTags.insert(oneTag);
+  },
+});
 
 export const insert = new ValidatedMethod({
   name: 'lastProject.insert',

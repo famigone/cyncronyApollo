@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Projects } from '/imports/api/projects';
 import { Tasks } from '/imports/api/tasks';
+import { CardTags } from '/imports/api/cardTags';
 import { LastProject } from '/imports/api/lastProject';
 import  Filetes  from '/imports/api/images';
 import { BoardCardComments } from '/imports/api/boardCardComments';
@@ -12,17 +13,16 @@ import Alert from 'react-s-alert';
 import { Button, Modal, Popover, Tooltip, OverlayTrigger, FormControl } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import TagsInput from 'react-tagsinput'
-import './myCss.css'
+//import './myCss.css'
 import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
 
 export class BoardCard extends Component {
    constructor() {
     super();
-    //console.log(this.props)    
-    this.state = { showModal: false,
+    this.state = { 
+      showModal: false,
       showModalTag: false,
-      tags: [],
-
+     
      };
     this.open = this.open.bind(this)
     this.close = this.close.bind(this)
@@ -30,16 +30,34 @@ export class BoardCard extends Component {
     this.closeTag = this.closeTag.bind(this)
     this.renderModalTag = this.renderModalTag.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.addTag = this.addTag.bind(this)
+    
 
   }
 
-handleChange(tags) {
+   componentWillMount(){
+      this.setState({tags:this.props.tags})
+   }
+
+handleChange(tags, changed, changedIndex) {
     this.setState({tags})
+    const tag = {boardCardId:this.props.card._id,
+                 tag: changed[0],
+                 projectId : this.props.card.projectId,
+                 activo : true ,
+                 taskId :  this.props.card.taskId
+    }
+
+    Meteor.call('cardTags.insert', tag, (error, response) => {
+      if (error) {   
+        console.log(error)   
+        //this.setState({errorMsg : error.reason, errorHay:true, okHay:false})        
+      }})
+
+
+    console.log(tags)
+    console.log(changed)
   }
-addTag(tag){
-  console.log(tag)
-}
+
 renderComments(){
   //console.log("Comentarios: "+this.props.comments)
   if (this.props.comments){
@@ -128,13 +146,14 @@ renderComments(){
         )
   }
 
-handleChange(tags) {
-    this.setState({tags})
-  }
 
 
 renderModalTag(){
   //console.log("sisisis")
+  const props = {
+  className: 'react-tagsinput-input',
+  placeholder: 'Etiquetas...'
+}
     return(
     <Modal show={this.state.showModalTag} onHide={this.closeTag}>
           <Modal.Header closeButton>
@@ -145,8 +164,11 @@ renderModalTag(){
             
          <div className="box-body">                              
         <TagsInput 
-            value={this.state.tags} 
+            value={[]}   
+            maxTags={3}
+            addOnBlur = {true} 
             onChange={this.handleChange}
+            inputProps = {props}
         />
             
 
@@ -156,7 +178,7 @@ renderModalTag(){
         </div>        
           </Modal.Body>
           <Modal.Footer>
-             <Button onClick={this.closeTag} className="btn btn-sm btn-primary btn-flat"><i className="fa fa-times" aria-hidden="true"></i></Button>
+             <Button  onClick={this.closeTag} className="btn btn-sm btn-primary btn-flat"><i className="fa fa-check" aria-hidden="true"></i></Button>
           </Modal.Footer>
         </Modal>
         )
@@ -207,6 +229,26 @@ icon(){
     )
 }
 
+getColor(){
+  pos = Math.floor(Math.random() * 10);
+  rta = "label label-danger pull-right"
+  if (pos>6) rta = "label label-danger pull-right"
+  else if (pos>3) rta = "label label-success pull-right"
+  else if (pos>0) rta = "label label-primary pull-right"
+    return rta
+}
+
+renderTagsInCard(){
+  //console.log("xxx"+this.props.tags)
+  let pos = 0 
+  if (this.props.tags){
+      
+      return this.props.tags.map((tag) => (
+        <span key={tag._id} style={{margin:1}} className={this.getColor()}>{tag.tag}</span>
+        
+     ));
+}}
+
 
 
 renderCard(){
@@ -231,7 +273,7 @@ renderCard(){
               </div>
 
             </div>
-
+            {this.renderTagsInCard()}
             <div className="box-body" >
              {/*  <img className="img-responsive pad" src="../dist/img/photo2.png" alt="Photo"/> */}
 
@@ -240,9 +282,10 @@ renderCard(){
 
               <button 
                   type="button" 
+                  title="Etiqueta tu Tarjeta!"
                   onClick={this.openTag} 
-                  className="btn btn-default btn-xs">
-                  <i className="fa fa-tag text-blue" aria-hidden="true" >Etiquetar</i> 
+                  className="btn btn-default btn">
+                  <i className="fa fa-tag text-blue" aria-hidden="true" ></i> 
                    
               </button>
               <span className="pull-right text-muted">{this.props.comments.length} comments</span>
@@ -302,18 +345,22 @@ renderCard(){
 */
 export default BoardCardContainer = withTracker(({ card  } ) => {            
     const subb  = Meteor.subscribe('boardCardComments') 
+    const subt  = Meteor.subscribe('cardTags') 
     const comments = BoardCardComments.find({boardCardId:card._id}).fetch()         
     const filete = Filetes.findOne(card.fileteId)
+    const tags = CardTags.find({boardCardId:card._id}).fetch()
+    //const tagsArray = CardTags.find({boardCardId:card._id}, {tag:1}).fetch()
     const tieneFilete = !(card.fileteId==null)
-    var isLoading = !(subb.ready());
-   
-    //if (!isLoading) {console.log("EL ID ESSSSSSSSSSSS:")   }
+    var isLoading = !(subb.ready() && subt.ready());
+  
     return {    
       isLoading,            
       card: card,
       comments: comments,
       usuario:  Meteor.users.findOne({_id:card.createdBy}),
       unFilete: filete,
+      tags: tags,
+      //tagsArray : tagsArray,
       tieneFilete: tieneFilete
     };
   })(BoardCard);
