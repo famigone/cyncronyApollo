@@ -146,7 +146,12 @@ renderComments(){
         )
   }
 
-
+serializarState(){
+  let tagsArray = []
+  tagsObjets = this.props.tags
+  tagsObjets.forEach((tag)=>tagsArray.push(tag.tag))
+  return tagsArray
+}
 
 renderModalTag(){
   //console.log("sisisis")
@@ -164,7 +169,7 @@ renderModalTag(){
             
          <div className="box-body">                              
         <TagsInput 
-            value={[]}   
+            value={this.serializarState()}   
             maxTags={3}
             addOnBlur = {true} 
             onChange={this.handleChange}
