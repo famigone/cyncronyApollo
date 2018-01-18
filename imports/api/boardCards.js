@@ -24,7 +24,7 @@ BoardCards.schema = new SimpleSchema({
    },
   solved: { type: Boolean
            ,optional: true
-        ,autoValue: function(){ return false } },  
+         },  
   progress: { type: Number
             , decimal: true
             , defaultValue: 0

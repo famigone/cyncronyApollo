@@ -6,6 +6,7 @@ import { CardTags } from '/imports/api/cardTags';
 import { LastProject } from '/imports/api/lastProject';
 import  Filetes  from '/imports/api/images';
 import { BoardCardComments } from '/imports/api/boardCardComments';
+import { BoardCards } from '/imports/api/boardCards';
 import { withTracker } from 'meteor/react-meteor-data';
 import  BoardCardComment  from './BoardCardComment';
 import LoadingSpinner from '../controls/LoadingSpinner';
@@ -22,6 +23,7 @@ export class BoardCard extends Component {
     this.state = { 
       showModal: false,
       showModalTag: false,
+      solved: false   
      
      };
     this.open = this.open.bind(this)
@@ -30,16 +32,16 @@ export class BoardCard extends Component {
     this.closeTag = this.closeTag.bind(this)
     this.renderModalTag = this.renderModalTag.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    
+    this.cerrarTarjeta = this.cerrarTarjeta.bind(this)
 
   }
 
-   componentWillMount(){
-      this.setState({tags:this.props.tags})
-   }
+ componentWillMount(){
+  this.setState({solved:this.props.card.solved})
+ }
 
 handleChange(tags, changed, changedIndex) {
-    this.setState({tags})
+    //this.setState({tags})
     const tag = {boardCardId:this.props.card._id,
                  tag: changed[0],
                  projectId : this.props.card.projectId,
@@ -249,36 +251,54 @@ renderTagsInCard(){
   if (this.props.tags){
       
       return this.props.tags.map((tag) => (
-        <span key={tag._id} style={{margin:1}} className={this.getColor()}>{tag.tag}</span>
+        <span key={tag._id} style={{margin:1}} className={this.getColor()}>{tag.tag.toUpperCase()}</span>
         
      ));
 }}
 
+completeBox(){
+  if (this.state.solved) rta = "box box-primary"
+  else rta = "box box-widget"
+  return rta  
+}
 
+cerrarTarjeta(){
+
+  tarjeta = {id : this.props.card._id, solved: this.props.card.solved}
+    console.log("valooooooooor "+tarjeta.solved)
+  Meteor.call('BoardCard.close', tarjeta, (error, response) => {
+      if (error) {   
+        console.log(error)   
+        //this.setState({errorMsg : error.reason, errorHay:true, okHay:false})        
+      }})
+   this.setState({solved: ! tarjeta.solved})
+}
 
 renderCard(){
   //instanciamos el filete
 
   return(
   <div className="col-md-4 col-sm-6 col-xs-12">
-          <div className="box box-widget">
+          <div className={this.completeBox()}>
             <div className="box-header with-border">
               <div className="user-block">
                 <img className="img-circle" src="/img/user2-160x160.jpg" alt="User Image"/>
                 <span className="username"><a href="#">{this.props.card.title}</a></span>
                 <span className="description">{this.props.usuario.username}{this.props.user} - {moment(this.props.card.createdAt).format("DD/MM/YY")}</span>
+              
               </div>
 
               <div className="box-tools">
-                <button type="button" className="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
+
+                <button onClick={this.cerrarTarjeta} type="button" className="btn btn-box-tool" data-toggle="tooltip" title="Cerrar Tarjeta">
                   <i className="fa fa-circle-o"></i></button>
                 <button type="button" className="btn btn-box-tool" data-widget="collapse"><i className="fa fa-minus"></i>
                 </button>
                 <button type="button" className="btn btn-box-tool" data-widget="remove"><i className="fa fa-times"></i></button>
               </div>
-
+{this.renderTagsInCard()}
             </div>
-            {this.renderTagsInCard()}
+            
             <div className="box-body" >
              {/*  <img className="img-responsive pad" src="../dist/img/photo2.png" alt="Photo"/> */}
 
@@ -296,7 +316,7 @@ renderCard(){
               <span className="pull-right text-muted">{this.props.comments.length} comments</span>
 
             </div>
-
+            <div className="box-footer"><div></div></div>
             <div className="box-footer box-comments"  onClick={this.open}>
             <i><small>Click for comment</small></i>
               {this.renderComments()}
@@ -348,7 +368,8 @@ renderCard(){
    
  };
 */
-export default BoardCardContainer = withTracker(({ card  } ) => {            
+export default BoardCardContainer = withTracker(({ card  } ) => {   
+    const subx  = Meteor.subscribe('boardCards')          
     const subb  = Meteor.subscribe('boardCardComments') 
     const subt  = Meteor.subscribe('cardTags') 
     const comments = BoardCardComments.find({boardCardId:card._id}).fetch()         
@@ -356,7 +377,7 @@ export default BoardCardContainer = withTracker(({ card  } ) => {
     const tags = CardTags.find({boardCardId:card._id}).fetch()
     //const tagsArray = CardTags.find({boardCardId:card._id}, {tag:1}).fetch()
     const tieneFilete = !(card.fileteId==null)
-    var isLoading = !(subb.ready() && subt.ready());
+    var isLoading = !(subb.ready() && subt.ready() && subx.ready());
   
     return {    
       isLoading,            

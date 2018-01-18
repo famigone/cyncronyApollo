@@ -404,6 +404,27 @@ export const deleteTask = new ValidatedMethod({
   },
 });
 
+
+export const closeCard = new ValidatedMethod({
+  name: 'BoardCard.close',
+  validate: new SimpleSchema({
+   id : { type: String
+             , regEx: SimpleSchema.RegEx.Id
+             },
+  solved: {type: Boolean}
+  }).validator(),
+  run(oneCard) {
+
+    const cant = BoardCards.update({_id:oneCard.id}, {
+      $set: { solved: ! oneCard.solved},
+    });
+    const toto = BoardCards.findOne(oneCard.id)
+    console.log("CANTIDAD "+cant)
+    console.log("VALOR "+ toto.solved)   
+
+  },
+});
+
 export const insertUser = new ValidatedMethod({
   name: 'user.insert',
   validate: new SimpleSchema({
@@ -427,6 +448,7 @@ const TODOS_METHODS = _.pluck([
   updateTask,
   deleteTask,
   deleteTaskUser,
+  closeCard,
 ], 'name');
 
 if (Meteor.isServer) {
@@ -438,5 +460,5 @@ if (Meteor.isServer) {
 
     // Rate limit per connection ID
     connectionId() { return true; },
-  }, 5, 1000);
+  }, 50, 1000);
 }
