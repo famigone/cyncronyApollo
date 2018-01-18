@@ -265,7 +265,7 @@ completeBox(){
 cerrarTarjeta(){
 
   tarjeta = {id : this.props.card._id, solved: this.props.card.solved}
-    console.log("valooooooooor "+tarjeta.solved)
+    //console.log("valooooooooor "+tarjeta.solved)
   Meteor.call('BoardCard.close', tarjeta, (error, response) => {
       if (error) {   
         console.log(error)   

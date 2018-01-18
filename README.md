@@ -20,7 +20,8 @@ Stack and Components: [ES6](https://es6.io/), [Meteor](https://www.meteor.com/) 
 
 
 ### Now the team can solve the task by sharing files, comments, solutions, etc.
-![board](https://user-images.githubusercontent.com/4053540/34652033-ad56af58-f3b7-11e7-8bf8-1bfad5a55b7b.png)
+
+![Board](https://user-images.githubusercontent.com/4053540/35111353-d4cbe2e2-fc59-11e7-914e-22a2b15fd900.png)
 
 ### Add cards to the task's board
 ![tarjeta](https://user-images.githubusercontent.com/4053540/34652037-ae2d400e-f3b7-11e7-99b5-8fa944ae7eaa.png)
